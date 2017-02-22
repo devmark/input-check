@@ -411,6 +411,17 @@ describe('Raw Validator', function () {
       const isIp = Is.ip('1:2:3:4:5:6:7:8')
       expect(isIp).to.equal(true)
     })
+
+    it('should return false when input is not a valid uuid', function () {
+      const isUUID = Is.uuid('foo-dd-aa-ss-aa')
+      expect(isUUID).to.equal(false)
+    })
+
+    it('should return true when input is a valid uuid', function () {
+      const isUUID = Is.uuid('135b71db-ee7d-43ea-9f6d-16227fa82ad9')
+      expect(isUUID).to.equal(true)
+    })
+
   })
 
   context('Arthmetic', function () {

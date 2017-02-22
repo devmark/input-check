@@ -13,6 +13,7 @@ const alphaNumericRegex = /^[a-z0-9]+$/i
 const alphaRegex = /^[a-z]+$/i
 const ipv4Regex = /^(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(?:\.(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}$/
 const ipv6Regex = /^(?:(?:[0-9a-fA-F:]){1,4}(?:(?::(?:[0-9a-fA-F]){1,4}|:)){2,7})+$/
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-4][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 let Raw = exports = module.exports = {}
 
@@ -244,6 +245,21 @@ Raw.empty = function (input) {
  */
 Raw.regex = function (input, regex) {
   return regex.test(input)
+}
+
+/**
+ * @description tells whether given input is a valid uuid
+ * or not
+ * @method uuid
+ * @param  {String} input
+ * @return {Boolean}
+ * @example
+ *   Following yields to true
+ *   135b71db-ee7d-43ea-9f6d-16227fa82ad9
+ *  @public
+ */
+Raw.uuid = function (input) {
+  return Raw.regex(input, uuidRegex)
 }
 
 /**

@@ -1707,6 +1707,52 @@ describe('Validations', function () {
     })
   })
 
+  context('uuid', function () {
+    it('should throw an error when value is not a valid uuid', function *() {
+      const data = {github_profile: 'foo'}
+      const field = 'github_profile'
+      const message = 'github profile must point to a valid uuid '
+      const get = _.get
+      const args = []
+      try {
+        const passes = yield Validations.uuid(data, field, message, args, get)
+        expect(passes).not.to.exist()
+      } catch (e) {
+        expect(e).to.equal(message)
+      }
+    })
+
+    it('should work fine when value is a valid uuid', function *() {
+      const data = {github_profile: '135b71db-ee7d-43ea-9f6d-16227fa82ad9'}
+      const field = 'github_profile'
+      const message = 'github profile must point to a valid uuid '
+      const get = _.get
+      const args = []
+      const passes = yield Validations.uuid(data, field, message, args, get)
+      expect(passes).to.equal('validation passed')
+    })
+
+    it('should skip validation when field does not exists', function *() {
+      const data = {}
+      const field = 'github_profile'
+      const message = 'github profile must point to a valid uuid '
+      const get = _.get
+      const args = []
+      const passes = yield Validations.uuid(data, field, message, args, get)
+      expect(passes).to.equal('validation skipped')
+    })
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = {github_profile: undefined}
+      const field = 'github_profile'
+      const message = 'github profile must point to a valid uuid '
+      const get = _.get
+      const args = []
+      const passes = yield Validations.uuid(data, field, message, args, get)
+      expect(passes).to.equal('validation skipped')
+    })
+  })
+
   context('ip', function () {
     it('should throw an error when value is not a valid ip address', function *() {
       const data = {user_ip: '909090909'}
