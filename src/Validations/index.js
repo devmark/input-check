@@ -534,7 +534,7 @@ Validations.before = function (data, field, message, args, get) {
  * @public
  */
 Validations.date = function (data, field, message, args, get) {
-  const formats = ['MM/DD/YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD']
+  const formats = ['DD/MM/YYYY', 'MM/DD/YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD']
   return new Promise(function (resolve, reject) {
     const fieldValue = get(data, field)
     if (skippable(fieldValue)) {
