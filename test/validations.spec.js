@@ -2039,6 +2039,63 @@ describe('Validations', function () {
     })
   })
 
+  context('numeric', function () {
+    it('should throw an error when value is not a valid numeric', function *() {
+      const data = {profile: 'foo'}
+      const field = 'profile'
+      const message = 'profile must be an number'
+      const get = _.get
+      const args = []
+      try {
+        const passes = yield Validations.numeric(data, field, message, args, get)
+        expect(passes).not.to.exist()
+      } catch (e) {
+        expect(e).to.equal(message)
+      }
+    })
+
+    it('should work fine when value is a valid numeric', function *() {
+      const data = {profile: 123}
+      const field = 'profile'
+      const message = 'profile must be an number'
+      const get = _.get
+      const args = []
+      const passes = yield Validations.numeric(data, field, message, args, get)
+      expect(passes).to.equal('validation passed')
+    })
+
+    it('should work fine when value is a valid numeric(string)', function *() {
+      const data = {profile: '213'}
+      const field = 'profile'
+      const message = 'profile must be an number'
+      const get = _.get
+      const args = []
+      const passes = yield Validations.numeric(data, field, message, args, get)
+      expect(passes).to.equal('validation passed')
+    })
+
+    it('should skip validation when field does not exists', function *() {
+      const data = {}
+      const field = 'profile'
+      const message = 'profile must be an number'
+      const get = _.get
+      const args = []
+      const passes = yield Validations.numeric(data, field, message, args, get)
+      expect(passes).to.equal('validation skipped')
+    })
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = {profile: undefined}
+      const field = 'profile'
+      const message = 'profile must be an number'
+      const get = _.get
+      const args = []
+      const passes = yield Validations.numeric(data, field, message, args, get)
+      expect(passes).to.equal('validation skipped')
+    })
+
+  })
+
   context('json', function () {
     it('should throw an error when value is not a valid json string', function *() {
       const data = {profile: 'foo'}

@@ -323,6 +323,34 @@ Validations.uuid = function (data, field, message, args, get) {
 
 /**
  * @description makes sure value of field under validation
+ * is a valid numeric
+ * @method object
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @param  {Function} get
+ * @return {Object}
+ * @public
+ */
+Validations.numeric = function (data, field, message, args, get) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = get(data, field)
+    if (skippable(fieldValue)) {
+      resolve('validation skipped')
+      return
+    }
+
+    if (Raw.numeric(fieldValue)) {
+      resolve('validation passed')
+      return
+    }
+    reject(message)
+  })
+}
+
+/**
+ * @description makes sure value of field under validation
  * is a valid object
  * @method object
  * @param  {Object} data

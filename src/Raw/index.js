@@ -103,6 +103,18 @@ Raw.number = function (input) {
 }
 
 /**
+ * @description tells input is
+ * a valid numeric or not
+ * @method numeric
+ * @param  {Mixed} input
+ * @return {Boolean}
+ * @public
+ */
+Raw.numeric = function (input) {
+  return !isNaN(parseFloat(input)) && isFinite(input);
+}
+
+/**
  * @description tells whether input is a valid
  * object or not
  * @method object
