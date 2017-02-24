@@ -476,6 +476,16 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed')
     })
 
+    it('should work fine when expected values are integer and args are string', function *() {
+      const data = {marks: 10}
+      const field = 'marks'
+      const message = 'select valid marks'
+      const get = _.get
+      const args = ['10', '20', '40']
+      const passes = yield Validations.in(data, field, message, args, get)
+      expect(passes).to.equal('validation passed')
+    })
+
     it('should skip validation when field does not exists', function *() {
       const data = {}
       const field = 'marks'

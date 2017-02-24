@@ -533,7 +533,7 @@ Raw.inArray = function (input, comparsionArray) {
   if (!isArrayInstance) {
     return false
   }
-  return comparsionArray.indexOf(input) > -1
+  return comparsionArray.map(String).indexOf(String(input)) > -1
 }
 
 /**
