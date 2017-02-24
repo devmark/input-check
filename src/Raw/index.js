@@ -1,21 +1,21 @@
-'use strict'
+'use strict';
 
-const moment = require('moment')
+const moment = require('moment');
 
 /**
  * list of creepy regex, no they work nice
  */
-const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,63}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i
-const emailRegex = /^([\w-]+(?:\.[\w-]+)*)(\+[\w\.-]+)?@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,63}(?:\.[a-z]{2})?)$/i
-const phoneRegex = /\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/
-const creditCardRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$/
-const alphaNumericRegex = /^[a-z0-9]+$/i
-const alphaRegex = /^[a-z]+$/i
-const ipv4Regex = /^(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(?:\.(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}$/
-const ipv6Regex = /^(?:(?:[0-9a-fA-F:]){1,4}(?:(?::(?:[0-9a-fA-F]){1,4}|:)){2,7})+$/
+const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,63}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i;
+const emailRegex = /^([\w-]+(?:\.[\w-]+)*)(\+[\w\.-]+)?@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,63}(?:\.[a-z]{2})?)$/i;
+const phoneRegex = /\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/;
+const creditCardRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$/;
+const alphaNumericRegex = /^[a-z0-9]+$/i;
+const alphaRegex = /^[a-z]+$/i;
+const ipv4Regex = /^(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(?:\.(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}$/;
+const ipv6Regex = /^(?:(?:[0-9a-fA-F:]){1,4}(?:(?::(?:[0-9a-fA-F]){1,4}|:)){2,7})+$/;
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-4][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-let Raw = exports = module.exports = {}
+let Raw = exports = module.exports = {};
 
 /**
  * @description tells whether input is a valid
@@ -26,8 +26,8 @@ let Raw = exports = module.exports = {}
  * @public
  */
 Raw.array = function (input) {
-  return input instanceof Array
-}
+  return input instanceof Array;
+};
 
 /**
  * @description tells whether input is a valid
@@ -39,12 +39,12 @@ Raw.array = function (input) {
  */
 Raw.boolean = function (input) {
   if (input === 0) {
-    input = false
+    input = false;
   } else if (input === 1) {
-    input = true
+    input = true;
   }
-  return typeof (input) === 'boolean'
-}
+  return typeof (input) === 'boolean';
+};
 
 /**
  * @description tells whether input is a valid
@@ -59,12 +59,12 @@ Raw.boolean = function (input) {
  * @public
  */
 Raw.date = function (input, strict) {
-  const isDateInstance = input instanceof Date
+  const isDateInstance = input instanceof Date;
   if (!isDateInstance && !strict) {
-    return new Date(input).toString() !== 'Invalid Date'
+    return new Date(input).toString() !== 'Invalid Date';
   }
-  return isDateInstance
-}
+  return isDateInstance;
+};
 
 /**
  * @description tells whether input is a valid function
@@ -75,8 +75,8 @@ Raw.date = function (input, strict) {
  * @public
  */
 Raw.function = function (input) {
-  return typeof (input) === 'function'
-}
+  return typeof (input) === 'function';
+};
 
 /**
  * @description tells whether input is null
@@ -87,8 +87,8 @@ Raw.function = function (input) {
  * @public
  */
 Raw.null = function (input) {
-  return input === null
-}
+  return input === null;
+};
 
 /**
  * @description tells type of input is
@@ -99,8 +99,8 @@ Raw.null = function (input) {
  * @public
  */
 Raw.number = function (input) {
-  return typeof (input) === 'number'
-}
+  return typeof (input) === 'number';
+};
 
 /**
  * @description tells input is
@@ -112,7 +112,7 @@ Raw.number = function (input) {
  */
 Raw.numeric = function (input) {
   return !isNaN(parseFloat(input)) && isFinite(input);
-}
+};
 
 /**
  * @description tells whether input is a valid
@@ -123,8 +123,8 @@ Raw.numeric = function (input) {
  * @public
  */
 Raw.object = function (input) {
-  return input instanceof Object && !Raw.array(input)
-}
+  return input instanceof Object && !Raw.array(input);
+};
 
 /**
  * @description tells whether input is a valid
@@ -136,12 +136,12 @@ Raw.object = function (input) {
  */
 Raw.json = function (input) {
   try {
-    JSON.parse(input)
-    return true
+    JSON.parse(input);
+    return true;
   } catch (e) {
-    return false
+    return false;
   }
-}
+};
 
 /**
  * @description tells whether input is of type
@@ -152,8 +152,8 @@ Raw.json = function (input) {
  * @public
  */
 Raw.string = function (input) {
-  return typeof (input) === 'string'
-}
+  return typeof (input) === 'string';
+};
 
 /**
  * @description matches 2 input are of same type or
@@ -165,8 +165,8 @@ Raw.string = function (input) {
  * @public
  */
 Raw.sameType = function (input, comparsionInput) {
-  return typeof (input) === typeof (comparsionInput)
-}
+  return typeof (input) === typeof (comparsionInput);
+};
 
 /**
  * @description tells whether input exists or not
@@ -182,10 +182,10 @@ Raw.sameType = function (input, comparsionInput) {
  */
 Raw.existy = function (input) {
   if (typeof (input) === 'string') {
-    return input.length > 0
+    return input.length > 0;
   }
-  return (input !== null && input !== undefined)
-}
+  return (input !== null && input !== undefined);
+};
 
 /**
  * @description tells whether input is truthy or
@@ -200,8 +200,8 @@ Raw.existy = function (input) {
  *  @public
  */
 Raw.truthy = function (input) {
-  return Raw.existy(input) && input !== false && input !== 0
-}
+  return Raw.existy(input) && input !== false && input !== 0;
+};
 
 /**
  * @description tells whether input is falsy or not, opposite
@@ -212,8 +212,8 @@ Raw.truthy = function (input) {
  * @public
  */
 Raw.falsy = function (input) {
-  return !Raw.truthy(input)
-}
+  return !Raw.truthy(input);
+};
 
 /**
  * @description tells whether input is empty or not
@@ -230,22 +230,22 @@ Raw.falsy = function (input) {
  */
 Raw.empty = function (input) {
   if (!Raw.existy(input)) {
-    return true
+    return true;
   }
 
   if (Raw.date(input)) {
-    return false
+    return false;
   }
 
-  const type = typeof (input)
+  const type = typeof (input);
 
   switch (type) {
     case 'object' :
-      return Object.keys(input).length === 0
+      return Object.keys(input).length === 0;
     case 'string' :
-      return input.length === 0
+      return input.length === 0;
   }
-}
+};
 
 /**
  * @description executes a given regex on a given input
@@ -256,8 +256,8 @@ Raw.empty = function (input) {
  * @public
  */
 Raw.regex = function (input, regex) {
-  return regex.test(input)
-}
+  return regex.test(input);
+};
 
 /**
  * @description tells whether given input is a valid uuid
@@ -271,8 +271,8 @@ Raw.regex = function (input, regex) {
  *  @public
  */
 Raw.uuid = function (input) {
-  return Raw.regex(input, uuidRegex)
-}
+  return Raw.regex(input, uuidRegex);
+};
 
 /**
  * @description tells whether given input is a valid url
@@ -288,8 +288,8 @@ Raw.uuid = function (input) {
  *  @public
  */
 Raw.url = function (input) {
-  return Raw.regex(input, urlRegex)
-}
+  return Raw.regex(input, urlRegex);
+};
 
 /**
  * @description tells whether given input is a valid email
@@ -300,8 +300,8 @@ Raw.url = function (input) {
  * @public
  */
 Raw.email = function (input) {
-  return Raw.regex(input, emailRegex)
-}
+  return Raw.regex(input, emailRegex);
+};
 
 /**
  * @description tells whether given input is a valid phone
@@ -317,8 +317,8 @@ Raw.email = function (input) {
  * @public
  */
 Raw.phone = function (input) {
-  return Raw.regex(input, phoneRegex)
-}
+  return Raw.regex(input, phoneRegex);
+};
 
 /**
  * @description tells whether input is a valid credit card
@@ -337,9 +337,9 @@ Raw.phone = function (input) {
  *  @public
  */
 Raw.creditCard = function (input) {
-  input = input.replace(/-/g, '')
-  return Raw.regex(input, creditCardRegex)
-}
+  input = input.replace(/-/g, '');
+  return Raw.regex(input, creditCardRegex);
+};
 
 /**
  * @description makes sure given field contains
@@ -350,8 +350,8 @@ Raw.creditCard = function (input) {
  * @public
  */
 Raw.alpha = function (input) {
-  return Raw.regex(input, alphaRegex)
-}
+  return Raw.regex(input, alphaRegex);
+};
 
 /**
  * @description tells whether input is a valid alpha numeric
@@ -362,8 +362,8 @@ Raw.alpha = function (input) {
  * @public
  */
 Raw.alphaNumeric = function (input) {
-  return Raw.regex(input, alphaNumericRegex)
-}
+  return Raw.regex(input, alphaNumericRegex);
+};
 
 /**
  * @description tells whether input is affirmative or
@@ -377,12 +377,12 @@ Raw.alphaNumeric = function (input) {
  *  @public
  */
 Raw.affirmative = function (input) {
-  const affirmativeArray = ['yes', 'true', 'y', 'ok', 'okay']
+  const affirmativeArray = ['yes', 'true', 'y', 'ok', 'okay'];
   if (input === 'A') {
-    return true
+    return true;
   }
-  return affirmativeArray.indexOf(input.toLowerCase()) > -1
-}
+  return affirmativeArray.indexOf(input.toLowerCase()) > -1;
+};
 
 /**
  * @description tells whether ip address is a valid ipv4 ip
@@ -393,8 +393,8 @@ Raw.affirmative = function (input) {
  * @public
  */
 Raw.ipv4 = function (input) {
-  return Raw.regex(input, ipv4Regex)
-}
+  return Raw.regex(input, ipv4Regex);
+};
 
 /**
  * @description tells whether ip address is a valid ipv6 ip
@@ -405,8 +405,8 @@ Raw.ipv4 = function (input) {
  * @public
  */
 Raw.ipv6 = function (input) {
-  return Raw.regex(input, ipv6Regex)
-}
+  return Raw.regex(input, ipv6Regex);
+};
 
 /**
  * @description tells whether ip address is a valid ipv4 or
@@ -417,8 +417,8 @@ Raw.ipv6 = function (input) {
  * @public
  */
 Raw.ip = function (input) {
-  return Raw.ipv4(input) || Raw.ipv6(input)
-}
+  return Raw.ipv4(input) || Raw.ipv6(input);
+};
 
 /**
  * @description tells whether 2 values are identically same
@@ -429,8 +429,8 @@ Raw.ip = function (input) {
  * @public
  */
 Raw.same = function (input, comparsionInput) {
-  return input === comparsionInput
-}
+  return input === comparsionInput;
+};
 
 /**
  * @description tells whether input is a even number or
@@ -441,8 +441,8 @@ Raw.same = function (input, comparsionInput) {
  * @public
  */
 Raw.even = function (input) {
-  return Number(input) % 2 === 0
-}
+  return Number(input) % 2 === 0;
+};
 
 /**
  * @description tells whether input is a odd number or
@@ -453,8 +453,8 @@ Raw.even = function (input) {
  * @public
  */
 Raw.odd = function (input) {
-  return !Raw.even(input)
-}
+  return !Raw.even(input);
+};
 
 /**
  * @description tells whether input is a positive number or not
@@ -464,8 +464,8 @@ Raw.odd = function (input) {
  * @public
  */
 Raw.positive = function (input) {
-  return Number(input) >= 0
-}
+  return Number(input) >= 0;
+};
 
 /**
  * @description tells whether input is a negative number or not
@@ -475,8 +475,8 @@ Raw.positive = function (input) {
  * @public
  */
 Raw.negative = function (input) {
-  return !Raw.positive(input)
-}
+  return !Raw.positive(input);
+};
 
 /**
  * @description tells whether input is above comparison
@@ -488,8 +488,8 @@ Raw.negative = function (input) {
  * @public
  */
 Raw.above = function (input, comparsionInput) {
-  return Number(input) > Number(comparsionInput)
-}
+  return Number(input) > Number(comparsionInput);
+};
 
 /**
  * @description tells whether input is under comparison
@@ -501,8 +501,8 @@ Raw.above = function (input, comparsionInput) {
  * @public
  */
 Raw.under = function (input, comparsionInput) {
-  return !Raw.above(input, comparsionInput)
-}
+  return !Raw.above(input, comparsionInput);
+};
 
 /**
  * @description tells whether a value lies between 2 values
@@ -515,9 +515,9 @@ Raw.under = function (input, comparsionInput) {
  * @public
  */
 Raw.between = function (input, min, max) {
-  input = Number(input)
-  return (input > Number(min)) && (input < Number(max))
-}
+  input = Number(input);
+  return (input > Number(min)) && (input < Number(max));
+};
 
 /**
  * @description tells whether a value lies in an array or
@@ -529,12 +529,12 @@ Raw.between = function (input, min, max) {
  * @public
  */
 Raw.inArray = function (input, comparsionArray) {
-  const isArrayInstance = comparsionArray instanceof Array
+  const isArrayInstance = comparsionArray instanceof Array;
   if (!isArrayInstance) {
-    return false
+    return false;
   }
-  return comparsionArray.map(String).indexOf(String(input)) > -1
-}
+  return comparsionArray.map(String).indexOf(String(input)) > -1;
+};
 
 /**
  * @description tells whether an array is sorted or not
@@ -544,19 +544,19 @@ Raw.inArray = function (input, comparsionArray) {
  * @public
  */
 Raw.sorted = function (input) {
-  const isArrayInstance = input instanceof Array
-  let downScale = 0
+  const isArrayInstance = input instanceof Array;
+  let downScale = 0;
   if (!isArrayInstance) {
-    return false
+    return false;
   }
   input.sort(function (a, b) {
     if (a > b) {
-      downScale++
-      return
+      downScale++;
+      return;
     }
-  })
-  return downScale === 0
-}
+  });
+  return downScale === 0;
+};
 
 /**
  * @description tells whether input date is a valid date
@@ -571,10 +571,10 @@ Raw.sorted = function (input) {
  * @public
  */
 Raw.today = function (input) {
-  const today = moment().format('YYYY-MM-DD')
-  const inputDate = moment(input).format('YYYY-MM-DD')
-  return inputDate === today
-}
+  const today = moment().format('YYYY-MM-DD');
+  const inputDate = moment(input).format('YYYY-MM-DD');
+  return inputDate === today;
+};
 
 /**
  * @description tells whether input date is a valid date
@@ -589,10 +589,10 @@ Raw.today = function (input) {
  * @public
  */
 Raw.yesterday = function (input) {
-  const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD')
-  const inputDate = moment(input).format('YYYY-MM-DD')
-  return inputDate === yesterday
-}
+  const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+  const inputDate = moment(input).format('YYYY-MM-DD');
+  return inputDate === yesterday;
+};
 
 /**
  * @description tells whether input date is a valid date
@@ -607,10 +607,10 @@ Raw.yesterday = function (input) {
  * @public
  */
 Raw.tomorrow = function (input) {
-  const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD')
-  const inputDate = moment(input).format('YYYY-MM-DD')
-  return inputDate === tomorrow
-}
+  const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+  const inputDate = moment(input).format('YYYY-MM-DD');
+  return inputDate === tomorrow;
+};
 
 /**
  * @description tells whether input date is in past or not
@@ -624,8 +624,8 @@ Raw.tomorrow = function (input) {
  * @public
  */
 Raw.past = function (input) {
-  return moment().isAfter(input, 'date')
-}
+  return moment().isAfter(input, 'date');
+};
 
 /**
  * @description tells whether input date is in future or not
@@ -639,8 +639,8 @@ Raw.past = function (input) {
  * @public
  */
 Raw.future = function (input) {
-  return !Raw.past(input)
-}
+  return !Raw.past(input);
+};
 
 /**
  * @description tells whether input is after given date
@@ -655,8 +655,8 @@ Raw.future = function (input) {
  * @public
  */
 Raw.after = function (input, afterDate) {
-  return moment(input).isAfter(afterDate)
-}
+  return moment(input).isAfter(afterDate);
+};
 
 /**
  * @description tells whether input is after certain
@@ -680,9 +680,9 @@ Raw.after = function (input, afterDate) {
  * @public
  */
 Raw.afterOffsetOf = function (input, number, key) {
-  const afterDate = moment().add(number, key)
-  return moment(input).isAfter(afterDate)
-}
+  const afterDate = moment().add(number, key);
+  return moment(input).isAfter(afterDate);
+};
 
 /**
  * @description tells whether input is before certain
@@ -706,9 +706,9 @@ Raw.afterOffsetOf = function (input, number, key) {
  * @public
  */
 Raw.beforeOffsetOf = function (input, number, key) {
-  const beforeDate = moment().subtract(number, key)
-  return moment(input).isBefore(beforeDate)
-}
+  const beforeDate = moment().subtract(number, key);
+  return moment(input).isBefore(beforeDate);
+};
 
 /**
  * @description tells whether input is before a given date
@@ -723,8 +723,8 @@ Raw.beforeOffsetOf = function (input, number, key) {
  * @public
  */
 Raw.before = function (input, beforeDate) {
-  return moment(input).isBefore(beforeDate)
-}
+  return moment(input).isBefore(beforeDate);
+};
 
 /**
  * @description tells whether input is a valid date for a given
@@ -740,9 +740,9 @@ Raw.before = function (input, beforeDate) {
  * @public
  */
 Raw.dateFormat = function (input, formats, locale) {
-  locale = locale || 'en'
-  return moment(input, formats, locale, true).isValid()
-}
+  locale = locale || 'en';
+  return moment(input, formats, locale, true).isValid();
+};
 
 /**
  * @description tells whether a given date is between 2 dates or not
@@ -758,8 +758,8 @@ Raw.dateFormat = function (input, formats, locale) {
  * @public
  */
 Raw.inDateRange = function (input, minDate, maxDate) {
-  return moment(input).isBetween(minDate, maxDate)
-}
+  return moment(input).isBetween(minDate, maxDate);
+};
 
 /**
  * @description makes sure any one value of one array
@@ -770,22 +770,22 @@ Raw.inDateRange = function (input, minDate, maxDate) {
  * @return {Boolean}
  */
 Raw.intersectAny = function (input, intersectionArray) {
-  const isArrayInstance = input instanceof Array
-  const isIntersectionArrayInstance = intersectionArray instanceof Array
-  let matchesCount = 0
+  const isArrayInstance = input instanceof Array;
+  const isIntersectionArrayInstance = intersectionArray instanceof Array;
+  let matchesCount = 0;
 
   if (!isArrayInstance || !isIntersectionArrayInstance) {
-    return false
+    return false;
   }
 
   input.filter(function (n) {
     if (intersectionArray.indexOf(n) > -1) {
-      matchesCount++
-      return
+      matchesCount++;
+      return;
     }
-  })
-  return matchesCount > 0
-}
+  });
+  return matchesCount > 0;
+};
 
 /**
  * @description makes sure all values of one array are
@@ -796,19 +796,19 @@ Raw.intersectAny = function (input, intersectionArray) {
  * @return {Boolean}
  */
 Raw.intersectAll = function (input, intersectionArray) {
-  const isArrayInstance = input instanceof Array
-  const isIntersectionArrayInstance = intersectionArray instanceof Array
-  let matchesCount = 0
+  const isArrayInstance = input instanceof Array;
+  const isIntersectionArrayInstance = intersectionArray instanceof Array;
+  let matchesCount = 0;
 
   if (!isArrayInstance || !isIntersectionArrayInstance) {
-    return false
+    return false;
   }
 
   input.filter(function (n) {
     if (intersectionArray.indexOf(n) > -1) {
-      matchesCount++
+      matchesCount++;
     }
-  })
+  });
 
-  return matchesCount === input.length
-}
+  return matchesCount === input.length;
+};

@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const Validator = require('./src/Validator')
-const Sanitization = require('./src/Sanitization')
+const Validator = require('./src/Validator');
+const Sanitization = require('./src/Sanitization');
 
 module.exports = {
   validate: Validator.validate,
@@ -12,4 +12,4 @@ module.exports = {
   sanitize: Sanitization.sanitize,
   sanitizor: Sanitization.sanitizor,
   'sanitizor.extend': Sanitization.sanitizor.extend
-}
+};

@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
-const Validations = require('../Validations')
-const Messages = require('../Messages')
-const _ = require('lodash')
-const Q = require('q')
+const Validations = require('../Validations');
+const Messages = require('../Messages');
+const _ = require('lodash');
+const Q = require('q');
 
-const ValidationEngine = exports = module.exports = {}
+const ValidationEngine = exports = module.exports = {};
 
 /**
  * validates a field with all assigned validations for that
@@ -20,13 +20,13 @@ const ValidationEngine = exports = module.exports = {}
  * @return {Promise<Array>}
  */
 ValidationEngine.validateField = function (data, field, validations, messages, runAll) {
-  const method = runAll ? 'allSettled' : 'all'
+  const method = runAll ? 'allSettled' : 'all';
   return Q[method](
     _.map(validations, (validation) => {
-      return ValidationEngine.runValidationOnField(data, field, validation.name, messages, validation.args)
+      return ValidationEngine.runValidationOnField(data, field, validation.name, messages, validation.args);
     })
-  )
-}
+  );
+};
 
 /**
  * runs a single validation on a given field.
@@ -40,17 +40,17 @@ ValidationEngine.validateField = function (data, field, validations, messages, r
  * @return {Promise}
  */
 ValidationEngine.runValidationOnField = function (data, field, validation, messages, args) {
-  const message = Messages.make(messages, field, validation, args)
-  const validationMethod = ValidationEngine.getValidationMethod(validation)
+  const message = Messages.make(messages, field, validation, args);
+  const validationMethod = ValidationEngine.getValidationMethod(validation);
 
   return Q.Promise((resolve, reject) => {
     validationMethod(data, field, message, args, _.get)
     .then(resolve)
     .catch((error) => {
-      reject({field, validation, message: error})
-    })
-  })
-}
+      reject({field, validation, message: error});
+    });
+  });
+};
 
 /**
  * returns the validation method from the Validations
@@ -65,6 +65,6 @@ ValidationEngine.runValidationOnField = function (data, field, validation, messa
  */
 ValidationEngine.getValidationMethod = function (validation) {
   return _.get(Validations, _.camelCase(validation), function () {
-    throw new Error(`${validation} is not defined as a validation`)
-  })
-}
+    throw new Error(`${validation} is not defined as a validation`);
+  });
+};

@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
-const pope = require('pope')
-const _ = require('lodash')
+const pope = require('pope');
+const _ = require('lodash');
 
-const messagesStore = {}
-const arrayExpressionRegex = /\.\d/g
+const messagesStore = {};
+const arrayExpressionRegex = /\.\d/g;
 
 /**
  * returns the default message for a validation.
@@ -18,7 +18,7 @@ const arrayExpressionRegex = /\.\d/g
  * @private
  */
 function _returnDefaultMessage (messages, field, validation) {
-  return messagesStore[validation] || '{{validation}} validation failed on {{field}}'
+  return messagesStore[validation] || '{{validation}} validation failed on {{field}}';
 }
 
 /**
@@ -33,7 +33,7 @@ function _returnDefaultMessage (messages, field, validation) {
  * @private
  */
 function _returnValidationMessage (messages, field, validation) {
-  return messages[validation]
+  return messages[validation];
 }
 
 /**
@@ -49,8 +49,8 @@ function _returnValidationMessage (messages, field, validation) {
  * @private
  */
 function _returnFieldValidationMessage (messages, field, validation) {
-  const fieldToArrayExpression = field.replace(arrayExpressionRegex, '.*')
-  return messages[`${field}.${validation}`] || messages[`${fieldToArrayExpression}.${validation}`]
+  const fieldToArrayExpression = field.replace(arrayExpressionRegex, '.*');
+  return messages[`${field}.${validation}`] || messages[`${fieldToArrayExpression}.${validation}`];
 }
 
 /**
@@ -64,8 +64,8 @@ function _returnFieldValidationMessage (messages, field, validation) {
  */
 function _makePopeMessage (message) {
   return typeof (message) === 'function' ? message : function (field, validation, arg) {
-    return pope(message, {field, validation, argument: arg})
-  }
+    return pope(message, {field, validation, argument: arg});
+  };
 }
 
 /**
@@ -79,9 +79,9 @@ const validationMethods = [
   _returnFieldValidationMessage,
   _returnValidationMessage,
   _returnDefaultMessage
-]
+];
 
-let Messages = exports = module.exports = {}
+let Messages = exports = module.exports = {};
 
 /**
  * making a message for a given field and validation.
@@ -99,8 +99,8 @@ Messages.make = function (customMessages, field, validation, args) {
   .find((method) => method(customMessages, field, validation))
   .thru((method) => method(customMessages, field, validation))
   .thru((message) => _makePopeMessage(message)(field, validation, args))
-  .value()
-}
+  .value();
+};
 
 /**
  * @description sets a message for a given rule
@@ -110,5 +110,5 @@ Messages.make = function (customMessages, field, validation, args) {
  * @public
  */
 Messages.set = function (name, message) {
-  messagesStore[name] = message
-}
+  messagesStore[name] = message;
+};

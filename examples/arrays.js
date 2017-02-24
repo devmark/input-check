@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const indicative = require('../')
+const indicative = require('../');
 
 const data = {
   profile: [
@@ -11,10 +11,10 @@ const data = {
       email: 'foo@gmail.com'
     }
   ]
-}
+};
 
 const rules = {
   'profile.*.email': 'email'
-}
+};
 
-indicative.validate(data, rules).then(console.log).catch(console.log)
+indicative.validate(data, rules).then(console.log).catch(console.log);

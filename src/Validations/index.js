@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const Raw = require('../Raw')
-const Modes = require('../Modes')
+const Raw = require('../Raw');
+const Modes = require('../Modes');
 const gm = require('gm');
 
 /**
@@ -9,7 +9,7 @@ const gm = require('gm');
  * @description List of schema validations
  * @type {Object}
  */
-let Validations = exports = module.exports = {}
+let Validations = exports = module.exports = {};
 
 /**
  * @description figures out whether value can be skipped
@@ -21,8 +21,8 @@ let Validations = exports = module.exports = {}
  * @private
  */
 const skippable = function (value) {
-  return Modes.get() === 'strict' ? typeof (value) === undefined : !Raw.existy(value)
-}
+  return Modes.get() === 'strict' ? typeof (value) === undefined : !Raw.existy(value);
+};
 
 /**
  * @description enforces a field to be confirmed by another.
@@ -37,19 +37,19 @@ const skippable = function (value) {
  */
 Validations.confirmed = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
-    const confirmedFieldValue = get(data, `${field}_confirmation`)
+    const fieldValue = get(data, field);
+    const confirmedFieldValue = get(data, `${field}_confirmation`);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.same(fieldValue, confirmedFieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces a field to be an email if present
@@ -64,18 +64,18 @@ Validations.confirmed = function (data, field, message, args, get) {
  */
 Validations.email = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.email(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces a field to be accepted
@@ -90,18 +90,18 @@ Validations.email = function (data, field, message, args, get) {
  */
 Validations.accepted = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.truthy(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces a field to be after a certain date
@@ -116,18 +116,18 @@ Validations.accepted = function (data, field, message, args, get) {
  */
 Validations.after = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.after(fieldValue, args[0])) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under validation is
@@ -143,20 +143,20 @@ Validations.after = function (data, field, message, args, get) {
  */
 Validations.afterOffsetOf = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
-    const offset = Number(args[0])
-    const key = args[1]
+    const fieldValue = get(data, field);
+    const offset = Number(args[0]);
+    const key = args[1];
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.afterOffsetOf(fieldValue, offset, key)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under validation is
@@ -172,20 +172,20 @@ Validations.afterOffsetOf = function (data, field, message, args, get) {
  */
 Validations.beforeOffsetOf = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
-    const offset = Number(args[0])
-    const key = args[1]
+    const fieldValue = get(data, field);
+    const offset = Number(args[0]);
+    const key = args[1];
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.beforeOffsetOf(fieldValue, offset, key)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the field under validation is a
@@ -201,18 +201,18 @@ Validations.beforeOffsetOf = function (data, field, message, args, get) {
  */
 Validations.alpha = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.alpha(fieldValue) && fieldValue !== null) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the field under validation is a
@@ -228,18 +228,18 @@ Validations.alpha = function (data, field, message, args, get) {
  */
 Validations.alphaNumeric = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.alphaNumeric(fieldValue) && fieldValue !== null) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -255,18 +255,18 @@ Validations.alphaNumeric = function (data, field, message, args, get) {
  */
 Validations.array = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.array(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -282,18 +282,18 @@ Validations.array = function (data, field, message, args, get) {
  */
 Validations.url = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.url(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -309,18 +309,18 @@ Validations.url = function (data, field, message, args, get) {
  */
 Validations.uuid = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.uuid(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -336,19 +336,19 @@ Validations.uuid = function (data, field, message, args, get) {
  */
 Validations.numeric = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (Raw.numeric(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -364,18 +364,18 @@ Validations.numeric = function (data, field, message, args, get) {
  */
 Validations.object = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.object(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -391,18 +391,18 @@ Validations.object = function (data, field, message, args, get) {
  */
 Validations.json = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.json(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation is a
@@ -418,18 +418,18 @@ Validations.json = function (data, field, message, args, get) {
  */
 Validations.ip = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.ip(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation is a
@@ -445,18 +445,18 @@ Validations.ip = function (data, field, message, args, get) {
  */
 Validations.ipv4 = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.ipv4(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation is a
@@ -472,18 +472,18 @@ Validations.ipv4 = function (data, field, message, args, get) {
  */
 Validations.ipv6 = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.ipv6(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation is a
@@ -499,18 +499,18 @@ Validations.ipv6 = function (data, field, message, args, get) {
  */
 Validations.integer = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Number.isInteger(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation is
@@ -527,28 +527,28 @@ Validations.integer = function (data, field, message, args, get) {
  */
 Validations.boolean = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    let fieldValue = get(data, field)
+    let fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     /**
      * converting 0 and 1 strings to numbers
      */
     if (fieldValue === '0') {
-      fieldValue = 0
+      fieldValue = 0;
     } else if (fieldValue === '1') {
-      fieldValue = 1
+      fieldValue = 1;
     }
 
     if (Raw.boolean(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field under validation is before
@@ -564,18 +564,18 @@ Validations.boolean = function (data, field, message, args, get) {
  */
 Validations.before = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.before(fieldValue, args[0])) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field under validation is a valid
@@ -590,20 +590,20 @@ Validations.before = function (data, field, message, args, get) {
  * @public
  */
 Validations.date = function (data, field, message, args, get) {
-  const formats = ['DD/MM/YYYY', 'MM/DD/YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD']
+  const formats = ['DD/MM/YYYY', 'MM/DD/YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.dateFormat(fieldValue, formats)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field under validation is a valid
@@ -618,20 +618,20 @@ Validations.date = function (data, field, message, args, get) {
  * @public
  */
 Validations.dateFormat = function (data, field, message, args, get) {
-  const format = args[0]
+  const format = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.dateFormat(fieldValue, format)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field value is under defined
@@ -647,18 +647,18 @@ Validations.dateFormat = function (data, field, message, args, get) {
  */
 Validations.in = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (Raw.inArray(fieldValue, args)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field value is not in one
@@ -674,18 +674,18 @@ Validations.in = function (data, field, message, args, get) {
  */
 Validations.notIn = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
     if (!Raw.inArray(fieldValue, args)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces a field to be present and should not be
@@ -702,14 +702,14 @@ Validations.notIn = function (data, field, message, args, get) {
  */
 Validations.required = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (!Raw.empty(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field under validation is present when
@@ -724,22 +724,22 @@ Validations.required = function (data, field, message, args, get) {
  * @public
  */
 Validations.requiredIf = function (data, field, message, args, get) {
-  const withField = args[0]
+  const withField = args[0];
   return new Promise(function (resolve, reject) {
-    const withFieldValue = get(data, withField)
+    const withFieldValue = get(data, withField);
     if (!withFieldValue) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (!Raw.empty(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field under validation is present and
@@ -754,23 +754,23 @@ Validations.requiredIf = function (data, field, message, args, get) {
  * @public
  */
 Validations.requiredWhen = function (data, field, message, args, get) {
-  const withField = args[0]
-  const withfieldExpectedValue = args[1]
+  const withField = args[0];
+  const withfieldExpectedValue = args[1];
   return new Promise(function (resolve, reject) {
-    const withFieldValue = get(data, withField)
+    const withFieldValue = get(data, withField);
     if (String(withfieldExpectedValue) !== String(withFieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (!Raw.empty(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces field under validation to have data
@@ -786,33 +786,33 @@ Validations.requiredWhen = function (data, field, message, args, get) {
  */
 Validations.requiredWithAny = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    let withFieldCount = 0
+    let withFieldCount = 0;
 
     /**
      * looping through all items to make sure
      * one of them is present
      */
     args.forEach(function (item) {
-      const itemValue = get(data, item)
+      const itemValue = get(data, item);
       if (itemValue) {
-        withFieldCount++
-        return
+        withFieldCount++;
+        return;
       }
-    })
+    });
 
     if (withFieldCount === 0) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (!Raw.empty(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces field under validation to have data
@@ -828,32 +828,32 @@ Validations.requiredWithAny = function (data, field, message, args, get) {
  */
 Validations.requiredWithAll = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    let withFieldsCount = 0
+    let withFieldsCount = 0;
 
     /**
      * looping through all items to make sure
      * all of them is present
      */
     args.forEach(function (item) {
-      const itemValue = get(data, item)
+      const itemValue = get(data, item);
       if (itemValue) {
-        withFieldsCount++
+        withFieldsCount++;
       }
-    })
+    });
 
     if (withFieldsCount !== args.length) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (!Raw.empty(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces field under validation to have data
@@ -869,33 +869,33 @@ Validations.requiredWithAll = function (data, field, message, args, get) {
  */
 Validations.requiredWithoutAny = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    let withOutFieldCounts = 0
+    let withOutFieldCounts = 0;
 
     /**
      * looping through all items to make sure
      * one of them is present
      */
     args.forEach(function (item) {
-      const itemValue = get(data, item)
+      const itemValue = get(data, item);
       if (!itemValue) {
-        withOutFieldCounts++
-        return
+        withOutFieldCounts++;
+        return;
       }
-    })
+    });
 
     if (withOutFieldCounts === 0) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (!Raw.empty(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description enforces field under validation to have data
@@ -911,33 +911,33 @@ Validations.requiredWithoutAny = function (data, field, message, args, get) {
  */
 Validations.requiredWithoutAll = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    let withOutFieldCounts = 0
+    let withOutFieldCounts = 0;
 
     /**
      * looping through all items to make sure
      * one of them is present
      */
     args.forEach(function (item) {
-      const itemValue = get(data, item)
+      const itemValue = get(data, item);
       if (!itemValue) {
-        withOutFieldCounts++
-        return
+        withOutFieldCounts++;
+        return;
       }
-    })
+    });
 
     if (withOutFieldCounts !== args.length) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (!Raw.empty(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under validation
@@ -952,27 +952,27 @@ Validations.requiredWithoutAll = function (data, field, message, args, get) {
  * @public
  */
 Validations.same = function (data, field, message, args, get) {
-  const targetedField = args[0]
+  const targetedField = args[0];
   return new Promise(function (resolve, reject) {
-    const targetedFieldValue = get(data, targetedField)
+    const targetedFieldValue = get(data, targetedField);
     if (!targetedFieldValue) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (targetedFieldValue === fieldValue) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under validation
@@ -987,27 +987,27 @@ Validations.same = function (data, field, message, args, get) {
  * @public
  */
 Validations.different = function (data, field, message, args, get) {
-  const targetedField = args[0]
+  const targetedField = args[0];
   return new Promise(function (resolve, reject) {
-    const targetedFieldValue = get(data, targetedField)
+    const targetedFieldValue = get(data, targetedField);
     if (!targetedFieldValue) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (targetedFieldValue !== fieldValue) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under
@@ -1022,21 +1022,21 @@ Validations.different = function (data, field, message, args, get) {
  * @public
  */
 Validations.equals = function (data, field, message, args, get) {
-  const targetedValue = args[0]
+  const targetedValue = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (targetedValue == fieldValue) { // eslint-disable-line eqeqeq
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under
@@ -1051,21 +1051,21 @@ Validations.equals = function (data, field, message, args, get) {
  * @public
  */
 Validations.notEquals = function (data, field, message, args, get) {
-  const targetedValue = args[0]
+  const targetedValue = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (targetedValue !== fieldValue) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -1080,26 +1080,26 @@ Validations.notEquals = function (data, field, message, args, get) {
  * @public
  */
 Validations.range = function (data, field, message, args, get) {
-  const min = args[0]
-  const max = args[1]
+  const min = args[0];
+  const max = args[1];
   return new Promise(function (resolve, reject) {
     if (!min || !max) {
-      return reject('min and max values are required for range validation')
+      return reject('min and max values are required for range validation');
     }
 
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (Raw.between(fieldValue, min, max)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the length of field under
@@ -1114,21 +1114,21 @@ Validations.range = function (data, field, message, args, get) {
  * @public
  */
 Validations.min = function (data, field, message, args, get) {
-  const minLength = args[0]
+  const minLength = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (String(fieldValue).length >= minLength) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the length of field under
@@ -1143,21 +1143,21 @@ Validations.min = function (data, field, message, args, get) {
  * @public
  */
 Validations.max = function (data, field, message, args, get) {
-  const maxLength = args[0]
+  const maxLength = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (String(fieldValue).length <= maxLength) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under
@@ -1172,21 +1172,21 @@ Validations.max = function (data, field, message, args, get) {
  * @public
  */
 Validations.above = function (data, field, message, args, get) {
-  const minValue = args[0]
+  const minValue = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (Number(fieldValue) > minValue) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure the value of field under
@@ -1201,21 +1201,21 @@ Validations.above = function (data, field, message, args, get) {
  * @public
  */
 Validations.under = function (data, field, message, args, get) {
-  const maxValue = args[0]
+  const maxValue = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (Number(fieldValue) < maxValue) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation contains a
@@ -1230,21 +1230,21 @@ Validations.under = function (data, field, message, args, get) {
  * @public
  */
 Validations.includes = function (data, field, message, args, get) {
-  const substring = args[0]
+  const substring = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (String(fieldValue).includes(substring)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -1259,21 +1259,21 @@ Validations.includes = function (data, field, message, args, get) {
  * @public
  */
 Validations.startsWith = function (data, field, message, args, get) {
-  const substring = args[0]
+  const substring = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (String(fieldValue).startsWith(substring)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure value of field under validation
@@ -1288,21 +1288,21 @@ Validations.startsWith = function (data, field, message, args, get) {
  * @public
  */
 Validations.endsWith = function (data, field, message, args, get) {
-  const substring = args[0]
+  const substring = args[0];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (String(fieldValue).endsWith(substring)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field under validation satifies defined
@@ -1317,23 +1317,23 @@ Validations.endsWith = function (data, field, message, args, get) {
  * @public
  */
 Validations.regex = function (data, field, message, args, get) {
-  const regexExp = args[0]
-  const regexFlags = args[1]
+  const regexExp = args[0];
+  const regexFlags = args[1];
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
-    const expression = regexFlags ? new RegExp(regexExp, regexFlags) : new RegExp(regexExp)
+    const expression = regexFlags ? new RegExp(regexExp, regexFlags) : new RegExp(regexExp);
     if (Raw.regex(fieldValue, expression)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * @description makes sure field under validation is a string
@@ -1348,21 +1348,21 @@ Validations.regex = function (data, field, message, args, get) {
  */
 Validations.string = function (data, field, message, args, get) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = get(data, field)
+    const fieldValue = get(data, field);
     if (skippable(fieldValue)) {
-      resolve('validation skipped')
-      return
+      resolve('validation skipped');
+      return;
     }
 
     if (Raw.string(fieldValue)) {
-      resolve('validation passed')
-      return
+      resolve('validation passed');
+      return;
     }
-    reject(message)
-  })
-}
+    reject(message);
+  });
+};
 
 /**
  * aliases
  */
-Validations.between = Validations.range
+Validations.between = Validations.range;

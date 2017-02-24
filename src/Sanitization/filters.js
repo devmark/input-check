@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
-const domains = /^hotmail\.com|gmail\.com|live\.com$/
-const linksRegex = /<a\b[^>]*>(.*?)<\/a>/ig
-const tagsRegex = /<\/?[^>]+(>|$)/g
-const _ = require('lodash')
+const domains = /^hotmail\.com|gmail\.com|live\.com$/;
+const linksRegex = /<a\b[^>]*>(.*?)<\/a>/ig;
+const tagsRegex = /<\/?[^>]+(>|$)/g;
+const _ = require('lodash');
 
-const inflect = require('inflect')
+const inflect = require('inflect');
 
-let SanitizationFilters = exports = module.exports = {}
+let SanitizationFilters = exports = module.exports = {};
 
 /**
  * @description tells whether domain falls in one of the
@@ -17,7 +17,7 @@ let SanitizationFilters = exports = module.exports = {}
  * @return {Boolean}
  */
 function _isNormalizeableProvider (domain) {
-  return domains.test(domain)
+  return domains.test(domain);
 }
 
 /**
@@ -28,7 +28,7 @@ function _isNormalizeableProvider (domain) {
  * @private
  */
 function _isHotmail (domain) {
-  return /hotmail\.com$/.test(domain)
+  return /hotmail\.com$/.test(domain);
 }
 
 /**
@@ -43,9 +43,9 @@ function _isHotmail (domain) {
  */
 function _replace (value, pattern, subsitute) {
   if (typeof (value) !== 'string') {
-    return value
+    return value;
   }
-  return value.replace(pattern, subsitute)
+  return value.replace(pattern, subsitute);
 }
 
 /**
@@ -57,9 +57,9 @@ function _replace (value, pattern, subsitute) {
  * @public
  */
 SanitizationFilters.blacklist = function (value, args) {
-  const blacklistRegex = new RegExp(`[${args[0]}]`, 'g')
-  return _replace(value, blacklistRegex, '')
-}
+  const blacklistRegex = new RegExp(`[${args[0]}]`, 'g');
+  return _replace(value, blacklistRegex, '');
+};
 
 /**
  * @description escapes an input if it's string
@@ -70,7 +70,7 @@ SanitizationFilters.blacklist = function (value, args) {
  */
 SanitizationFilters.escape = function (value) {
   if (typeof (value) !== 'string') {
-    return value
+    return value;
   }
 
   return (
@@ -82,8 +82,8 @@ SanitizationFilters.escape = function (value) {
     .replace(/>/g, '&gt;')
     .replace(/\//g, '&#x2F;')
     .replace(/\//g, '&#96;')
-  )
-}
+  );
+};
 
 /**
  * @description normalizes an email by removing all unncessary
@@ -99,45 +99,45 @@ SanitizationFilters.normalizeEmail = function (value, args) {
     lowercase: true,
     removeDots: true,
     removeExtension: true
-  }
+  };
 
   if (args instanceof Array) {
     args.forEach(function (option) {
       if (option === '!lc') {
-        options.lowercase = false
+        options.lowercase = false;
       }
       if (option === '!rd') {
-        options.removeDots = false
+        options.removeDots = false;
       }
       if (option === '!re') {
-        options.removeExtension = false
+        options.removeExtension = false;
       }
-    })
+    });
   }
 
   if (typeof (value) !== 'string') {
-    return value
+    return value;
   }
 
-  const splitValue = value.split('@')
+  const splitValue = value.split('@');
 
   if (!splitValue[1]) {
-    return value
+    return value;
   }
 
-  let username = options.lowercase ? splitValue[0].toLowerCase() : splitValue[0]
-  const domain = splitValue[1] === 'googlemail.com' ? 'gmail.com' : splitValue[1].toLowerCase()
+  let username = options.lowercase ? splitValue[0].toLowerCase() : splitValue[0];
+  const domain = splitValue[1] === 'googlemail.com' ? 'gmail.com' : splitValue[1].toLowerCase();
 
   if (options.removeExtension && _isNormalizeableProvider(domain)) {
-    username = username.split('+')[0]
+    username = username.split('+')[0];
   }
 
   if (options.removeDots && !_isHotmail(domain)) {
-    username = username.replace(/\./g, '')
+    username = username.replace(/\./g, '');
   }
 
-  return `${username}@${domain}`
-}
+  return `${username}@${domain}`;
+};
 
 /**
  * @description coverts a value to boolean all values
@@ -149,10 +149,10 @@ SanitizationFilters.normalizeEmail = function (value, args) {
  */
 SanitizationFilters.toBoolean = function (value) {
   if (!value || value === 'false' || value === '0') {
-    return false
+    return false;
   }
-  return true
-}
+  return true;
+};
 
 /**
  * @description converts a value to float or returns
@@ -163,8 +163,8 @@ SanitizationFilters.toBoolean = function (value) {
  * @public
  */
 SanitizationFilters.toFloat = function (value) {
-  return parseFloat(value)
-}
+  return parseFloat(value);
+};
 
 /**
  * @description coverts a value to integer or returns
@@ -176,9 +176,9 @@ SanitizationFilters.toFloat = function (value) {
  * @public
  */
 SanitizationFilters.toInt = function (value, args) {
-  const radix = _.isNumber(_.get(args, '0')) ? args[0] : 10
-  return parseInt(value, radix)
-}
+  const radix = _.isNumber(_.get(args, '0')) ? args[0] : 10;
+  return parseInt(value, radix);
+};
 
 /**
  * @desription converts a date to a date object or
@@ -188,9 +188,9 @@ SanitizationFilters.toInt = function (value, args) {
  * @return {String}
  */
 SanitizationFilters.toDate = function (value) {
-  const dateValue = new Date(value)
-  return (dateValue.toString() === 'Invalid Date') ? null : dateValue
-}
+  const dateValue = new Date(value);
+  return (dateValue.toString() === 'Invalid Date') ? null : dateValue;
+};
 
 /**
  * @description strips a tags from string
@@ -201,9 +201,9 @@ SanitizationFilters.toDate = function (value) {
  */
 SanitizationFilters.stripLinks = function (value) {
   return _replace(value, linksRegex, function (index, group) {
-    return group.trim()
-  })
-}
+    return group.trim();
+  });
+};
 
 /**
  * @description strips html tags from a give value
@@ -216,50 +216,50 @@ SanitizationFilters.stripLinks = function (value) {
  * @public
  */
 SanitizationFilters.stripTags = function (value, args) {
-  const strict = _.get(args, '0') === 'trim'
-  value = _replace(value, tagsRegex, '')
+  const strict = _.get(args, '0') === 'trim';
+  value = _replace(value, tagsRegex, '');
   if (strict) {
-    value = _replace(value, /\s+/g, ' ')
+    value = _replace(value, /\s+/g, ' ');
   }
-  return typeof (value) === 'string' ? value.trim() : value
-}
+  return typeof (value) === 'string' ? value.trim() : value;
+};
 
 SanitizationFilters.plural = function (value) {
-  return inflect.pluralize(value)
-}
+  return inflect.pluralize(value);
+};
 
 SanitizationFilters.singular = function (value) {
-  return inflect.singularize(value)
-}
+  return inflect.singularize(value);
+};
 
 SanitizationFilters.camelCase = function (value) {
-  return inflect.camelize(value)
-}
+  return inflect.camelize(value);
+};
 
 SanitizationFilters.capitalize = function (value) {
-  return inflect.capitalize(value)
-}
+  return inflect.capitalize(value);
+};
 
 SanitizationFilters.decapitalize = function (value) {
-  return inflect.decapitalize(value)
-}
+  return inflect.decapitalize(value);
+};
 
 SanitizationFilters.title = function (value) {
-  return inflect.titleize(value)
-}
+  return inflect.titleize(value);
+};
 
 SanitizationFilters.underscore = function (value) {
-  return inflect.underscore(value)
-}
+  return inflect.underscore(value);
+};
 
 SanitizationFilters.toDash = function (value) {
-  return inflect.dasherize(value)
-}
+  return inflect.dasherize(value);
+};
 
 SanitizationFilters.slug = function (value) {
-  return inflect.parameterize(value)
-}
+  return inflect.parameterize(value);
+};
 
 SanitizationFilters.humanize = function (value) {
-  return inflect.humanize(value)
-}
+  return inflect.humanize(value);
+};

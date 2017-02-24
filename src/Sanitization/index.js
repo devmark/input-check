@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
-let Sanitization = exports = module.exports = {}
+let Sanitization = exports = module.exports = {};
 
-const _ = require('lodash')
-const Parser = require('../Parser')
-const filters = require('./filters')
+const _ = require('lodash');
+const Parser = require('../Parser');
+const filters = require('./filters');
 
 /**
  * returns sanitization method for a filter name
@@ -19,8 +19,8 @@ const filters = require('./filters')
  */
 function _getSanitizationMethod (filter) {
   return _.get(filters, _.camelCase(filter), function () {
-    throw new Error(`${filter} is not defined as a filter`)
-  })
+    throw new Error(`${filter} is not defined as a filter`);
+  });
 }
 
 /**
@@ -37,9 +37,9 @@ function _getSanitizationMethod (filter) {
  */
 function _sanitizeFieldValue (data, rules, field) {
   return _.reduce(rules, (value, rule) => {
-    const ruleMethod = _getSanitizationMethod(rule.name)
-    return ruleMethod(value, rule.args)
-  }, _.get(data, field))
+    const ruleMethod = _getSanitizationMethod(rule.name);
+    return ruleMethod(value, rule.args);
+  }, _.get(data, field));
 }
 
 /**
@@ -52,15 +52,15 @@ function _sanitizeFieldValue (data, rules, field) {
  * @return {Object}
  */
 Sanitization.sanitize = function (data, rules) {
-  const clonedSet = _.cloneDeep(data)
-  const transformedRules = Parser.transformRules(data, rules)
+  const clonedSet = _.cloneDeep(data);
+  const transformedRules = Parser.transformRules(data, rules);
   return _.reduce(transformedRules, (result, rules, field) => {
-    _.set(result, field, _sanitizeFieldValue(data, rules, field))
-    return result
-  }, clonedSet)
-}
+    _.set(result, field, _sanitizeFieldValue(data, rules, field));
+    return result;
+  }, clonedSet);
+};
 
-Sanitization.sanitizor = filters
+Sanitization.sanitizor = filters;
 
 /**
  * exposes an interface to extend filters
@@ -74,7 +74,7 @@ Sanitization.sanitizor = filters
  */
 Sanitization.sanitizor.extend = function (name, method) {
   if (typeof (method) !== 'function') {
-    throw new Error('Invalid arguments, sanitizor.extend expects 2nd parameter to be a function')
+    throw new Error('Invalid arguments, sanitizor.extend expects 2nd parameter to be a function');
   }
-  Sanitization.sanitizor[name] = method
-}
+  Sanitization.sanitizor[name] = method;
+};

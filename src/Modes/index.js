@@ -1,18 +1,18 @@
-'use strict'
+'use strict';
 
-const availableModes = ['normal', 'strict']
-let currentMode = 'normal'
+const availableModes = ['normal', 'strict'];
+let currentMode = 'normal';
 
-const Modes = exports = module.exports = {}
+const Modes = exports = module.exports = {};
 
 Modes.set = function (mode) {
   if (availableModes.indexOf(mode) <= -1) {
-    console.log(`indicative: ${mode} is not a valid mode, switching back to normal mode`)
-    return
+    console.log(`indicative: ${mode} is not a valid mode, switching back to normal mode`);
+    return;
   }
-  currentMode = mode
-}
+  currentMode = mode;
+};
 
 Modes.get = function () {
-  return currentMode
-}
+  return currentMode;
+};

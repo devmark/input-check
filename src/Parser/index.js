@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
-const arrayExpressionRegex = /(\w[^\.\*]+)(\.\*\.?)(.+)?/
-const splitArgsRegex = /^([^:]+)[:](.+)$/
+const arrayExpressionRegex = /(\w[^\.\*]+)(\.\*\.?)(.+)?/;
+const splitArgsRegex = /^([^:]+)[:](.+)$/;
 
-const _ = require('lodash')
+const _ = require('lodash');
 
-let Parser = exports = module.exports = {}
+let Parser = exports = module.exports = {};
 
 /**
  * parse a validation validation string to fetch
@@ -18,13 +18,13 @@ let Parser = exports = module.exports = {}
  * @private
  */
 const _parseValidation = function (validation) {
-  const value = splitArgsRegex.exec(validation)
+  const value = splitArgsRegex.exec(validation);
   if (_.size(value) < 2) {
-    return {name: validation, args: []}
+    return {name: validation, args: []};
   }
 
-  return {name: value[1], args: value[2].split(',')}
-}
+  return {name: value[1], args: value[2].split(',')};
+};
 
 /**
  * parse all validation strings to object.
@@ -37,9 +37,9 @@ const _parseValidation = function (validation) {
  */
 const _parseValidations = function (validations) {
   return _.map(validations, (validation) => {
-    return _parseValidation(validation)
-  })
-}
+    return _parseValidation(validation);
+  });
+};
 
 /**
  * parse a given set of validations to a consumable array.
@@ -49,9 +49,9 @@ const _parseValidations = function (validations) {
  * @return {Array}
  */
 Parser.parse = function (validations) {
-  const validationsArray = validations instanceof Array ? validations : validations.split('|')
-  return _parseValidations(validationsArray)
-}
+  const validationsArray = validations instanceof Array ? validations : validations.split('|');
+  return _parseValidations(validationsArray);
+};
 
 /**
  * parses an array expression to a consumable object
@@ -62,12 +62,12 @@ Parser.parse = function (validations) {
  * @public
  */
 Parser.expressionCurryFor = function (field, whenMatched, otherwise) {
-  const expression = field.match(arrayExpressionRegex)
+  const expression = field.match(arrayExpressionRegex);
   if (_.size(expression) < 4) {
-    return otherwise()
+    return otherwise();
   }
-  return whenMatched(expression[1], expression[3])
-}
+  return whenMatched(expression[1], expression[3]);
+};
 
 /**
  * parses a rule and returns an object with
@@ -81,8 +81,8 @@ Parser.expressionCurryFor = function (field, whenMatched, otherwise) {
  * @private
  */
 Parser.parseFieldRule = function (rule, field) {
-  return {[field]: Parser.parse(rule)}
-}
+  return {[field]: Parser.parse(rule)};
+};
 
 /**
  * parses field rules for a array expressions
@@ -98,10 +98,10 @@ Parser.parseFieldRule = function (rule, field) {
  */
 Parser.getRulesForExpression = function (data, rule, node, child) {
   return _.fromPairs(_.map(data[node], (value, index) => {
-    const fieldName = _([node, index, child]).takeWhile((value) => value !== undefined).join('.')
-    return [fieldName, Parser.parse(rule)]
-  }))
-}
+    const fieldName = _([node, index, child]).takeWhile((value) => value !== undefined).join('.');
+    return [fieldName, Parser.parse(rule)];
+  }));
+};
 
 /**
  * transforms a single rule or an array expression
@@ -120,8 +120,8 @@ Parser.transformRule = function (data, rule, field) {
     field,
     (dataKey, fieldKey) => Parser.getRulesForExpression(data, rule, dataKey, fieldKey),
     () => Parser.parseFieldRule(rule, field)
-  )
-}
+  );
+};
 
 /**
  * transform rules by parsing each rule and converting
@@ -137,7 +137,7 @@ Parser.transformRule = function (data, rule, field) {
 Parser.transformRules = function (data, rules) {
   return _(rules)
     .transform((result, rule, field) => {
-      _.extend(result, Parser.transformRule(data, rule, field))
+      _.extend(result, Parser.transformRule(data, rule, field));
     })
-    .value()
-}
+    .value();
+};
