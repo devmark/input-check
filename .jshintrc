@@ -1,0 +1,29 @@
+{
+  "boss": true,
+  "node": true,
+  "eqeqeq": true,
+  "strict": false,
+  "newcap": false,
+  "undef": true,
+  "unused": "vars",
+  "onecase": true,
+  "lastsemic": true,
+  "esnext": true,
+  "es5": true,
+  "expr": true,
+  "predef": [
+    "alert",
+    "describe",
+    "it",
+    "before",
+    "beforeEach",
+    "after",
+    "afterEach",
+    "suite",
+    "setup",
+    "teardown",
+    "suiteSetup",
+    "suiteTeardown",
+    "test"
+  ]
+}
