@@ -2,6 +2,7 @@
 
 const Raw = require('../Raw')
 const Modes = require('../Modes')
+const gm = require('gm');
 
 /**
  * @module Validations
