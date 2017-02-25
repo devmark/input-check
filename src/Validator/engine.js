@@ -23,7 +23,7 @@ ValidationEngine.validateField = function (data, field, validations, messages, r
   const method = runAll ? 'allSettled' : 'all';
   return Q[method](
     _.map(validations, (validation) => {
-      return ValidationEngine.runValidationOnField(data, field, validation.name, messages, validation.args);
+      return ValidationEngine.runValidationOnField(data, field, validation.name, messages, validation.args, validations);
     })
   );
 };
@@ -39,12 +39,12 @@ ValidationEngine.validateField = function (data, field, validations, messages, r
  *
  * @return {Promise}
  */
-ValidationEngine.runValidationOnField = function (data, field, validation, messages, args) {
+ValidationEngine.runValidationOnField = function (data, field, validation, messages, args, validations) {
   const message = Messages.make(messages, field, validation, args);
   const validationMethod = ValidationEngine.getValidationMethod(validation);
 
   return Q.Promise((resolve, reject) => {
-    validationMethod(data, field, message, args)
+    validationMethod(data, field, message, args, validations)
     .then(resolve)
     .catch((error) => {
       reject({field, validation, message: error});

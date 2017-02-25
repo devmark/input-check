@@ -1026,6 +1026,76 @@ describe('Validations', function () {
   });
 
   describe('min', function () {
+    describe('number', function () {
+      it('should throw error when length of string field is less than defined length', function *() {
+        const data = {price: '4'};
+        const validations = [{name: 'string', args: []}];
+        const field = 'price';
+        const message = 'price should be at least 3';
+        const args = [3];
+        try {
+          const passes = yield Validations.min(data, field, message, args, validations);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should throw error when length of field is less than defined length', function *() {
+        const data = {price: 2};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be at least 3';
+        const args = [3];
+        try {
+          const passes = yield Validations.min(data, field, message, args, validations);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should skip validation when field does not exists', function *() {
+        const data = {};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6 characters';
+        const args = [6];
+        const passes = yield Validations.min(data, field, message, args, validations);
+        expect(passes).to.equal('validation skipped');
+      });
+
+      it('should skip validation when field value is undefined', function *() {
+        const data = {price: undefined};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6 characters';
+        const args = [6];
+        const passes = yield Validations.min(data, field, message, args, validations);
+        expect(passes).to.equal('validation skipped');
+      });
+
+      it('should work fine when length of value of field is greater than defined length', function *() {
+        const data = {price: 10};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6';
+        const args = [6];
+        const passes = yield Validations.min(data, field, message, args, validations);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {price: 6};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6';
+        const args = [6];
+        const passes = yield Validations.min(data, field, message, args, validations);
+        expect(passes).to.equal('validation passed');
+      });
+
+    });
     describe('string: ', function () {
       it('should throw error when length of field is less than defined length', function *() {
         const data = {password: 'foo'};
@@ -1115,6 +1185,76 @@ describe('Validations', function () {
   });
 
   describe('max', function () {
+    describe('number', function () {
+      it('should throw error when length of string field is less than defined length', function *() {
+        const data = {price: '0.5'};
+        const validations = [{name: 'string', args: []}];
+        const field = 'price';
+        const message = 'price should be max 1';
+        const args = [1];
+        try {
+          const passes = yield Validations.max(data, field, message, args, validations);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should throw error when length of field is greater than defined length', function *() {
+        const data = {price: 2};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be at least 3';
+        const args = [1];
+        try {
+          const passes = yield Validations.max(data, field, message, args, validations);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should skip validation when field does not exists', function *() {
+        const data = {};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6 characters';
+        const args = [6];
+        const passes = yield Validations.max(data, field, message, args, validations);
+        expect(passes).to.equal('validation skipped');
+      });
+
+      it('should skip validation when field value is undefined', function *() {
+        const data = {price: undefined};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6 characters';
+        const args = [6];
+        const passes = yield Validations.max(data, field, message, args, validations);
+        expect(passes).to.equal('validation skipped');
+      });
+
+      it('should work fine when length of value of field is less than defined length', function *() {
+        const data = {price: 10};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6';
+        const args = [11];
+        const passes = yield Validations.max(data, field, message, args, validations);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {price: 6};
+        const validations = [{name: 'numeric', args: []}];
+        const field = 'price';
+        const message = 'price should be over 6';
+        const args = [6];
+        const passes = yield Validations.max(data, field, message, args, validations);
+        expect(passes).to.equal('validation passed');
+      });
+
+    });
     describe('string: ', function () {
       it('should throw error when length of field is greater than defined length', function *() {
         const data = {password: 'foobarbaz'};
@@ -1200,116 +1340,6 @@ describe('Validations', function () {
         const passes = yield Validations.max(data, field, message, args);
         expect(passes).to.equal('validation passed');
       });
-    });
-  });
-
-  describe('above', function () {
-    it('should throw error when value of field is less than defined value', function *() {
-      const data = {age: 16};
-      const field = 'age';
-      const message = 'age should be over 17 years';
-      const args = [17];
-      try {
-        const passes = yield Validations.above(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should throw error when value of field is equal to the defined value', function *() {
-      const data = {age: 17};
-      const field = 'age';
-      const message = 'age should be over 17 years';
-      const args = [17];
-      try {
-        const passes = yield Validations.above(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'age';
-      const message = 'age should be over 17 years';
-      const args = [17];
-      const passes = yield Validations.above(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = {age: undefined};
-      const field = 'age';
-      const message = 'age should be over 17 years';
-      const args = [17];
-      const passes = yield Validations.above(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should work fine when value of field is greater than defined value', function *() {
-      const data = {age: 18};
-      const field = 'age';
-      const message = 'age should be over 17 years';
-      const args = [17];
-      const passes = yield Validations.above(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-  });
-
-  describe('under', function () {
-    it('should throw error when value of field is greater than defined value', function *() {
-      const data = {age: 11};
-      const field = 'age';
-      const message = 'age should be less than 10 years for junior idol';
-      const args = [10];
-      try {
-        const passes = yield Validations.under(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should throw error when value of field is equal to the defined value', function *() {
-      const data = {age: 10};
-      const field = 'age';
-      const message = 'age should be less than 10 years for junior idol';
-      const args = [10];
-      try {
-        const passes = yield Validations.under(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'age';
-      const message = 'age should be less than 10 years for junior idol';
-      const args = [10];
-      const passes = yield Validations.under(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = {age: undefined};
-      const field = 'age';
-      const message = 'age should be less than 10 years for junior idol';
-      const args = [10];
-      const passes = yield Validations.under(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should work fine when value of field is less than defined value', function *() {
-      const data = {age: 8};
-      const field = 'age';
-      const message = 'age should be less than 10 years for junior idol';
-      const args = [10];
-      const passes = yield Validations.under(data, field, message, args);
-      expect(passes).to.equal('validation passed');
     });
   });
 

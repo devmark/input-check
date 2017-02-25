@@ -25,20 +25,47 @@ const skippable = function (value) {
   return Modes.get() === 'strict' ? typeof (value) === undefined : !Raw.existy(value);
 };
 
-
 /**
  * @description Get the size of an attribute.
  * @method getSize
  * @param  {Mixed}  fieldValue
+ * @param  {Boolean}  hasNumericRule
  * @return {Boolean}
  * @private
  */
-const getSize = function (fieldValue) {
-  if (fieldValue instanceof Array) {
+const getSize = function (fieldValue, hasNumericRule = false) {
+  if (Raw.numeric(fieldValue) && hasNumericRule) {
+    return fieldValue;
+  } else if (fieldValue instanceof Array) {
     return fieldValue.length;
   }
   return String(fieldValue).length;
 };
+
+/**
+ * Determine if the given attribute has a rule in the given set.
+ *
+ * @param  {Array}  validations
+ * @param  {String|Array} rules
+ * @return {Boolean}
+ */
+const hasRule = function (validations, rules) {
+  if (!_.isArray(rules)) rules = [rules];
+
+  const filterRules = _.filter(validations, (validation) => {
+    return rules.indexOf(validation.name) !== -1;
+  });
+
+  return filterRules.length > 0;
+};
+
+/**
+ * The numeric related validation rules.
+ *
+ * @return {Array}
+ * @private
+ */
+const numericRules = ['numeric', 'integer'];
 
 /**
  * @description enforces a field to be confirmed by another.
@@ -1101,7 +1128,7 @@ Validations.range = function (data, field, message, args) {
  * @return {Object}
  * @public
  */
-Validations.min = function (data, field, message, args) {
+Validations.min = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
     if (skippable(fieldValue)) {
@@ -1109,7 +1136,8 @@ Validations.min = function (data, field, message, args) {
       return;
     }
 
-    if (Number(getSize(fieldValue)) >= Number(args[0])) {
+    const isNumeric = hasRule(validations, numericRules);
+    if (Number(getSize(fieldValue, isNumeric)) >= Number(args[0])) {
       resolve('validation passed');
       return;
     }
@@ -1128,7 +1156,7 @@ Validations.min = function (data, field, message, args) {
  * @return {Object}
  * @public
  */
-Validations.max = function (data, field, message, args) {
+Validations.max = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
     if (skippable(fieldValue)) {
@@ -1136,63 +1164,8 @@ Validations.max = function (data, field, message, args) {
       return;
     }
 
-    if (Number(getSize(fieldValue)) <= Number(args[0])) {
-      resolve('validation passed');
-      return;
-    }
-    reject(message);
-  });
-};
-
-/**
- * @description makes sure the value of field under
- * validation is greater than defined value.
- * @method above
- * @param  {Object} data
- * @param  {String} field
- * @param  {String} message
- * @param  {Array} args
- * @return {Object}
- * @public
- */
-Validations.above = function (data, field, message, args) {
-  const minValue = args[0];
-  return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
-      resolve('validation skipped');
-      return;
-    }
-
-    if (Number(fieldValue) > minValue) {
-      resolve('validation passed');
-      return;
-    }
-    reject(message);
-  });
-};
-
-/**
- * @description makes sure the value of field under
- * validation is less than defined value.
- * @method under
- * @param  {Object} data
- * @param  {String} field
- * @param  {String} message
- * @param  {Array} args
- * @return {Object}
- * @public
- */
-Validations.under = function (data, field, message, args) {
-  const maxValue = args[0];
-  return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
-      resolve('validation skipped');
-      return;
-    }
-
-    if (Number(fieldValue) < maxValue) {
+    const isNumeric = hasRule(validations, numericRules);
+    if (Number(getSize(fieldValue, isNumeric)) <= Number(args[0])) {
       resolve('validation passed');
       return;
     }
