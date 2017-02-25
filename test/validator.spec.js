@@ -197,7 +197,7 @@ describe('Validator', function () {
     }
   });
 
-  it('should throw errors when valid function is not passed to extend method', function *() {
+  it('should throw errors when valid function is not passed to extend method', function () {
     const fn = function () {
       return Validator.extend('phone', '', '');
     };
@@ -319,7 +319,7 @@ describe('Validator', function () {
       expect(e).to.be.an('array');
       expect(e[0].field).to.equal('username');
       expect(e[0].validation).to.equal('alpha_numeric');
-      expect(e[0].message).to.equal(messages['alpha_numeric']);
+      expect(e[0].message).to.equal(messages.alpha_numeric);
     }
   });
 

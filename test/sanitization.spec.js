@@ -443,7 +443,7 @@ describe('Sanitization', function () {
     expect(sanitized).deep.equal({name: 'DOE'});
   });
 
-  context('Regression', function () {
+  describe('Regression', function () {
     it('should work fine without optional 2nd argument', function () {
       const sanitized = SanitizationFilters.toInt('20');
       expect(sanitized).to.equal(20);

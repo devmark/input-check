@@ -48,7 +48,7 @@ function _settleAllPromises (results) {
   }
 }
 
-const Validator = exports = module.exports = {};
+const Validator = module.exports = {};
 
 /**
  * validate a set of async validations mapped as field and rule

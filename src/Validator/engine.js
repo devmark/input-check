@@ -5,7 +5,7 @@ const Messages = require('../Messages');
 const _ = require('lodash');
 const Q = require('q');
 
-const ValidationEngine = exports = module.exports = {};
+const ValidationEngine = module.exports = {};
 
 /**
  * validates a field with all assigned validations for that

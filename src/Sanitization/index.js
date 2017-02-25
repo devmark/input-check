@@ -1,6 +1,6 @@
 'use strict';
 
-let Sanitization = exports = module.exports = {};
+let Sanitization = module.exports = {};
 
 const _ = require('lodash');
 const Parser = require('../Parser');

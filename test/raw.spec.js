@@ -6,7 +6,7 @@ const expect = chai.expect;
 const moment = require('moment');
 
 describe('Raw Validator', function () {
-  context('Types', function () {
+  describe('Types', function () {
     it('should return true when input is an array', function () {
       const isArray = Is.array(['22', '12']);
       expect(isArray).to.equal(true);
@@ -74,7 +74,7 @@ describe('Raw Validator', function () {
     });
 
     it('should return true when input is a native javascript function', function () {
-      const isFunction = Is.function(toString);
+      const isFunction = Is.function(String);
       expect(isFunction).to.equal(true);
     });
 
@@ -149,7 +149,7 @@ describe('Raw Validator', function () {
     });
   });
 
-  context('Presence', function () {
+  describe('Presence', function () {
     it('should return true when object is empty', function () {
       const isEmpty = Is.empty({});
       expect(isEmpty).to.equal(true);
@@ -251,7 +251,7 @@ describe('Raw Validator', function () {
     });
   });
 
-  context('Regexp', function () {
+  describe('Regexp', function () {
     it('should return false when input is not a valid url', function () {
       const isUrl = Is.url('foo');
       expect(isUrl).to.equal(false);
@@ -424,7 +424,7 @@ describe('Raw Validator', function () {
 
   });
 
-  context('Arthmetic', function () {
+  describe('Arthmetic', function () {
     it('should return true when 2 numeric values are same', function () {
       const isSame = Is.same(42, 40 + 2);
       expect(isSame).to.equal(true);
@@ -516,7 +516,7 @@ describe('Raw Validator', function () {
     });
   });
 
-  context('Array', function () {
+  describe('Array', function () {
     it('should return true when value falls in an array', function () {
       const isInArray = Is.inArray(2, [1, 2, 3]);
       expect(isInArray).to.equal(true);
@@ -548,7 +548,7 @@ describe('Raw Validator', function () {
     });
   });
 
-  context('Dates', function () {
+  describe('Dates', function () {
     it('should return true when date is today', function () {
       const isToday = Is.today(new Date());
       expect(isToday).to.equal(true);
@@ -633,7 +633,7 @@ describe('Raw Validator', function () {
     });
   });
 
-  context('Array', function () {
+  describe('Array', function () {
     it('should return false when input array values are not in targeted array', function () {
       const doesIntersectAny = Is.intersectAny([10, 20], [30, 40, 50]);
       expect(doesIntersectAny).to.equal(false);
@@ -680,7 +680,7 @@ describe('Raw Validator', function () {
     });
   });
 
-  context('Dates', function () {
+  describe('Dates', function () {
     it('should make return false when date is not after defined offset', function () {
       const isAfterOffset = Is.afterOffsetOf(new Date(), 12, 'months');
       expect(isAfterOffset).to.equal(false);

@@ -7,7 +7,7 @@ const _ = require('lodash');
 
 const inflect = require('inflect');
 
-let SanitizationFilters = exports = module.exports = {};
+let SanitizationFilters = module.exports = {};
 
 /**
  * @description tells whether domain falls in one of the

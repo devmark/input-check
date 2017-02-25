@@ -2,14 +2,13 @@
 
 const Raw = require('../Raw');
 const Modes = require('../Modes');
-const gm = require('gm');
 
 /**
  * @module Validations
  * @description List of schema validations
  * @type {Object}
  */
-let Validations = exports = module.exports = {};
+let Validations = module.exports = {};
 
 /**
  * @description figures out whether value can be skipped
@@ -1030,7 +1029,7 @@ Validations.equals = function (data, field, message, args, get) {
       return;
     }
 
-    if (targetedValue == fieldValue) { // eslint-disable-line eqeqeq
+    if (String(targetedValue) === String(fieldValue)) { // eslint-disable-line eqeqeq
       resolve('validation passed');
       return;
     }

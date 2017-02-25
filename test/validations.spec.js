@@ -9,7 +9,7 @@ const expect = chai.expect;
 require('co-mocha');
 
 describe('Validations', function () {
-  context('required', function () {
+  describe('required', function () {
     it('should reject promise when field is not defined', function *() {
       const data = {};
       const field = 'name';
@@ -67,7 +67,7 @@ describe('Validations', function () {
     });
   });
 
-  context('email', function () {
+  describe('email', function () {
     it('should return error when field is defined and does not have valid email', function *() {
       const data = {email: 'virk'};
       const field = 'email';
@@ -141,7 +141,7 @@ describe('Validations', function () {
     });
   });
 
-  context('Accepted', function () {
+  describe('Accepted', function () {
     it('should return error when field is defined but not accepted', function *() {
       const data = {terms: false};
       const field = 'terms';
@@ -187,7 +187,7 @@ describe('Validations', function () {
     });
   });
 
-  context('after', function () {
+  describe('after', function () {
     it('should throw an error when date is not after defined date', function *() {
       const data = {dob: '1980-11-20'};
       const field = 'dob';
@@ -233,7 +233,7 @@ describe('Validations', function () {
     });
   });
 
-  context('alpha', function () {
+  describe('alpha', function () {
     it('should throw an error when value is not alpha', function *() {
       const data = {username: 'virk1234'};
       const field = 'username';
@@ -279,7 +279,7 @@ describe('Validations', function () {
     });
   });
 
-  context('before', function () {
+  describe('before', function () {
     it('should throw an error when date is not before defined date', function *() {
       const data = {dob: '2012-11-20'};
       const field = 'dob';
@@ -325,7 +325,7 @@ describe('Validations', function () {
     });
   });
 
-  context('date', function () {
+  describe('date', function () {
     it('should throw an error when field value is not a valid date', function *() {
       const data = {dob: '10th'};
       const field = 'dob';
@@ -381,7 +381,7 @@ describe('Validations', function () {
     });
   });
 
-  context('dateFormat', function () {
+  describe('dateFormat', function () {
     it('should throw an error when field value is not a valid date', function *() {
       const data = {dob: '10th'};
       const field = 'dob';
@@ -441,7 +441,7 @@ describe('Validations', function () {
     });
   });
 
-  context('in', function () {
+  describe('in', function () {
     it('should throw an error when field value is not in defined fields', function *() {
       const data = {gender: 'Foo'};
       const field = 'gender';
@@ -507,7 +507,7 @@ describe('Validations', function () {
     });
   });
 
-  context('notIn', function () {
+  describe('notIn', function () {
     it('should throw an error when field value is in defined fields', function *() {
       const data = {username: 'admin'};
       const field = 'username';
@@ -553,7 +553,7 @@ describe('Validations', function () {
     });
   });
 
-  context('requiredIf', function () {
+  describe('requiredIf', function () {
     it('should skip validation when conditional field does not exists', function *() {
       const data = {};
       const field = 'password_confirm';
@@ -599,7 +599,7 @@ describe('Validations', function () {
     });
   });
 
-  context('requiredWithAny', function () {
+  describe('requiredWithAny', function () {
     it('should work fine when none of the targeted fields are present', function *() {
       const data = {};
       const field = 'password';
@@ -649,7 +649,7 @@ describe('Validations', function () {
     });
   });
 
-  context('requiredWithAll', function () {
+  describe('requiredWithAll', function () {
     it('should work fine when none of the targeted fields are present', function *() {
       const data = {};
       const field = 'password';
@@ -709,7 +709,7 @@ describe('Validations', function () {
     });
   });
 
-  context('requiredWithoutAny', function () {
+  describe('requiredWithoutAny', function () {
     it('should work fine when all the targeted fields are present', function *() {
       const data = {username: 'foo', email: 'foo@bar.com'};
       const field = 'password';
@@ -759,7 +759,7 @@ describe('Validations', function () {
     });
   });
 
-  context('requiredWithoutAll', function () {
+  describe('requiredWithoutAll', function () {
     it('should work fine when all the targeted fields are present', function *() {
       const data = {username: 'foo', email: 'foo@bar.com'};
       const field = 'password';
@@ -819,7 +819,7 @@ describe('Validations', function () {
     });
   });
 
-  context('same', function () {
+  describe('same', function () {
     it('should thrown an error when value of targeted field is not equal to defined field', function *() {
       const data = {password: 'foo', 'password_confirm': 'bar'};
       const field = 'password_confirm';
@@ -875,7 +875,7 @@ describe('Validations', function () {
     });
   });
 
-  context('equals', function () {
+  describe('equals', function () {
     it('should thrown an error when value of targeted field is not equal to defined value', function *() {
       const data = {title: 'foo'};
       const field = 'title';
@@ -931,7 +931,7 @@ describe('Validations', function () {
     });
   });
 
-  context('notEquals', function () {
+  describe('notEquals', function () {
     it('should thrown an error when value of targeted field is equal to defined value', function *() {
       const data = {title: 'bar'};
       const field = 'title';
@@ -977,7 +977,7 @@ describe('Validations', function () {
     });
   });
 
-  context('different', function () {
+  describe('different', function () {
     it('should thrown an error when value of targeted field is equal to defined field', function *() {
       const data = {dob: '2011-20-10', 'enrollment_date': '2011-20-10'};
       const field = 'enrollment_date';
@@ -1033,7 +1033,7 @@ describe('Validations', function () {
     });
   });
 
-  context('range', function () {
+  describe('range', function () {
     it('should throw an error when value of field is less then defined range', function *() {
       const data = {age: 16};
       const field = 'age';
@@ -1121,7 +1121,7 @@ describe('Validations', function () {
     });
   });
 
-  context('min', function () {
+  describe('min', function () {
     it('should throw error when length of field is less than defined length', function *() {
       const data = {password: 'foo'};
       const field = 'password';
@@ -1191,7 +1191,7 @@ describe('Validations', function () {
     });
   });
 
-  context('max', function () {
+  describe('max', function () {
     it('should throw error when length of field is greater than defined length', function *() {
       const data = {password: 'foobarbaz'};
       const field = 'password';
@@ -1261,7 +1261,7 @@ describe('Validations', function () {
     });
   });
 
-  context('above', function () {
+  describe('above', function () {
     it('should throw error when value of field is less than defined value', function *() {
       const data = {age: 16};
       const field = 'age';
@@ -1321,7 +1321,7 @@ describe('Validations', function () {
     });
   });
 
-  context('under', function () {
+  describe('under', function () {
     it('should throw error when value of field is greater than defined value', function *() {
       const data = {age: 11};
       const field = 'age';
@@ -1381,7 +1381,7 @@ describe('Validations', function () {
     });
   });
 
-  context('includes', function () {
+  describe('includes', function () {
     it('should throw an error when string does not include defined substring', function *() {
       const data = {dpath: 'foo/bar'};
       const field = 'dpath';
@@ -1427,7 +1427,7 @@ describe('Validations', function () {
     });
   });
 
-  context('startsWith', function () {
+  describe('startsWith', function () {
     it('should throw an error when string does not startsWith defined substring', function *() {
       const data = {username: 'foo'};
       const field = 'username';
@@ -1473,7 +1473,7 @@ describe('Validations', function () {
     });
   });
 
-  context('endsWith', function () {
+  describe('endsWith', function () {
     it('should throw an error when string does not endsWith defined substring', function *() {
       const data = {username: 'foo'};
       const field = 'username';
@@ -1519,7 +1519,7 @@ describe('Validations', function () {
     });
   });
 
-  context('regex', function () {
+  describe('regex', function () {
     it('should throw an error when value does not match regex', function *() {
       const data = {email: 'foo'};
       const field = 'email';
@@ -1565,7 +1565,7 @@ describe('Validations', function () {
     });
   });
 
-  context('alphaNumeric', function () {
+  describe('alphaNumeric', function () {
     it('should throw an error when value is not alpha numeric', function *() {
       const data = {username: 'virk@123'};
       const field = 'username';
@@ -1611,7 +1611,7 @@ describe('Validations', function () {
     });
   });
 
-  context('array', function () {
+  describe('array', function () {
     it('should throw an error when value is not a valid array', function *() {
       const data = {users: 'foo'};
       const field = 'users';
@@ -1671,7 +1671,7 @@ describe('Validations', function () {
     });
   });
 
-  context('url', function () {
+  describe('url', function () {
     it('should throw an error when value is not a valid url', function *() {
       const data = {github_profile: 'foo'};
       const field = 'github_profile';
@@ -1717,7 +1717,7 @@ describe('Validations', function () {
     });
   });
 
-  context('uuid', function () {
+  describe('uuid', function () {
     it('should throw an error when value is not a valid uuid', function *() {
       const data = {github_profile: 'foo'};
       const field = 'github_profile';
@@ -1763,7 +1763,7 @@ describe('Validations', function () {
     });
   });
 
-  context('ip', function () {
+  describe('ip', function () {
     it('should throw an error when value is not a valid ip address', function *() {
       const data = {user_ip: '909090909'};
       const field = 'user_ip';
@@ -1809,7 +1809,7 @@ describe('Validations', function () {
     });
   });
 
-  context('integer', function () {
+  describe('integer', function () {
     it('should throw an error when value is a string', function *() {
       const data = {marks: '10'};
       const field = 'marks';
@@ -1879,7 +1879,7 @@ describe('Validations', function () {
     });
   });
 
-  context('boolean', function () {
+  describe('boolean', function () {
     it('should throw an error when value is not a boolean', function *() {
       const data = {is_admin: 20};
       const field = 'is_admin';
@@ -1989,7 +1989,7 @@ describe('Validations', function () {
     });
   });
 
-  context('object', function () {
+  describe('object', function () {
     it('should throw an error when value is not a valid object', function *() {
       const data = {profile: 'foo'};
       const field = 'profile';
@@ -2049,7 +2049,7 @@ describe('Validations', function () {
     });
   });
 
-  context('numeric', function () {
+  describe('numeric', function () {
     it('should throw an error when value is not a valid numeric', function *() {
       const data = {profile: 'foo'};
       const field = 'profile';
@@ -2106,7 +2106,7 @@ describe('Validations', function () {
 
   });
 
-  context('json', function () {
+  describe('json', function () {
     it('should throw an error when value is not a valid json string', function *() {
       const data = {profile: 'foo'};
       const field = 'profile';
@@ -2152,7 +2152,7 @@ describe('Validations', function () {
     });
   });
 
-  context('ipv4', function () {
+  describe('ipv4', function () {
     it('should throw an error when value is not a valid ipv4 address', function *() {
       const data = {user_ip: '2001:DB8:0:0:1::1'};
       const field = 'user_ip';
@@ -2198,7 +2198,7 @@ describe('Validations', function () {
     });
   });
 
-  context('ipv6', function () {
+  describe('ipv6', function () {
     it('should throw an error when value is not a valid ipv6 address', function *() {
       const data = {user_ip: '127.0.0.1'};
       const field = 'user_ip';
@@ -2244,7 +2244,7 @@ describe('Validations', function () {
     });
   });
 
-  context('requiredWhen', function () {
+  describe('requiredWhen', function () {
     it('should skip validation when conditional field does not exists', function *() {
       const data = {};
       const field = 'state';
@@ -2311,7 +2311,7 @@ describe('Validations', function () {
 
   });
 
-  context('afterOffsetOf', function () {
+  describe('afterOffsetOf', function () {
     it('should throw an error when date is not after defined offset', function *() {
       const data = {renewal: new Date()};
       const field = 'renewal';
@@ -2357,7 +2357,7 @@ describe('Validations', function () {
     });
   });
 
-  context('beforeOffsetOf', function () {
+  describe('beforeOffsetOf', function () {
     it('should throw an error when date is not before defined offset', function *() {
       const data = {subscription: new Date()};
       const field = 'subscription';
@@ -2403,7 +2403,7 @@ describe('Validations', function () {
     });
   });
 
-  context('Confirmation', function () {
+  describe('Confirmation', function () {
     it('should work fine when the confirmed field is equal', function *() {
       const data = {password: '1234', password_confirmation: '1234'};
       const field = 'password';
@@ -2463,7 +2463,7 @@ describe('Validations', function () {
     });
   });
 
-  context('String', function () {
+  describe('String', function () {
     it('should work fine when the confirmed field is string', function *() {
       const data = {username: 'david'};
       const field = 'username';

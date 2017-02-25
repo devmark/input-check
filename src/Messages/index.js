@@ -81,7 +81,7 @@ const validationMethods = [
   _returnDefaultMessage
 ];
 
-let Messages = exports = module.exports = {};
+let Messages = module.exports = {};
 
 /**
  * making a message for a given field and validation.

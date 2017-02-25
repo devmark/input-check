@@ -3,7 +3,7 @@
 const availableModes = ['normal', 'strict'];
 let currentMode = 'normal';
 
-const Modes = exports = module.exports = {};
+const Modes = module.exports = {};
 
 Modes.set = function (mode) {
   if (availableModes.indexOf(mode) <= -1) {

@@ -5,7 +5,7 @@ const splitArgsRegex = /^([^:]+)[:](.+)$/;
 
 const _ = require('lodash');
 
-let Parser = exports = module.exports = {};
+let Parser = module.exports = {};
 
 /**
  * parse a validation validation string to fetch
