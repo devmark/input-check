@@ -3,6 +3,7 @@
 const Raw = require('../Raw');
 const Modes = require('../Modes');
 const _ = require('lodash');
+const gm = require('gm');
 
 /**
  * @module Validations
@@ -1323,6 +1324,58 @@ Validations.string = function (data, field, message, args) {
       return;
     }
     reject(message);
+  });
+};
+
+/**
+ * @description Validate the dimensions of an image matches the given values
+ * @method regex
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
+Validations.dimensions = function (data, field, message, args) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+
+    gm(fieldValue.path).identify(function (err, data) {
+      if (err) return reject(message);
+
+      let parameters = {};
+      _.each(args, (arg) => {
+        let argValue = arg.split('=');
+        parameters[argValue[0]] = argValue[1];
+      });
+
+      if (
+        !_.isUndefined(parameters.width) && parseInt(parameters.width) !== data.size.width ||
+        !_.isUndefined(parameters.min_width) && parseInt(parameters.min_width) > data.size.width ||
+        !_.isUndefined(parameters.max_width) && parseInt(parameters.max_width) < data.size.width ||
+        !_.isUndefined(parameters.height) && parseInt(parameters.height) !== data.size.height ||
+        !_.isUndefined(parameters.min_height) && parseInt(parameters.min_height) > data.size.height ||
+        !_.isUndefined(parameters.max_height) && parseInt(parameters.max_height) < data.size.height
+      ) {
+        return reject(message);
+      }
+
+      if (!_.isUndefined(parameters.ratio)) {
+        let ratio = parameters.ratio.split('/');
+
+        let numerator = !_.isUndefined(ratio[0]) && ratio[0] !== '' ? parseInt(ratio[0]) : 1;
+        let denominator = !_.isUndefined(ratio[0]) && ratio[1] !== '' ? parseInt(ratio[1]) : 1;
+        if (numerator / denominator !== data.size.width / data.size.height) return reject(message);
+      }
+
+      resolve('validation passed');
+      return;
+    });
   });
 };
 
