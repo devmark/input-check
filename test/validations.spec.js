@@ -1026,130 +1026,180 @@ describe('Validations', function () {
   });
 
   describe('min', function () {
-    it('should throw error when length of field is less than defined length', function *() {
-      const data = {password: 'foo'};
-      const field = 'password';
-      const message = 'password should be over 6 characters';
-      const args = [6];
-      try {
+    describe('string: ', function () {
+      it('should throw error when length of field is less than defined length', function *() {
+        const data = {password: 'foo'};
+        const field = 'password';
+        const message = 'password should be over 6 characters';
+        const args = [6];
+        try {
+          const passes = yield Validations.min(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should throw error when length of field as number is less than defined length', function *() {
+        const data = {password: 990};
+        const field = 'password';
+        const message = 'password should be over 6 characters';
+        const args = [6];
+        try {
+          const passes = yield Validations.min(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should skip validation when field does not exists', function *() {
+        const data = {};
+        const field = 'password';
+        const message = 'password should be over 6 characters';
+        const args = [6];
         const passes = yield Validations.min(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
+        expect(passes).to.equal('validation skipped');
+      });
 
-    it('should throw error when length of field as number is less than defined length', function *() {
-      const data = {password: 990};
-      const field = 'password';
-      const message = 'password should be over 6 characters';
-      const args = [6];
-      try {
+      it('should skip validation when field value is undefined', function *() {
+        const data = {password: undefined};
+        const field = 'password';
+        const message = 'password should be over 6 characters';
+        const args = [6];
         const passes = yield Validations.min(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
+        expect(passes).to.equal('validation skipped');
+      });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'password';
-      const message = 'password should be over 6 characters';
-      const args = [6];
-      const passes = yield Validations.min(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
+      it('should work fine when length of value of field is greater than defined length', function *() {
+        const data = {password: 'foobarbaz'};
+        const field = 'password';
+        const message = 'password should be over 6 characters';
+        const args = [6];
+        const passes = yield Validations.min(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
 
-    it('should skip validation when field value is undefined', function *() {
-      const data = {password: undefined};
-      const field = 'password';
-      const message = 'password should be over 6 characters';
-      const args = [6];
-      const passes = yield Validations.min(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {password: 'foobar'};
+        const field = 'password';
+        const message = 'password should be over 6 characters';
+        const args = [6];
+        const passes = yield Validations.min(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
     });
+    describe('array: ', function () {
+      it('should throw error when length of field as array is less than defined length', function *() {
+        const data = {user: ['1', '2', '3']};
+        const field = 'user';
+        const message = 'user should be less than 4 length';
+        const args = [4];
+        try {
+          const passes = yield Validations.min(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
 
-    it('should work fine when length of value of field is greater than defined length', function *() {
-      const data = {password: 'foobarbaz'};
-      const field = 'password';
-      const message = 'password should be over 6 characters';
-      const args = [6];
-      const passes = yield Validations.min(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-
-    it('should work fine when length of value of field is equal to the defined length', function *() {
-      const data = {password: 'foobar'};
-      const field = 'password';
-      const message = 'password should be over 6 characters';
-      const args = [6];
-      const passes = yield Validations.min(data, field, message, args);
-      expect(passes).to.equal('validation passed');
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {user: ['1', '2']};
+        const field = 'user';
+        const message = 'user should be less than 2 length';
+        const args = [2];
+        const passes = yield Validations.min(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
     });
   });
 
   describe('max', function () {
-    it('should throw error when length of field is greater than defined length', function *() {
-      const data = {password: 'foobarbaz'};
-      const field = 'password';
-      const message = 'password should be less than 6 characters';
-      const args = [6];
-      try {
+    describe('string: ', function () {
+      it('should throw error when length of field is greater than defined length', function *() {
+        const data = {password: 'foobarbaz'};
+        const field = 'password';
+        const message = 'password should be less than 6 characters';
+        const args = [6];
+        try {
+          const passes = yield Validations.max(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should throw error when length of field as number is greater than defined length', function *() {
+        const data = {password: 1990909990};
+        const field = 'password';
+        const message = 'password should be less than 6 characters';
+        const args = [6];
+        try {
+          const passes = yield Validations.max(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should skip validation when field does not exists', function *() {
+        const data = {};
+        const field = 'password';
+        const message = 'password should be less than 6 characters';
+        const args = [6];
         const passes = yield Validations.max(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
+        expect(passes).to.equal('validation skipped');
+      });
 
-    it('should throw error when length of field as number is greater than defined length', function *() {
-      const data = {password: 1990909990};
-      const field = 'password';
-      const message = 'password should be less than 6 characters';
-      const args = [6];
-      try {
+      it('should skip validation when field value is undefined', function *() {
+        const data = {password: undefined};
+        const field = 'password';
+        const message = 'password should be less than 6 characters';
+        const args = [6];
         const passes = yield Validations.max(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
+        expect(passes).to.equal('validation skipped');
+      });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'password';
-      const message = 'password should be less than 6 characters';
-      const args = [6];
-      const passes = yield Validations.max(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
+      it('should work fine when length of value of field is less than defined length', function *() {
+        const data = {password: 'foo'};
+        const field = 'password';
+        const message = 'password should be less than 6 characters';
+        const args = [6];
+        const passes = yield Validations.max(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
 
-    it('should skip validation when field value is undefined', function *() {
-      const data = {password: undefined};
-      const field = 'password';
-      const message = 'password should be less than 6 characters';
-      const args = [6];
-      const passes = yield Validations.max(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {password: 'foobar'};
+        const field = 'password';
+        const message = 'password should be less than 6 characters';
+        const args = [6];
+        const passes = yield Validations.max(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
     });
+    describe('array: ', function () {
+      it('should throw error when length of field as array is greater than defined length', function *() {
+        const data = {user: ['1', '2', '3']};
+        const field = 'user';
+        const message = 'user should be less than 2 length';
+        const args = [2];
+        try {
+          const passes = yield Validations.max(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
 
-    it('should work fine when length of value of field is less than defined length', function *() {
-      const data = {password: 'foo'};
-      const field = 'password';
-      const message = 'password should be less than 6 characters';
-      const args = [6];
-      const passes = yield Validations.max(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-
-    it('should work fine when length of value of field is equal to the defined length', function *() {
-      const data = {password: 'foobar'};
-      const field = 'password';
-      const message = 'password should be less than 6 characters';
-      const args = [6];
-      const passes = yield Validations.max(data, field, message, args);
-      expect(passes).to.equal('validation passed');
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {user: ['1', '2']};
+        const field = 'user';
+        const message = 'user should be less than 2 length';
+        const args = [2];
+        const passes = yield Validations.max(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
     });
   });
 

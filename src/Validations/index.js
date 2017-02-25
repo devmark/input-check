@@ -25,6 +25,21 @@ const skippable = function (value) {
   return Modes.get() === 'strict' ? typeof (value) === undefined : !Raw.existy(value);
 };
 
+
+/**
+ * @description Get the size of an attribute.
+ * @method getSize
+ * @param  {Mixed}  fieldValue
+ * @return {Boolean}
+ * @private
+ */
+const getSize = function (fieldValue) {
+  if (fieldValue instanceof Array) {
+    return fieldValue.length;
+  }
+  return String(fieldValue).length;
+};
+
 /**
  * @description enforces a field to be confirmed by another.
  * @method email
@@ -1087,7 +1102,6 @@ Validations.range = function (data, field, message, args) {
  * @public
  */
 Validations.min = function (data, field, message, args) {
-  const minLength = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
     if (skippable(fieldValue)) {
@@ -1095,7 +1109,7 @@ Validations.min = function (data, field, message, args) {
       return;
     }
 
-    if (String(fieldValue).length >= minLength) {
+    if (Number(getSize(fieldValue)) >= Number(args[0])) {
       resolve('validation passed');
       return;
     }
@@ -1115,7 +1129,6 @@ Validations.min = function (data, field, message, args) {
  * @public
  */
 Validations.max = function (data, field, message, args) {
-  const maxLength = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
     if (skippable(fieldValue)) {
@@ -1123,7 +1136,7 @@ Validations.max = function (data, field, message, args) {
       return;
     }
 
-    if (String(fieldValue).length <= maxLength) {
+    if (Number(getSize(fieldValue)) <= Number(args[0])) {
       resolve('validation passed');
       return;
     }
