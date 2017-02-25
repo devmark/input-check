@@ -44,7 +44,7 @@ ValidationEngine.runValidationOnField = function (data, field, validation, messa
   const validationMethod = ValidationEngine.getValidationMethod(validation);
 
   return Q.Promise((resolve, reject) => {
-    validationMethod(data, field, message, args, _.get)
+    validationMethod(data, field, message, args)
     .then(resolve)
     .catch((error) => {
       reject({field, validation, message: error});

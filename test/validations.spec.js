@@ -1,7 +1,6 @@
 'use strict';
 
 const Validations = require('../src/Validations');
-const _ = require('lodash');
 const chai = require('chai');
 const moment = require('moment');
 const expect = chai.expect;
@@ -14,10 +13,9 @@ describe('Validations', function () {
       const data = {};
       const field = 'name';
       const message = 'name is required';
-      const get = _.get;
       const args = [];
       try {
-        yield Validations.required(data, field, message, args, get);
+        yield Validations.required(data, field, message, args);
       } catch (e) {
         expect(e).to.equal(message);
       }
@@ -27,10 +25,9 @@ describe('Validations', function () {
       const data = {name: ''};
       const field = 'name';
       const message = 'name is required';
-      const get = _.get;
       const args = [];
       try {
-        yield Validations.required(data, field, message, args, get);
+        yield Validations.required(data, field, message, args);
       } catch (e) {
         expect(e).to.equal(message);
       }
@@ -40,9 +37,8 @@ describe('Validations', function () {
       const data = {name: 'virk'};
       const field = 'name';
       const message = 'name is required';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.required(data, field, message, args, get);
+      const passes = yield Validations.required(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -50,9 +46,8 @@ describe('Validations', function () {
       const data = {name: false};
       const field = 'name';
       const message = 'name is required';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.required(data, field, message, args, get);
+      const passes = yield Validations.required(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -60,9 +55,8 @@ describe('Validations', function () {
       const data = {name: 0};
       const field = 'name';
       const message = 'name is required';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.required(data, field, message, args, get);
+      const passes = yield Validations.required(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -72,10 +66,9 @@ describe('Validations', function () {
       const data = {email: 'virk'};
       const field = 'email';
       const message = 'email must be email';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.email(data, field, message, args, get);
+        const passes = yield Validations.email(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -86,10 +79,9 @@ describe('Validations', function () {
       const data = {email: false};
       const field = 'email';
       const message = 'email must be email';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.email(data, field, message, args, get);
+        const passes = yield Validations.email(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -100,10 +92,9 @@ describe('Validations', function () {
       const data = {email: 0};
       const field = 'email';
       const message = 'email must be email';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.email(data, field, message, args, get);
+        const passes = yield Validations.email(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -114,9 +105,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'email';
       const message = 'email must be email';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.email(data, field, message, args, get);
+      const passes = yield Validations.email(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -124,9 +114,8 @@ describe('Validations', function () {
       const data = {email: 'foo@bar.com'};
       const field = 'email';
       const message = 'email must be email';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.email(data, field, message, args, get);
+      const passes = yield Validations.email(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -134,9 +123,8 @@ describe('Validations', function () {
       const data = {email: 'foo+baz@bar.com'};
       const field = 'email';
       const message = 'email must be email';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.email(data, field, message, args, get);
+      const passes = yield Validations.email(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -146,10 +134,9 @@ describe('Validations', function () {
       const data = {terms: false};
       const field = 'terms';
       const message = 'terms must be accepted';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.accepted(data, field, message, args, get);
+        const passes = yield Validations.accepted(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -160,9 +147,8 @@ describe('Validations', function () {
       const data = {terms: true};
       const field = 'terms';
       const message = 'terms must be accepted';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.accepted(data, field, message, args, get);
+      const passes = yield Validations.accepted(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -170,9 +156,8 @@ describe('Validations', function () {
       const data = {terms: 'okay'};
       const field = 'terms';
       const message = 'terms must be accepted';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.accepted(data, field, message, args, get);
+      const passes = yield Validations.accepted(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -180,9 +165,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'terms';
       const message = 'terms must be accepted';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.accepted(data, field, message, args, get);
+      const passes = yield Validations.accepted(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -192,10 +176,9 @@ describe('Validations', function () {
       const data = {dob: '1980-11-20'};
       const field = 'dob';
       const message = 'dob should be after 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
       try {
-        const passes = yield Validations.after(data, field, message, args, get);
+        const passes = yield Validations.after(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -206,9 +189,8 @@ describe('Validations', function () {
       const data = {dob: '2011-01-01'};
       const field = 'dob';
       const message = 'dob should be after 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
-      const passes = yield Validations.after(data, field, message, args, get);
+      const passes = yield Validations.after(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -216,9 +198,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'dob';
       const message = 'dob should be after 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
-      const passes = yield Validations.after(data, field, message, args, get);
+      const passes = yield Validations.after(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -226,9 +207,8 @@ describe('Validations', function () {
       const data = {dob: undefined};
       const field = 'dob';
       const message = 'dob should be after 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
-      const passes = yield Validations.after(data, field, message, args, get);
+      const passes = yield Validations.after(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -238,10 +218,9 @@ describe('Validations', function () {
       const data = {username: 'virk1234'};
       const field = 'username';
       const message = 'username must contain letters only';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.alpha(data, field, message, args, get);
+        const passes = yield Validations.alpha(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -252,9 +231,8 @@ describe('Validations', function () {
       const data = {username: 'virk'};
       const field = 'username';
       const message = 'username must contain letters only';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.alpha(data, field, message, args, get);
+      const passes = yield Validations.alpha(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -262,9 +240,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'username';
       const message = 'username must contain letters only';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.alpha(data, field, message, args, get);
+      const passes = yield Validations.alpha(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -272,9 +249,8 @@ describe('Validations', function () {
       const data = {username: undefined};
       const field = 'username';
       const message = 'username must contain letters only';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.alpha(data, field, message, args, get);
+      const passes = yield Validations.alpha(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -284,10 +260,9 @@ describe('Validations', function () {
       const data = {dob: '2012-11-20'};
       const field = 'dob';
       const message = 'dob should be before 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
       try {
-        const passes = yield Validations.before(data, field, message, args, get);
+        const passes = yield Validations.before(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -298,9 +273,8 @@ describe('Validations', function () {
       const data = {dob: '2009-01-01'};
       const field = 'dob';
       const message = 'dob should be before 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
-      const passes = yield Validations.before(data, field, message, args, get);
+      const passes = yield Validations.before(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -308,9 +282,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'dob';
       const message = 'dob should be before 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
-      const passes = yield Validations.before(data, field, message, args, get);
+      const passes = yield Validations.before(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -318,9 +291,8 @@ describe('Validations', function () {
       const data = {dob: undefined};
       const field = 'dob';
       const message = 'dob should be before 2010';
-      const get = _.get;
       const args = ['2010-11-20'];
-      const passes = yield Validations.before(data, field, message, args, get);
+      const passes = yield Validations.before(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -330,10 +302,9 @@ describe('Validations', function () {
       const data = {dob: '10th'};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.date(data, field, message, args, get);
+        const passes = yield Validations.date(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -344,9 +315,8 @@ describe('Validations', function () {
       const data = {dob: '2015-10-20'};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.date(data, field, message, args, get);
+      const passes = yield Validations.date(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -354,9 +324,8 @@ describe('Validations', function () {
       const data = {dob: '10/20/2015'};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.date(data, field, message, args, get);
+      const passes = yield Validations.date(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -364,9 +333,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.date(data, field, message, args, get);
+      const passes = yield Validations.date(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -374,9 +342,8 @@ describe('Validations', function () {
       const data = {dob: undefined};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.date(data, field, message, args, get);
+      const passes = yield Validations.date(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -386,10 +353,9 @@ describe('Validations', function () {
       const data = {dob: '10th'};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = ['YYYY/MM/DD'];
       try {
-        const passes = yield Validations.dateFormat(data, field, message, args, get);
+        const passes = yield Validations.dateFormat(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -400,10 +366,9 @@ describe('Validations', function () {
       const data = {dob: '10-20-2015'};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = ['YYYY/MM/DD'];
       try {
-        const passes = yield Validations.dateFormat(data, field, message, args, get);
+        const passes = yield Validations.dateFormat(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -414,9 +379,8 @@ describe('Validations', function () {
       const data = {dob: '2015/10/20'};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = ['YYYY/MM/DD'];
-      const passes = yield Validations.dateFormat(data, field, message, args, get);
+      const passes = yield Validations.dateFormat(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -424,9 +388,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = ['YYYY/MM/DD'];
-      const passes = yield Validations.dateFormat(data, field, message, args, get);
+      const passes = yield Validations.dateFormat(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -434,9 +397,8 @@ describe('Validations', function () {
       const data = {dob: undefined};
       const field = 'dob';
       const message = 'dob should be a valid date';
-      const get = _.get;
       const args = ['YYYY/MM/DD'];
-      const passes = yield Validations.dateFormat(data, field, message, args, get);
+      const passes = yield Validations.dateFormat(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -446,10 +408,9 @@ describe('Validations', function () {
       const data = {gender: 'Foo'};
       const field = 'gender';
       const message = 'select valid gender';
-      const get = _.get;
       const args = ['F', 'M', 'O'];
       try {
-        const passes = yield Validations.in(data, field, message, args, get);
+        const passes = yield Validations.in(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -460,9 +421,8 @@ describe('Validations', function () {
       const data = {gender: 'F'};
       const field = 'gender';
       const message = 'select valid gender';
-      const get = _.get;
       const args = ['F', 'M', 'O'];
-      const passes = yield Validations.in(data, field, message, args, get);
+      const passes = yield Validations.in(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -470,9 +430,8 @@ describe('Validations', function () {
       const data = {marks: 10};
       const field = 'marks';
       const message = 'select valid marks';
-      const get = _.get;
       const args = [10, 20, 40];
-      const passes = yield Validations.in(data, field, message, args, get);
+      const passes = yield Validations.in(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -480,9 +439,8 @@ describe('Validations', function () {
       const data = {marks: 10};
       const field = 'marks';
       const message = 'select valid marks';
-      const get = _.get;
       const args = ['10', '20', '40'];
-      const passes = yield Validations.in(data, field, message, args, get);
+      const passes = yield Validations.in(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -490,9 +448,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'marks';
       const message = 'select valid marks';
-      const get = _.get;
       const args = [10, 20, 40];
-      const passes = yield Validations.in(data, field, message, args, get);
+      const passes = yield Validations.in(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -500,9 +457,8 @@ describe('Validations', function () {
       const data = {marks: undefined};
       const field = 'marks';
       const message = 'select valid marks';
-      const get = _.get;
       const args = [10, 20, 40];
-      const passes = yield Validations.in(data, field, message, args, get);
+      const passes = yield Validations.in(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -512,10 +468,9 @@ describe('Validations', function () {
       const data = {username: 'admin'};
       const field = 'username';
       const message = 'select valid username';
-      const get = _.get;
       const args = ['admin', 'super', 'root'];
       try {
-        const passes = yield Validations.notIn(data, field, message, args, get);
+        const passes = yield Validations.notIn(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -526,9 +481,8 @@ describe('Validations', function () {
       const data = {username: 'foo'};
       const field = 'username';
       const message = 'select valid username';
-      const get = _.get;
       const args = ['admin', 'super', 'root'];
-      const passes = yield Validations.notIn(data, field, message, args, get);
+      const passes = yield Validations.notIn(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -536,9 +490,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'username';
       const message = 'select valid username';
-      const get = _.get;
       const args = ['admin', 'super', 'root'];
-      const passes = yield Validations.notIn(data, field, message, args, get);
+      const passes = yield Validations.notIn(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -546,9 +499,8 @@ describe('Validations', function () {
       const data = {username: undefined};
       const field = 'username';
       const message = 'select valid username';
-      const get = _.get;
       const args = ['admin', 'super', 'root'];
-      const passes = yield Validations.notIn(data, field, message, args, get);
+      const passes = yield Validations.notIn(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -558,9 +510,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'password_confirm';
       const message = 'please confirm password';
-      const get = _.get;
       const args = ['password'];
-      const passes = yield Validations.requiredIf(data, field, message, args, get);
+      const passes = yield Validations.requiredIf(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -568,10 +519,9 @@ describe('Validations', function () {
       const data = {password: 'foobar'};
       const field = 'password_confirm';
       const message = 'please confirm password';
-      const get = _.get;
       const args = ['password'];
       try {
-        const passes = yield Validations.requiredIf(data, field, message, args, get);
+        const passes = yield Validations.requiredIf(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -582,9 +532,8 @@ describe('Validations', function () {
       const data = {password: null};
       const field = 'password_confirm';
       const message = 'please confirm password';
-      const get = _.get;
       const args = ['password'];
-      const passes = yield Validations.requiredIf(data, field, message, args, get);
+      const passes = yield Validations.requiredIf(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -592,9 +541,8 @@ describe('Validations', function () {
       const data = {password: 'foobar', 'password_confirm': 'foobar'};
       const field = 'password_confirm';
       const message = 'please confirm password';
-      const get = _.get;
       const args = ['password'];
-      const passes = yield Validations.requiredIf(data, field, message, args, get);
+      const passes = yield Validations.requiredIf(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -604,9 +552,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithAny(data, field, message, args, get);
+      const passes = yield Validations.requiredWithAny(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -614,10 +561,9 @@ describe('Validations', function () {
       const data = {username: 'foo'};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithAny(data, field, message, args, get);
+        const passes = yield Validations.requiredWithAny(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -628,10 +574,9 @@ describe('Validations', function () {
       const data = {username: 'foo', password: null};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithAny(data, field, message, args, get);
+        const passes = yield Validations.requiredWithAny(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -642,9 +587,8 @@ describe('Validations', function () {
       const data = {username: 'foo', password: 'bar'};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithAny(data, field, message, args, get);
+      const passes = yield Validations.requiredWithAny(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -654,9 +598,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithAll(data, field, message, args, get);
+      const passes = yield Validations.requiredWithAll(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -664,10 +607,9 @@ describe('Validations', function () {
       const data = {username: 'foo', 'email': 'foo@bar.com'};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithAll(data, field, message, args, get);
+        const passes = yield Validations.requiredWithAll(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -678,10 +620,9 @@ describe('Validations', function () {
       const data = {username: 'foo', email: 'foo@bar.com', password: null};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithAll(data, field, message, args, get);
+        const passes = yield Validations.requiredWithAll(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -692,9 +633,8 @@ describe('Validations', function () {
       const data = {username: 'foo', password: 'bar', 'email': 'foo@bar.com'};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithAll(data, field, message, args, get);
+      const passes = yield Validations.requiredWithAll(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -702,9 +642,8 @@ describe('Validations', function () {
       const data = {username: 'foo'};
       const field = 'password';
       const message = 'password is required after username or email';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithAll(data, field, message, args, get);
+      const passes = yield Validations.requiredWithAll(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -714,9 +653,8 @@ describe('Validations', function () {
       const data = {username: 'foo', email: 'foo@bar.com'};
       const field = 'password';
       const message = 'enter email or password';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithoutAny(data, field, message, args, get);
+      const passes = yield Validations.requiredWithoutAny(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -724,10 +662,9 @@ describe('Validations', function () {
       const data = {username: 'foo'};
       const field = 'password';
       const message = 'enter email or password';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithoutAny(data, field, message, args, get);
+        const passes = yield Validations.requiredWithoutAny(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -738,10 +675,9 @@ describe('Validations', function () {
       const data = {username: 'foo', password: null};
       const field = 'password';
       const message = 'enter email or password';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithoutAny(data, field, message, args, get);
+        const passes = yield Validations.requiredWithoutAny(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -752,9 +688,8 @@ describe('Validations', function () {
       const data = {password: 'foobar'};
       const field = 'password';
       const message = 'enter email or password';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithoutAny(data, field, message, args, get);
+      const passes = yield Validations.requiredWithoutAny(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -764,9 +699,8 @@ describe('Validations', function () {
       const data = {username: 'foo', email: 'foo@bar.com'};
       const field = 'password';
       const message = 'enter username, email or password';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithoutAll(data, field, message, args, get);
+      const passes = yield Validations.requiredWithoutAll(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -774,10 +708,9 @@ describe('Validations', function () {
       const data = {};
       const field = 'password';
       const message = 'enter username, email or password';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithoutAll(data, field, message, args, get);
+        const passes = yield Validations.requiredWithoutAll(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -788,10 +721,9 @@ describe('Validations', function () {
       const data = {password: null};
       const field = 'password';
       const message = 'enter username, email or password';
-      const get = _.get;
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithoutAll(data, field, message, args, get);
+        const passes = yield Validations.requiredWithoutAll(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -802,9 +734,8 @@ describe('Validations', function () {
       const data = {password: 'foobar'};
       const field = 'password';
       const message = 'enter username, email or password';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithoutAll(data, field, message, args, get);
+      const passes = yield Validations.requiredWithoutAll(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -812,9 +743,8 @@ describe('Validations', function () {
       const data = {username: 'foo'};
       const field = 'password';
       const message = 'enter username, email or password';
-      const get = _.get;
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithoutAll(data, field, message, args, get);
+      const passes = yield Validations.requiredWithoutAll(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -824,10 +754,9 @@ describe('Validations', function () {
       const data = {password: 'foo', 'password_confirm': 'bar'};
       const field = 'password_confirm';
       const message = 'password should match';
-      const get = _.get;
       const args = ['password'];
       try {
-        const passes = yield Validations.same(data, field, message, args, get);
+        const passes = yield Validations.same(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -838,9 +767,8 @@ describe('Validations', function () {
       const data = {'password_confirm': 'bar'};
       const field = 'password_confirm';
       const message = 'password should match';
-      const get = _.get;
       const args = ['password'];
-      const passes = yield Validations.same(data, field, message, args, get);
+      const passes = yield Validations.same(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -848,9 +776,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'password_confirm';
       const message = 'password should match';
-      const get = _.get;
       const args = ['password'];
-      const passes = yield Validations.same(data, field, message, args, get);
+      const passes = yield Validations.same(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -858,9 +785,8 @@ describe('Validations', function () {
       const data = {password: 'foo', password_confirm: 'foo'};
       const field = 'password_confirm';
       const message = 'password should match';
-      const get = _.get;
       const args = ['password'];
-      const passes = yield Validations.same(data, field, message, args, get);
+      const passes = yield Validations.same(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -868,9 +794,8 @@ describe('Validations', function () {
       const data = {password: 'foo'};
       const field = 'password_confirm';
       const message = 'password should match';
-      const get = _.get;
       const args = ['password'];
-      const passes = yield Validations.same(data, field, message, args, get);
+      const passes = yield Validations.same(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -880,10 +805,9 @@ describe('Validations', function () {
       const data = {title: 'foo'};
       const field = 'title';
       const message = 'title should be bar';
-      const get = _.get;
       const args = ['bar'];
       try {
-        const passes = yield Validations.equals(data, field, message, args, get);
+        const passes = yield Validations.equals(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -894,9 +818,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'title';
       const message = 'title should be bar';
-      const get = _.get;
       const args = ['bar'];
-      const passes = yield Validations.equals(data, field, message, args, get);
+      const passes = yield Validations.equals(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -904,9 +827,8 @@ describe('Validations', function () {
       const data = {title: undefined};
       const field = 'title';
       const message = 'title should be bar';
-      const get = _.get;
       const args = ['bar'];
-      const passes = yield Validations.equals(data, field, message, args, get);
+      const passes = yield Validations.equals(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -914,9 +836,8 @@ describe('Validations', function () {
       const data = {title: 'bar'};
       const field = 'title';
       const message = 'title should be bar';
-      const get = _.get;
       const args = ['bar'];
-      const passes = yield Validations.equals(data, field, message, args, get);
+      const passes = yield Validations.equals(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -924,9 +845,8 @@ describe('Validations', function () {
       const data = {age: 18};
       const field = 'age';
       const message = 'age should be 18';
-      const get = _.get;
       const args = ['18'];
-      const passes = yield Validations.equals(data, field, message, args, get);
+      const passes = yield Validations.equals(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -936,10 +856,9 @@ describe('Validations', function () {
       const data = {title: 'bar'};
       const field = 'title';
       const message = 'title should not be bar';
-      const get = _.get;
       const args = ['bar'];
       try {
-        const passes = yield Validations.notEquals(data, field, message, args, get);
+        const passes = yield Validations.notEquals(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -950,9 +869,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'title';
       const message = 'title should not be bar';
-      const get = _.get;
       const args = ['bar'];
-      const passes = yield Validations.notEquals(data, field, message, args, get);
+      const passes = yield Validations.notEquals(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -960,9 +878,8 @@ describe('Validations', function () {
       const data = {title: undefined};
       const field = 'title';
       const message = 'title should not be bar';
-      const get = _.get;
       const args = ['bar'];
-      const passes = yield Validations.notEquals(data, field, message, args, get);
+      const passes = yield Validations.notEquals(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -970,9 +887,8 @@ describe('Validations', function () {
       const data = {title: 'foo'};
       const field = 'title';
       const message = 'title should not be bar';
-      const get = _.get;
       const args = ['bar'];
-      const passes = yield Validations.notEquals(data, field, message, args, get);
+      const passes = yield Validations.notEquals(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -982,10 +898,9 @@ describe('Validations', function () {
       const data = {dob: '2011-20-10', 'enrollment_date': '2011-20-10'};
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
-      const get = _.get;
       const args = ['dob'];
       try {
-        const passes = yield Validations.different(data, field, message, args, get);
+        const passes = yield Validations.different(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -996,9 +911,8 @@ describe('Validations', function () {
       const data = {'enrollment_date': '2011-20-10'};
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
-      const get = _.get;
       const args = ['dob'];
-      const passes = yield Validations.different(data, field, message, args, get);
+      const passes = yield Validations.different(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1006,9 +920,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
-      const get = _.get;
       const args = ['dob'];
-      const passes = yield Validations.different(data, field, message, args, get);
+      const passes = yield Validations.different(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1016,9 +929,8 @@ describe('Validations', function () {
       const data = {dob: '2011-20-10', 'enrollment_date': '2011-20-20'};
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
-      const get = _.get;
       const args = ['dob'];
-      const passes = yield Validations.different(data, field, message, args, get);
+      const passes = yield Validations.different(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1026,9 +938,8 @@ describe('Validations', function () {
       const data = {dob: '2011-20-10'};
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
-      const get = _.get;
       const args = ['dob'];
-      const passes = yield Validations.different(data, field, message, args, get);
+      const passes = yield Validations.different(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -1038,10 +949,9 @@ describe('Validations', function () {
       const data = {age: 16};
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
-      const get = _.get;
       const args = [18, 60];
       try {
-        const passes = yield Validations.range(data, field, message, args, get);
+        const passes = yield Validations.range(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1052,10 +962,9 @@ describe('Validations', function () {
       const data = {age: 61};
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
-      const get = _.get;
       const args = [18, 60];
       try {
-        const passes = yield Validations.range(data, field, message, args, get);
+        const passes = yield Validations.range(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1066,10 +975,9 @@ describe('Validations', function () {
       const data = {age: 61};
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
-      const get = _.get;
       const args = [null, 60];
       try {
-        const passes = yield Validations.range(data, field, message, args, get);
+        const passes = yield Validations.range(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.match(/min and max values are required/);
@@ -1080,10 +988,9 @@ describe('Validations', function () {
       const data = {age: 61};
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
-      const get = _.get;
       const args = [18];
       try {
-        const passes = yield Validations.range(data, field, message, args, get);
+        const passes = yield Validations.range(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.match(/min and max values are required/);
@@ -1094,9 +1001,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
-      const get = _.get;
       const args = [18, 60];
-      const passes = yield Validations.range(data, field, message, args, get);
+      const passes = yield Validations.range(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1104,9 +1010,8 @@ describe('Validations', function () {
       const data = {age: undefined};
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
-      const get = _.get;
       const args = [18, 60];
-      const passes = yield Validations.range(data, field, message, args, get);
+      const passes = yield Validations.range(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1114,9 +1019,8 @@ describe('Validations', function () {
       const data = {age: 20};
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
-      const get = _.get;
       const args = [18, 60];
-      const passes = yield Validations.range(data, field, message, args, get);
+      const passes = yield Validations.range(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1126,10 +1030,9 @@ describe('Validations', function () {
       const data = {password: 'foo'};
       const field = 'password';
       const message = 'password should be over 6 characters';
-      const get = _.get;
       const args = [6];
       try {
-        const passes = yield Validations.min(data, field, message, args, get);
+        const passes = yield Validations.min(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1140,10 +1043,9 @@ describe('Validations', function () {
       const data = {password: 990};
       const field = 'password';
       const message = 'password should be over 6 characters';
-      const get = _.get;
       const args = [6];
       try {
-        const passes = yield Validations.min(data, field, message, args, get);
+        const passes = yield Validations.min(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1154,9 +1056,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'password';
       const message = 'password should be over 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.min(data, field, message, args, get);
+      const passes = yield Validations.min(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1164,9 +1065,8 @@ describe('Validations', function () {
       const data = {password: undefined};
       const field = 'password';
       const message = 'password should be over 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.min(data, field, message, args, get);
+      const passes = yield Validations.min(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1174,9 +1074,8 @@ describe('Validations', function () {
       const data = {password: 'foobarbaz'};
       const field = 'password';
       const message = 'password should be over 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.min(data, field, message, args, get);
+      const passes = yield Validations.min(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1184,9 +1083,8 @@ describe('Validations', function () {
       const data = {password: 'foobar'};
       const field = 'password';
       const message = 'password should be over 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.min(data, field, message, args, get);
+      const passes = yield Validations.min(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1196,10 +1094,9 @@ describe('Validations', function () {
       const data = {password: 'foobarbaz'};
       const field = 'password';
       const message = 'password should be less than 6 characters';
-      const get = _.get;
       const args = [6];
       try {
-        const passes = yield Validations.max(data, field, message, args, get);
+        const passes = yield Validations.max(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1210,10 +1107,9 @@ describe('Validations', function () {
       const data = {password: 1990909990};
       const field = 'password';
       const message = 'password should be less than 6 characters';
-      const get = _.get;
       const args = [6];
       try {
-        const passes = yield Validations.max(data, field, message, args, get);
+        const passes = yield Validations.max(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1224,9 +1120,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'password';
       const message = 'password should be less than 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.max(data, field, message, args, get);
+      const passes = yield Validations.max(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1234,9 +1129,8 @@ describe('Validations', function () {
       const data = {password: undefined};
       const field = 'password';
       const message = 'password should be less than 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.max(data, field, message, args, get);
+      const passes = yield Validations.max(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1244,9 +1138,8 @@ describe('Validations', function () {
       const data = {password: 'foo'};
       const field = 'password';
       const message = 'password should be less than 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.max(data, field, message, args, get);
+      const passes = yield Validations.max(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1254,9 +1147,8 @@ describe('Validations', function () {
       const data = {password: 'foobar'};
       const field = 'password';
       const message = 'password should be less than 6 characters';
-      const get = _.get;
       const args = [6];
-      const passes = yield Validations.max(data, field, message, args, get);
+      const passes = yield Validations.max(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1266,10 +1158,9 @@ describe('Validations', function () {
       const data = {age: 16};
       const field = 'age';
       const message = 'age should be over 17 years';
-      const get = _.get;
       const args = [17];
       try {
-        const passes = yield Validations.above(data, field, message, args, get);
+        const passes = yield Validations.above(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1280,10 +1171,9 @@ describe('Validations', function () {
       const data = {age: 17};
       const field = 'age';
       const message = 'age should be over 17 years';
-      const get = _.get;
       const args = [17];
       try {
-        const passes = yield Validations.above(data, field, message, args, get);
+        const passes = yield Validations.above(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1294,9 +1184,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'age';
       const message = 'age should be over 17 years';
-      const get = _.get;
       const args = [17];
-      const passes = yield Validations.above(data, field, message, args, get);
+      const passes = yield Validations.above(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1304,9 +1193,8 @@ describe('Validations', function () {
       const data = {age: undefined};
       const field = 'age';
       const message = 'age should be over 17 years';
-      const get = _.get;
       const args = [17];
-      const passes = yield Validations.above(data, field, message, args, get);
+      const passes = yield Validations.above(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1314,9 +1202,8 @@ describe('Validations', function () {
       const data = {age: 18};
       const field = 'age';
       const message = 'age should be over 17 years';
-      const get = _.get;
       const args = [17];
-      const passes = yield Validations.above(data, field, message, args, get);
+      const passes = yield Validations.above(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1326,10 +1213,9 @@ describe('Validations', function () {
       const data = {age: 11};
       const field = 'age';
       const message = 'age should be less than 10 years for junior idol';
-      const get = _.get;
       const args = [10];
       try {
-        const passes = yield Validations.under(data, field, message, args, get);
+        const passes = yield Validations.under(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1340,10 +1226,9 @@ describe('Validations', function () {
       const data = {age: 10};
       const field = 'age';
       const message = 'age should be less than 10 years for junior idol';
-      const get = _.get;
       const args = [10];
       try {
-        const passes = yield Validations.under(data, field, message, args, get);
+        const passes = yield Validations.under(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1354,9 +1239,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'age';
       const message = 'age should be less than 10 years for junior idol';
-      const get = _.get;
       const args = [10];
-      const passes = yield Validations.under(data, field, message, args, get);
+      const passes = yield Validations.under(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1364,9 +1248,8 @@ describe('Validations', function () {
       const data = {age: undefined};
       const field = 'age';
       const message = 'age should be less than 10 years for junior idol';
-      const get = _.get;
       const args = [10];
-      const passes = yield Validations.under(data, field, message, args, get);
+      const passes = yield Validations.under(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1374,9 +1257,8 @@ describe('Validations', function () {
       const data = {age: 8};
       const field = 'age';
       const message = 'age should be less than 10 years for junior idol';
-      const get = _.get;
       const args = [10];
-      const passes = yield Validations.under(data, field, message, args, get);
+      const passes = yield Validations.under(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1386,10 +1268,9 @@ describe('Validations', function () {
       const data = {dpath: 'foo/bar'};
       const field = 'dpath';
       const message = 'path should include app directory';
-      const get = _.get;
       const args = ['app'];
       try {
-        const passes = yield Validations.includes(data, field, message, args, get);
+        const passes = yield Validations.includes(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1400,9 +1281,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'dpath';
       const message = 'path should include app directory';
-      const get = _.get;
       const args = ['app'];
-      const passes = yield Validations.includes(data, field, message, args, get);
+      const passes = yield Validations.includes(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1410,9 +1290,8 @@ describe('Validations', function () {
       const data = {dpath: undefined};
       const field = 'dpath';
       const message = 'path should include app directory';
-      const get = _.get;
       const args = ['app'];
-      const passes = yield Validations.includes(data, field, message, args, get);
+      const passes = yield Validations.includes(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1420,9 +1299,8 @@ describe('Validations', function () {
       const data = {dpath: '/app/bar'};
       const field = 'dpath';
       const message = 'path should include app directory';
-      const get = _.get;
       const args = ['app'];
-      const passes = yield Validations.includes(data, field, message, args, get);
+      const passes = yield Validations.includes(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1432,10 +1310,9 @@ describe('Validations', function () {
       const data = {username: 'foo'};
       const field = 'username';
       const message = 'username should start with D';
-      const get = _.get;
       const args = ['D'];
       try {
-        const passes = yield Validations.startsWith(data, field, message, args, get);
+        const passes = yield Validations.startsWith(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1446,9 +1323,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'username';
       const message = 'username should start with D';
-      const get = _.get;
       const args = ['D'];
-      const passes = yield Validations.startsWith(data, field, message, args, get);
+      const passes = yield Validations.startsWith(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1456,9 +1332,8 @@ describe('Validations', function () {
       const data = {username: undefined};
       const field = 'username';
       const message = 'username should start with D';
-      const get = _.get;
       const args = ['D'];
-      const passes = yield Validations.startsWith(data, field, message, args, get);
+      const passes = yield Validations.startsWith(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1466,9 +1341,8 @@ describe('Validations', function () {
       const data = {username: 'Doe'};
       const field = 'username';
       const message = 'username should start with D';
-      const get = _.get;
       const args = ['D'];
-      const passes = yield Validations.startsWith(data, field, message, args, get);
+      const passes = yield Validations.startsWith(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1478,10 +1352,9 @@ describe('Validations', function () {
       const data = {username: 'foo'};
       const field = 'username';
       const message = 'username should end with e';
-      const get = _.get;
       const args = ['e'];
       try {
-        const passes = yield Validations.endsWith(data, field, message, args, get);
+        const passes = yield Validations.endsWith(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1492,9 +1365,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'username';
       const message = 'username should end with e';
-      const get = _.get;
       const args = ['e'];
-      const passes = yield Validations.endsWith(data, field, message, args, get);
+      const passes = yield Validations.endsWith(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1502,9 +1374,8 @@ describe('Validations', function () {
       const data = {username: undefined};
       const field = 'username';
       const message = 'username should end with e';
-      const get = _.get;
       const args = ['e'];
-      const passes = yield Validations.endsWith(data, field, message, args, get);
+      const passes = yield Validations.endsWith(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1512,9 +1383,8 @@ describe('Validations', function () {
       const data = {username: 'Doe'};
       const field = 'username';
       const message = 'username should end with e';
-      const get = _.get;
       const args = ['e'];
-      const passes = yield Validations.endsWith(data, field, message, args, get);
+      const passes = yield Validations.endsWith(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1524,10 +1394,9 @@ describe('Validations', function () {
       const data = {email: 'foo'};
       const field = 'email';
       const message = 'email should match given regex';
-      const get = _.get;
       const args = [/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0, 66})\.([a-z]{2, 6}(?:\.[a-z]{2})?)$/];
       try {
-        const passes = yield Validations.regex(data, field, message, args, get);
+        const passes = yield Validations.regex(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1538,9 +1407,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'country';
       const message = 'country should be India with I as uppercase';
-      const get = _.get;
       const args = ['[a-z]'];
-      const passes = yield Validations.regex(data, field, message, args, get);
+      const passes = yield Validations.regex(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1548,9 +1416,8 @@ describe('Validations', function () {
       const data = {country: undefined};
       const field = 'country';
       const message = 'country should be India with I as uppercase';
-      const get = _.get;
       const args = ['[a-z]'];
-      const passes = yield Validations.regex(data, field, message, args, get);
+      const passes = yield Validations.regex(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1558,9 +1425,8 @@ describe('Validations', function () {
       const data = {country: 'India'};
       const field = 'country';
       const message = 'country should be India with I as uppercase';
-      const get = _.get;
       const args = ['[a-z]', 'i'];
-      const passes = yield Validations.regex(data, field, message, args, get);
+      const passes = yield Validations.regex(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1570,10 +1436,9 @@ describe('Validations', function () {
       const data = {username: 'virk@123'};
       const field = 'username';
       const message = 'username must letters and numbers only';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.alphaNumeric(data, field, message, args, get);
+        const passes = yield Validations.alphaNumeric(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1584,9 +1449,8 @@ describe('Validations', function () {
       const data = {username: 'virk123'};
       const field = 'username';
       const message = 'username must letters and numbers only';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.alphaNumeric(data, field, message, args, get);
+      const passes = yield Validations.alphaNumeric(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1594,9 +1458,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'username';
       const message = 'username must letters and numbers only';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.alphaNumeric(data, field, message, args, get);
+      const passes = yield Validations.alphaNumeric(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1604,9 +1467,8 @@ describe('Validations', function () {
       const data = {username: undefined};
       const field = 'username';
       const message = 'username must letters and numbers only';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.alphaNumeric(data, field, message, args, get);
+      const passes = yield Validations.alphaNumeric(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -1616,10 +1478,9 @@ describe('Validations', function () {
       const data = {users: 'foo'};
       const field = 'users';
       const message = 'users list must be an array';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.array(data, field, message, args, get);
+        const passes = yield Validations.array(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1630,9 +1491,8 @@ describe('Validations', function () {
       const data = {users: ['doe', 'foo', 'bar']};
       const field = 'users';
       const message = 'users list must be an array';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.array(data, field, message, args, get);
+      const passes = yield Validations.array(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1640,9 +1500,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'users';
       const message = 'users list must be an array';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.array(data, field, message, args, get);
+      const passes = yield Validations.array(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1650,9 +1509,8 @@ describe('Validations', function () {
       const data = {users: undefined};
       const field = 'users';
       const message = 'users list must be an array';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.array(data, field, message, args, get);
+      const passes = yield Validations.array(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1660,10 +1518,9 @@ describe('Validations', function () {
       const data = {users: {name: 'foo'}};
       const field = 'users';
       const message = 'users list must be an array';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.array(data, field, message, args, get);
+        const passes = yield Validations.array(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1676,10 +1533,9 @@ describe('Validations', function () {
       const data = {github_profile: 'foo'};
       const field = 'github_profile';
       const message = 'github profile must point to a valid url ';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.url(data, field, message, args, get);
+        const passes = yield Validations.url(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1690,9 +1546,8 @@ describe('Validations', function () {
       const data = {github_profile: 'http://github.com/thetutlage'};
       const field = 'github_profile';
       const message = 'github profile must point to a valid url ';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.url(data, field, message, args, get);
+      const passes = yield Validations.url(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1700,9 +1555,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'github_profile';
       const message = 'github profile must point to a valid url ';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.url(data, field, message, args, get);
+      const passes = yield Validations.url(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1710,9 +1564,8 @@ describe('Validations', function () {
       const data = {github_profile: undefined};
       const field = 'github_profile';
       const message = 'github profile must point to a valid url ';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.url(data, field, message, args, get);
+      const passes = yield Validations.url(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -1722,10 +1575,9 @@ describe('Validations', function () {
       const data = {github_profile: 'foo'};
       const field = 'github_profile';
       const message = 'github profile must point to a valid uuid ';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.uuid(data, field, message, args, get);
+        const passes = yield Validations.uuid(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1736,9 +1588,8 @@ describe('Validations', function () {
       const data = {github_profile: '135b71db-ee7d-43ea-9f6d-16227fa82ad9'};
       const field = 'github_profile';
       const message = 'github profile must point to a valid uuid ';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.uuid(data, field, message, args, get);
+      const passes = yield Validations.uuid(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1746,9 +1597,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'github_profile';
       const message = 'github profile must point to a valid uuid ';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.uuid(data, field, message, args, get);
+      const passes = yield Validations.uuid(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1756,9 +1606,8 @@ describe('Validations', function () {
       const data = {github_profile: undefined};
       const field = 'github_profile';
       const message = 'github profile must point to a valid uuid ';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.uuid(data, field, message, args, get);
+      const passes = yield Validations.uuid(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -1768,10 +1617,9 @@ describe('Validations', function () {
       const data = {user_ip: '909090909'};
       const field = 'user_ip';
       const message = 'invalid ip address';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.ip(data, field, message, args, get);
+        const passes = yield Validations.ip(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1782,9 +1630,8 @@ describe('Validations', function () {
       const data = {user_ip: '127.0.0.1'};
       const field = 'user_ip';
       const message = 'invalid ip address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ip(data, field, message, args, get);
+      const passes = yield Validations.ip(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1792,9 +1639,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'user_ip';
       const message = 'invalid ip address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ip(data, field, message, args, get);
+      const passes = yield Validations.ip(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1802,9 +1648,8 @@ describe('Validations', function () {
       const data = {user_ip: undefined};
       const field = 'user_ip';
       const message = 'invalid ip address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ip(data, field, message, args, get);
+      const passes = yield Validations.ip(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -1814,10 +1659,9 @@ describe('Validations', function () {
       const data = {marks: '10'};
       const field = 'marks';
       const message = 'marks should be an integer';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.integer(data, field, message, args, get);
+        const passes = yield Validations.integer(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1828,10 +1672,9 @@ describe('Validations', function () {
       const data = {marks: 10.1};
       const field = 'marks';
       const message = 'marks should be an integer';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.integer(data, field, message, args, get);
+        const passes = yield Validations.integer(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1842,9 +1685,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'marks';
       const message = 'marks should be an integer';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.integer(data, field, message, args, get);
+      const passes = yield Validations.integer(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1852,9 +1694,8 @@ describe('Validations', function () {
       const data = {marks: undefined};
       const field = 'marks';
       const message = 'marks should be an integer';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.integer(data, field, message, args, get);
+      const passes = yield Validations.integer(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1862,9 +1703,8 @@ describe('Validations', function () {
       const data = {marks: 10};
       const field = 'marks';
       const message = 'marks should be an integer';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.integer(data, field, message, args, get);
+      const passes = yield Validations.integer(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1872,9 +1712,8 @@ describe('Validations', function () {
       const data = {marks: 10.0};
       const field = 'marks';
       const message = 'marks should be an integer';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.integer(data, field, message, args, get);
+      const passes = yield Validations.integer(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1884,10 +1723,9 @@ describe('Validations', function () {
       const data = {is_admin: 20};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.boolean(data, field, message, args, get);
+        const passes = yield Validations.boolean(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1898,10 +1736,9 @@ describe('Validations', function () {
       const data = {is_admin: '20'};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.boolean(data, field, message, args, get);
+        const passes = yield Validations.boolean(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -1912,9 +1749,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1922,9 +1758,8 @@ describe('Validations', function () {
       const data = {is_admin: undefined};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -1932,9 +1767,8 @@ describe('Validations', function () {
       const data = {is_admin: true};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1942,9 +1776,8 @@ describe('Validations', function () {
       const data = {is_admin: false};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1952,9 +1785,8 @@ describe('Validations', function () {
       const data = {is_admin: 1};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1962,9 +1794,8 @@ describe('Validations', function () {
       const data = {is_admin: 0};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1972,9 +1803,8 @@ describe('Validations', function () {
       const data = {is_admin: '0'};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -1982,9 +1812,8 @@ describe('Validations', function () {
       const data = {is_admin: '1'};
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.boolean(data, field, message, args, get);
+      const passes = yield Validations.boolean(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -1994,10 +1823,9 @@ describe('Validations', function () {
       const data = {profile: 'foo'};
       const field = 'profile';
       const message = 'profile must be an object';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.object(data, field, message, args, get);
+        const passes = yield Validations.object(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2008,9 +1836,8 @@ describe('Validations', function () {
       const data = {profile: {username: 'foo'}};
       const field = 'profile';
       const message = 'profile must be an object';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.object(data, field, message, args, get);
+      const passes = yield Validations.object(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2018,9 +1845,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'profile';
       const message = 'profile must be an object';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.object(data, field, message, args, get);
+      const passes = yield Validations.object(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2028,9 +1854,8 @@ describe('Validations', function () {
       const data = {profile: undefined};
       const field = 'profile';
       const message = 'profile must be an object';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.object(data, field, message, args, get);
+      const passes = yield Validations.object(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2038,10 +1863,9 @@ describe('Validations', function () {
       const data = {profile: ['username']};
       const field = 'profile';
       const message = 'profile must be an object';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.object(data, field, message, args, get);
+        const passes = yield Validations.object(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2054,10 +1878,9 @@ describe('Validations', function () {
       const data = {profile: 'foo'};
       const field = 'profile';
       const message = 'profile must be an number';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.numeric(data, field, message, args, get);
+        const passes = yield Validations.numeric(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2068,9 +1891,8 @@ describe('Validations', function () {
       const data = {profile: 123};
       const field = 'profile';
       const message = 'profile must be an number';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.numeric(data, field, message, args, get);
+      const passes = yield Validations.numeric(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2078,9 +1900,8 @@ describe('Validations', function () {
       const data = {profile: '213'};
       const field = 'profile';
       const message = 'profile must be an number';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.numeric(data, field, message, args, get);
+      const passes = yield Validations.numeric(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2088,9 +1909,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'profile';
       const message = 'profile must be an number';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.numeric(data, field, message, args, get);
+      const passes = yield Validations.numeric(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2098,9 +1918,8 @@ describe('Validations', function () {
       const data = {profile: undefined};
       const field = 'profile';
       const message = 'profile must be an number';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.numeric(data, field, message, args, get);
+      const passes = yield Validations.numeric(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2111,10 +1930,9 @@ describe('Validations', function () {
       const data = {profile: 'foo'};
       const field = 'profile';
       const message = 'profile must be in json';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.json(data, field, message, args, get);
+        const passes = yield Validations.json(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2125,9 +1943,8 @@ describe('Validations', function () {
       const data = {profile: JSON.stringify({name: 'foo'})};
       const field = 'profile';
       const message = 'profile must be in json';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.json(data, field, message, args, get);
+      const passes = yield Validations.json(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2135,9 +1952,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'profile';
       const message = 'profile must be in json';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.json(data, field, message, args, get);
+      const passes = yield Validations.json(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2145,9 +1961,8 @@ describe('Validations', function () {
       const data = {profile: undefined};
       const field = 'profile';
       const message = 'profile must be in json';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.json(data, field, message, args, get);
+      const passes = yield Validations.json(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -2157,10 +1972,9 @@ describe('Validations', function () {
       const data = {user_ip: '2001:DB8:0:0:1::1'};
       const field = 'user_ip';
       const message = 'invalid ipv4 address';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.ipv4(data, field, message, args, get);
+        const passes = yield Validations.ipv4(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2171,9 +1985,8 @@ describe('Validations', function () {
       const data = {user_ip: '127.0.0.1'};
       const field = 'user_ip';
       const message = 'invalid ipv4 address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ipv4(data, field, message, args, get);
+      const passes = yield Validations.ipv4(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2181,9 +1994,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'user_ip';
       const message = 'invalid ipv4 address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ipv4(data, field, message, args, get);
+      const passes = yield Validations.ipv4(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2191,9 +2003,8 @@ describe('Validations', function () {
       const data = {user_ip: undefined};
       const field = 'user_ip';
       const message = 'invalid ipv4 address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ipv4(data, field, message, args, get);
+      const passes = yield Validations.ipv4(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -2203,10 +2014,9 @@ describe('Validations', function () {
       const data = {user_ip: '127.0.0.1'};
       const field = 'user_ip';
       const message = 'invalid ipv6 address';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.ipv6(data, field, message, args, get);
+        const passes = yield Validations.ipv6(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2217,9 +2027,8 @@ describe('Validations', function () {
       const data = {user_ip: '2001:DB8:0:0:1::1'};
       const field = 'user_ip';
       const message = 'invalid ipv6 address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ipv6(data, field, message, args, get);
+      const passes = yield Validations.ipv6(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2227,9 +2036,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'user_ip';
       const message = 'invalid ipv6 address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ipv6(data, field, message, args, get);
+      const passes = yield Validations.ipv6(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2237,9 +2045,8 @@ describe('Validations', function () {
       const data = {user_ip: undefined};
       const field = 'user_ip';
       const message = 'invalid ipv6 address';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.ipv6(data, field, message, args, get);
+      const passes = yield Validations.ipv6(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -2249,9 +2056,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'state';
       const message = 'state is required';
-      const get = _.get;
       const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args, get);
+      const passes = yield Validations.requiredWhen(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2259,10 +2065,9 @@ describe('Validations', function () {
       const data = {country: 'US'};
       const field = 'state';
       const message = 'state is required';
-      const get = _.get;
       const args = ['country', 'US'];
       try {
-        const passes = yield Validations.requiredWhen(data, field, message, args, get);
+        const passes = yield Validations.requiredWhen(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2273,9 +2078,8 @@ describe('Validations', function () {
       const data = {country: 'UK'};
       const field = 'state';
       const message = 'state is required';
-      const get = _.get;
       const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args, get);
+      const passes = yield Validations.requiredWhen(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2283,9 +2087,8 @@ describe('Validations', function () {
       const data = {country: null};
       const field = 'state';
       const message = 'state is required';
-      const get = _.get;
       const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args, get);
+      const passes = yield Validations.requiredWhen(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2293,9 +2096,8 @@ describe('Validations', function () {
       const data = {country: 'US', state: 'NewYork'};
       const field = 'state';
       const message = 'state is required';
-      const get = _.get;
       const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args, get);
+      const passes = yield Validations.requiredWhen(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2303,9 +2105,8 @@ describe('Validations', function () {
       const data = {country: false, state: 'NewYork'};
       const field = 'state';
       const message = 'state is required';
-      const get = _.get;
       const args = ['country', false];
-      const passes = yield Validations.requiredWhen(data, field, message, args, get);
+      const passes = yield Validations.requiredWhen(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2316,10 +2117,9 @@ describe('Validations', function () {
       const data = {renewal: new Date()};
       const field = 'renewal';
       const message = 'packages are renewed after 12 months';
-      const get = _.get;
       const args = ['12', 'months'];
       try {
-        const passes = yield Validations.afterOffsetOf(data, field, message, args, get);
+        const passes = yield Validations.afterOffsetOf(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2330,9 +2130,8 @@ describe('Validations', function () {
       const data = {renewal: moment().add(13, 'months')};
       const field = 'renewal';
       const message = 'packages are renewed after 12 months';
-      const get = _.get;
       const args = ['12', 'months'];
-      const passes = yield Validations.afterOffsetOf(data, field, message, args, get);
+      const passes = yield Validations.afterOffsetOf(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2340,9 +2139,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'renewal';
       const message = 'packages are renewed after 12 months';
-      const get = _.get;
       const args = ['12', 'months'];
-      const passes = yield Validations.afterOffsetOf(data, field, message, args, get);
+      const passes = yield Validations.afterOffsetOf(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2350,9 +2148,8 @@ describe('Validations', function () {
       const data = {renewal: undefined};
       const field = 'renewal';
       const message = 'packages are renewed after 12 months';
-      const get = _.get;
       const args = ['12', 'months'];
-      const passes = yield Validations.afterOffsetOf(data, field, message, args, get);
+      const passes = yield Validations.afterOffsetOf(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -2362,10 +2159,9 @@ describe('Validations', function () {
       const data = {subscription: new Date()};
       const field = 'subscription';
       const message = '12 months old subscriptions are upgradable';
-      const get = _.get;
       const args = ['12', 'months'];
       try {
-        const passes = yield Validations.beforeOffsetOf(data, field, message, args, get);
+        const passes = yield Validations.beforeOffsetOf(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2376,9 +2172,8 @@ describe('Validations', function () {
       const data = {subscription: moment().subtract(2, 'years')};
       const field = 'subscription';
       const message = '12 months old subscriptions are upgradable';
-      const get = _.get;
       const args = ['12', 'months'];
-      const passes = yield Validations.beforeOffsetOf(data, field, message, args, get);
+      const passes = yield Validations.beforeOffsetOf(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2386,9 +2181,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'subscription';
       const message = '12 months old subscriptions are upgradable';
-      const get = _.get;
       const args = ['12', 'months'];
-      const passes = yield Validations.beforeOffsetOf(data, field, message, args, get);
+      const passes = yield Validations.beforeOffsetOf(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2396,9 +2190,8 @@ describe('Validations', function () {
       const data = {subscription: undefined};
       const field = 'subscription';
       const message = '12 months old subscriptions are upgradable';
-      const get = _.get;
       const args = ['12', 'months'];
-      const passes = yield Validations.beforeOffsetOf(data, field, message, args, get);
+      const passes = yield Validations.beforeOffsetOf(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -2408,9 +2201,8 @@ describe('Validations', function () {
       const data = {password: '1234', password_confirmation: '1234'};
       const field = 'password';
       const message = 'Password does not match!';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.confirmed(data, field, message, args, get);
+      const passes = yield Validations.confirmed(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2418,10 +2210,9 @@ describe('Validations', function () {
       const data = {password: '1234', password_confirmation: '12345'};
       const field = 'password';
       const message = 'Password does not match!';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.confirmed(data, field, message, args, get);
+        const passes = yield Validations.confirmed(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2432,10 +2223,9 @@ describe('Validations', function () {
       const data = {password: '1234', password_confirmation: undefined};
       const field = 'password';
       const message = 'Password does not match!';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.confirmed(data, field, message, args, get);
+        const passes = yield Validations.confirmed(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2446,9 +2236,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'password';
       const message = 'Password does not match!';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.confirmed(data, field, message, args, get);
+      const passes = yield Validations.confirmed(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2456,9 +2245,8 @@ describe('Validations', function () {
       const data = {password: undefined, password_confirmation: undefined};
       const field = 'password';
       const message = 'Password does not match!';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.confirmed(data, field, message, args, get);
+      const passes = yield Validations.confirmed(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
@@ -2468,9 +2256,8 @@ describe('Validations', function () {
       const data = {username: 'david'};
       const field = 'username';
       const message = 'Username should be a string';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.string(data, field, message, args, get);
+      const passes = yield Validations.string(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
 
@@ -2478,10 +2265,9 @@ describe('Validations', function () {
       const data = {username: 1234};
       const field = 'username';
       const message = 'Username should be a string';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.string(data, field, message, args, get);
+        const passes = yield Validations.string(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2492,10 +2278,9 @@ describe('Validations', function () {
       const data = {username: true};
       const field = 'username';
       const message = 'Username should be a string';
-      const get = _.get;
       const args = [];
       try {
-        const passes = yield Validations.string(data, field, message, args, get);
+        const passes = yield Validations.string(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -2506,9 +2291,8 @@ describe('Validations', function () {
       const data = {};
       const field = 'username';
       const message = 'Username should be a string';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.string(data, field, message, args, get);
+      const passes = yield Validations.string(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -2516,9 +2300,8 @@ describe('Validations', function () {
       const data = {username: undefined};
       const field = 'username';
       const message = 'Username should be a string';
-      const get = _.get;
       const args = [];
-      const passes = yield Validations.string(data, field, message, args, get);
+      const passes = yield Validations.string(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
