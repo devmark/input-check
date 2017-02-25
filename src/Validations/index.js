@@ -33,7 +33,9 @@ const skippable = function (value) {
  * @return {Boolean}
  * @private
  */
-const getSize = function (fieldValue, hasNumericRule = false) {
+const getSize = function (fieldValue, hasNumericRule) {
+  hasNumericRule = _.isUndefined(hasNumericRule) ? false : hasNumericRule;
+
   if (Raw.numeric(fieldValue) && hasNumericRule) {
     return fieldValue;
   } else if (fieldValue instanceof Array) {
