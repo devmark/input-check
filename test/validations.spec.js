@@ -320,8 +320,17 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should work fine when value of field is a valid date but with a differen date format', function *() {
+    it('should work fine when value of field is a valid date but with a different date format', function *() {
       const data = {dob: '10/20/2015'};
+      const field = 'dob';
+      const message = 'dob should be a valid date';
+      const args = [];
+      const passes = yield Validations.date(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should work fine when value of field is a valid date but with a iso 8601 date format', function *() {
+      const data = {dob: '2016-11-11T01:02:03+08:00'};
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = [];
