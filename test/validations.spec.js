@@ -412,6 +412,79 @@ describe('Validations', function () {
     });
   });
 
+  describe('time', function () {
+    it('should throw an error when field value is a date', function *() {
+      const data = {dob: '2015-11-11'};
+      const field = 'dob';
+      const message = 'dob should be a valid time';
+      const args = [];
+      try {
+        const passes = yield Validations.time(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should throw an error when field value is not a valid time', function *() {
+      const data = {dob: '14:62'};
+      const field = 'dob';
+      const message = 'dob should be a valid time';
+      const args = [];
+      try {
+        const passes = yield Validations.time(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should work fine when value of field is a valid time(HH:mm)', function *() {
+      const data = {dob: '14:23'};
+      const field = 'dob';
+      const message = 'dob should be a valid time';
+      const args = [];
+      const passes = yield Validations.time(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should work fine when value of field is a valid time but with a different time format(HH:mm:ss)', function *() {
+      const data = {dob: '15:22:11'};
+      const field = 'dob';
+      const message = 'dob should be a valid time';
+      const args = [];
+      const passes = yield Validations.time(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should work fine when value of field is a valid time but with a different time format(HH:mm a)', function *() {
+      const data = {dob: '01:02 pm'};
+      const field = 'dob';
+      const message = 'dob should be a valid time';
+      const args = [];
+      const passes = yield Validations.time(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should skip validation when field does not exists', function *() {
+      const data = {};
+      const field = 'dob';
+      const message = 'dob should be a valid time';
+      const args = [];
+      const passes = yield Validations.time(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = {dob: undefined};
+      const field = 'dob';
+      const message = 'dob should be a valid time';
+      const args = [];
+      const passes = yield Validations.date(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
   describe('in', function () {
     it('should throw an error when field value is not in defined fields', function *() {
       const data = {gender: 'Foo'};

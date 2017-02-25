@@ -657,6 +657,33 @@ Validations.dateFormat = function (data, field, message, args) {
   });
 };
 
+
+/**
+ * @description makes sure field under validation is a valid time
+ * @method time
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
+Validations.time = function (data, field, message, args) {
+  const timeFormat = ['HH:mm:ss', 'HH:mm', 'HH:mm a'];
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+    if (Raw.dateFormat(fieldValue, timeFormat)) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
 /**
  * @description makes sure field value is under defined
  * values
