@@ -112,40 +112,17 @@ The field under validation must be numeric and must have an exact length of valu
 ----
 The field under validation must have a length between the given min and max.
 
-
-~~dimensions~~
-----
-The file under validation must be an image meeting the dimension constraints as specified by the rule's parameters:
-
 ~~distinct~~
 ----
 When working with arrays, the field under validation must not have any duplicate values.
-
 
 email
 ----
 The field under validation must be formatted as an e-mail address.
 
-
-~~exists:table,column~~
-----
-The field under validation must exist on a given database table.
-
-
-~~file~~
-----
-The field under validation must be a successfully uploaded file.
-
-
 ~~filled~~
 ----
 The field under validation must not be empty when it is present.
-
-
-~~image~~
-----
-The file under validation must be an image (jpeg, png, bmp, gif, or svg)
-
 
 in:foo,bar,...  (in_array)
 ----
@@ -203,15 +180,6 @@ The field under validation must be less than or equal to a maximum value.
 `Strings`, `numerics`, and `array` size rule.
 
 Warning: Not support File type.
-
-~~mimetypes:text/plain,...~~
-----
-The file under validation must match one of the given MIME types:
-
-~~mimes:foo,bar,...~~
-----
-The file under validation must have a MIME type corresponding to one of the listed extensions.
-
 
 ~~nullable~~
 ----
@@ -293,6 +261,11 @@ The field under validation must be a string. If you would like to allow the fiel
 The field under validation must be a valid timezone identifier according to the  `momentjs` timezone function.
 
 
+
+~~exists:table,column~~
+----
+The field under validation must exist on a given database table.
+
 ~~unique:table,column,except,idColumn~~
 ----
 The field under validation must be unique in a given database table. If the column option is not specified, the field name will be used.
@@ -332,9 +305,64 @@ ends_with:foo
 The field under validation must be end within value.
 
 
+### File & Image
+
+#### handle multipart bodies
+
+you may be interested in the following modules:
+  * [formidable](https://www.npmjs.org/package/formidable#readme)
+  * [multer](https://www.npmjs.org/package/multer#readme)
+When you using above modules, you could get the file or image information.
+Then, you must to transfer information below before use file validation:
+```
+const file = {
+  mimetype: 'image/png', // for mime type or other valiations
+  path: '/var/tmp/xxxx.png', // for dimensions 
+}
+```
+
+#### Image 
+Before using validation, you need to download and install [GraphicsMagick](http://www.graphicsmagick.org/) or [ImageMagick](http://www.imagemagick.org/). In Mac OS X, you can simply use [Homebrew](http://mxcl.github.io/homebrew/) and do:
+```
+    brew install imagemagick
+    brew install graphicsmagick
+```
+More details: https://github.com/aheckmann/gm#getting-started
+
+
+~~file~~
+----
+The field under validation must be a successfully uploaded file.
+
+~~image~~
+----
+The file under validation must be an image (jpeg, png, bmp, gif, or svg)
+```
+const rules = {
+  'file'  : 'image',
+}
+```
+
+mimetypes:text/plain,...
+----
+The file under validation must match one of the given MIME types:
+
+~~mimes:foo,bar,...~~
+----
+The file under validation must have a MIME type corresponding to one of the listed extensions.
+
+dimensions
+----
+The file under validation must be an image meeting the dimension constraints as specified by the rule's parameters:
+```
+const rules = {
+  'image'  : 'dimensions:min_width=100,min_height=200,ratio=3/2',
+}
+```
+
+Available constraints are: min_width, max_width, min_height, max_height, width, height, ratio.
 
 ## Custom messages
-
 ```
 const messages = {
   required: 'This field is required to complete the registration process.'

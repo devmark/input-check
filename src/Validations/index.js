@@ -75,7 +75,7 @@ const numericRules = ['numeric', 'integer'];
  * @return {Array}
  * @private
  */
-const imageMimeTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/gif'];
+const imageMimeTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/gif', 'image/svg+xml'];
 
 /**
  * @description enforces a field to be confirmed by another.
@@ -1229,6 +1229,32 @@ Validations.string = function (data, field, message, args) {
     }
 
     if (Raw.string(fieldValue)) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
+/**
+ * @description Validate the mime type of an file matches the given values
+ * @method regex
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
+Validations.mimetypes = function (data, field, message, args) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+
+    if (fieldValue.mimetype === args[0]) {
       resolve('validation passed');
       return;
     }
