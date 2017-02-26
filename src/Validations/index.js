@@ -1008,7 +1008,7 @@ Validations.different = function (data, field, message, args) {
  * @return {Object}
  * @public
  */
-Validations.range = function (data, field, message, args) {
+Validations.range = function (data, field, message, args, validations) {
   const min = args[0];
   const max = args[1];
   return new Promise(function (resolve, reject) {
@@ -1022,7 +1022,8 @@ Validations.range = function (data, field, message, args) {
       return;
     }
 
-    if (Raw.between(fieldValue, min, max)) {
+    const isNumeric = hasRule(validations, numericRules);
+    if (Raw.between(getSize(fieldValue, isNumeric), min, max)) {
       resolve('validation passed');
       return;
     }

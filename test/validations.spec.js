@@ -1012,12 +1012,23 @@ describe('Validations', function () {
       expect(passes).to.equal('validation skipped');
     });
 
+    it('should work fine when field value is under defined range(string)', function *() {
+      const data = {age: 20};
+      const validations = [{name: 'numeric', args: []}];
+      const field = 'age';
+      const message = 'only adults less than 60 years of age are allowed';
+      const args = ['18', 60];
+      const passes = yield Validations.range(data, field, message, args, validations);
+      expect(passes).to.equal('validation passed');
+    });
+
     it('should work fine when field value is under defined range', function *() {
       const data = {age: 20};
+      const validations = [{name: 'numeric', args: []}];
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = [18, 60];
-      const passes = yield Validations.range(data, field, message, args);
+      const passes = yield Validations.range(data, field, message, args, validations);
       expect(passes).to.equal('validation passed');
     });
   });
