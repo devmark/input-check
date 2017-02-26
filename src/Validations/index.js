@@ -70,6 +70,14 @@ const hasRule = function (validations, rules) {
 const numericRules = ['numeric', 'integer'];
 
 /**
+ * The image mimt types
+ *
+ * @return {Array}
+ * @private
+ */
+const imageMimeTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/gif'];
+
+/**
  * @description enforces a field to be confirmed by another.
  * @method email
  * @param  {Object} data
@@ -1228,6 +1236,22 @@ Validations.string = function (data, field, message, args) {
   });
 };
 
+Validations.image = function (data, field, message, args) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+
+    if (!_.isUndefined(fieldValue.mimetype) && imageMimeTypes.indexOf(fieldValue.mimetype) !== -1) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
 /**
  * @description Validate the dimensions of an image matches the given values
  * @method regex
@@ -1251,7 +1275,7 @@ Validations.dimensions = function (data, field, message, args) {
 
       let parameters = {};
       _.each(args, (arg) => {
-        let argValue = arg.split('=');
+        const argValue = arg.split('=');
         parameters[argValue[0]] = argValue[1];
       });
 
