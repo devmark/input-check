@@ -2,7 +2,6 @@
 
 const Validations = require('../src/Validations');
 const chai = require('chai');
-const moment = require('moment');
 const expect = chai.expect;
 
 require('co-mocha');
@@ -145,6 +144,15 @@ describe('Validations', function () {
 
     it('should pass validation when field is defined and accepted using true', function *() {
       const data = {terms: true};
+      const field = 'terms';
+      const message = 'terms must be accepted';
+      const args = [];
+      const passes = yield Validations.accepted(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should pass validation when field is defined and accepted using string', function *() {
+      const data = {terms: 'yes'};
       const field = 'terms';
       const message = 'terms must be accepted';
       const args = [];
@@ -879,99 +887,6 @@ describe('Validations', function () {
       const args = ['password'];
       const passes = yield Validations.same(data, field, message, args);
       expect(passes).to.equal('validation skipped');
-    });
-  });
-
-  describe('equals', function () {
-    it('should thrown an error when value of targeted field is not equal to defined value', function *() {
-      const data = {title: 'foo'};
-      const field = 'title';
-      const message = 'title should be bar';
-      const args = ['bar'];
-      try {
-        const passes = yield Validations.equals(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'title';
-      const message = 'title should be bar';
-      const args = ['bar'];
-      const passes = yield Validations.equals(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = {title: undefined};
-      const field = 'title';
-      const message = 'title should be bar';
-      const args = ['bar'];
-      const passes = yield Validations.equals(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should work fine when value for field matches to defined value', function *() {
-      const data = {title: 'bar'};
-      const field = 'title';
-      const message = 'title should be bar';
-      const args = ['bar'];
-      const passes = yield Validations.equals(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-
-    it('should work fine when then under validation is a number', function *() {
-      const data = {age: 18};
-      const field = 'age';
-      const message = 'age should be 18';
-      const args = ['18'];
-      const passes = yield Validations.equals(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-  });
-
-  describe('notEquals', function () {
-    it('should thrown an error when value of targeted field is equal to defined value', function *() {
-      const data = {title: 'bar'};
-      const field = 'title';
-      const message = 'title should not be bar';
-      const args = ['bar'];
-      try {
-        const passes = yield Validations.notEquals(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'title';
-      const message = 'title should not be bar';
-      const args = ['bar'];
-      const passes = yield Validations.notEquals(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = {title: undefined};
-      const field = 'title';
-      const message = 'title should not be bar';
-      const args = ['bar'];
-      const passes = yield Validations.notEquals(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should work fine when value for field does not matches to defined value', function *() {
-      const data = {title: 'foo'};
-      const field = 'title';
-      const message = 'title should not be bar';
-      const args = ['bar'];
-      const passes = yield Validations.notEquals(data, field, message, args);
-      expect(passes).to.equal('validation passed');
     });
   });
 
@@ -2272,90 +2187,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-  });
-
-  describe('afterOffsetOf', function () {
-    it('should throw an error when date is not after defined offset', function *() {
-      const data = {renewal: new Date()};
-      const field = 'renewal';
-      const message = 'packages are renewed after 12 months';
-      const args = ['12', 'months'];
-      try {
-        const passes = yield Validations.afterOffsetOf(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should work fine when value is after defined offset', function *() {
-      const data = {renewal: moment().add(13, 'months')};
-      const field = 'renewal';
-      const message = 'packages are renewed after 12 months';
-      const args = ['12', 'months'];
-      const passes = yield Validations.afterOffsetOf(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-
-    it('should skip validation when field is not defined', function *() {
-      const data = {};
-      const field = 'renewal';
-      const message = 'packages are renewed after 12 months';
-      const args = ['12', 'months'];
-      const passes = yield Validations.afterOffsetOf(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = {renewal: undefined};
-      const field = 'renewal';
-      const message = 'packages are renewed after 12 months';
-      const args = ['12', 'months'];
-      const passes = yield Validations.afterOffsetOf(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-  });
-
-  describe('beforeOffsetOf', function () {
-    it('should throw an error when date is not before defined offset', function *() {
-      const data = {subscription: new Date()};
-      const field = 'subscription';
-      const message = '12 months old subscriptions are upgradable';
-      const args = ['12', 'months'];
-      try {
-        const passes = yield Validations.beforeOffsetOf(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should work fine when value is before defined offset', function *() {
-      const data = {subscription: moment().subtract(2, 'years')};
-      const field = 'subscription';
-      const message = '12 months old subscriptions are upgradable';
-      const args = ['12', 'months'];
-      const passes = yield Validations.beforeOffsetOf(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-
-    it('should skip validation when field is not defined', function *() {
-      const data = {};
-      const field = 'subscription';
-      const message = '12 months old subscriptions are upgradable';
-      const args = ['12', 'months'];
-      const passes = yield Validations.beforeOffsetOf(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = {subscription: undefined};
-      const field = 'subscription';
-      const message = '12 months old subscriptions are upgradable';
-      const args = ['12', 'months'];
-      const passes = yield Validations.beforeOffsetOf(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('Confirmation', function () {

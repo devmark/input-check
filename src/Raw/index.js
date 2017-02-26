@@ -659,58 +659,6 @@ Raw.after = function (input, afterDate) {
 };
 
 /**
- * @description tells whether input is after certain
- * offset from current date
- * @method afterOffsetOf
- * @param  {String}      input
- * @param  {Number}      number
- * @param  {String}      key
- * @return {Boolean}
- * @example
- *   key can be
- *     years        | y
- *     quarters     | Q
- *     months       | M
- *     weeks        | w
- *     days         | d
- *     hours        | h
- *     minutes      | m
- *     seconds      | s
- *     milliseconds | ms
- * @public
- */
-Raw.afterOffsetOf = function (input, number, key) {
-  const afterDate = moment().add(number, key);
-  return moment(input).isAfter(afterDate);
-};
-
-/**
- * @description tells whether input is before certain
- * offset from current date
- * @method beforeOffsetOf
- * @param  {String}      input
- * @param  {Number}      number
- * @param  {String}      key
- * @return {Boolean}
- * @example
- *   key can be
- *     years        | y
- *     quarters     | Q
- *     months       | M
- *     weeks        | w
- *     days         | d
- *     hours        | h
- *     minutes      | m
- *     seconds      | s
- *     milliseconds | ms
- * @public
- */
-Raw.beforeOffsetOf = function (input, number, key) {
-  const beforeDate = moment().subtract(number, key);
-  return moment(input).isBefore(beforeDate);
-};
-
-/**
  * @description tells whether input is before a given date
  * @method before
  * @param  {String|Object} input

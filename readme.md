@@ -10,14 +10,14 @@ Validator for nodejs and web.
 ## Available Validation Rules
 Below is a list of all available validation rules and their function:
 
-~~accepted~~
+accepted
 ----
 The field under validation must be yes, on, 1, or true. This is useful for validating "Terms of Service" acceptance.
 
 
-active_url
+~~active_url~~
 ----
-The field under validation must have a valid A or AAAA record according to the dns_get_record PHP function.
+The field under validation must have a valid A or AAAA record.
 
 
 after:(date|time)
@@ -52,7 +52,7 @@ The field under validation must be entirely alpha-numeric characters.
 
 array
 ----
-The field under validation must be a PHP array.
+The field under validation must be a array.
 
 
 before:date
@@ -67,7 +67,7 @@ const rules = {
 
 ~~before_or_equal:date~~
 ----
-The field under validation must be a value preceding or equal to the given date. The dates will be passed into the PHP strtotime function.
+The field under validation must be a value preceding or equal to the given date. The dates will be passed into the `momentjs` function.
 
 
 between:min,max
@@ -290,7 +290,7 @@ The field under validation must be a string. If you would like to allow the fiel
 
 ~~timezone~~
 ----
-The field under validation must be a valid timezone identifier according to the  timezone_identifiers_list PHP function.
+The field under validation must be a valid timezone identifier according to the  `momentjs` timezone function.
 
 
 ~~unique:table,column,except,idColumn~~
@@ -304,15 +304,32 @@ The field under validation must be a valid URL.
 
 ### Different With Laravel Validation
 
-Time
+time
 ----
-The field under validation must be a valid Time .
+The field under validation must be a valid Time.
 Support format: `HH:mm:ss`, `HH:mm`, `HH:mm a`
 
+object
+----
+The field under validation must be a valid object.
+
+uuid
+----
+The field under validation must be a valid uuid.
 
 
+includes:foo
+----
+The field under validation must be within value.
 
 
+starts_with:foo
+----
+The field under validation must be start within value.
+
+ends_with:foo
+----
+The field under validation must be end within value.
 
 
 

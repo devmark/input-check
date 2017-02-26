@@ -171,64 +171,6 @@ Validations.after = function (data, field, message, args) {
 };
 
 /**
- * @description makes sure the value of field under validation is
- * after defined offset
- * @method afterOffsetOf
- * @param  {Object}      data
- * @param  {String}      field
- * @param  {String}      message
- * @param  {Array}      args
- * @param  {Function}      get
- * @return {Object}
- * @public
- */
-Validations.afterOffsetOf = function (data, field, message, args) {
-  return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    const offset = Number(args[0]);
-    const key = args[1];
-    if (skippable(fieldValue)) {
-      resolve('validation skipped');
-      return;
-    }
-    if (Raw.afterOffsetOf(fieldValue, offset, key)) {
-      resolve('validation passed');
-      return;
-    }
-    reject(message);
-  });
-};
-
-/**
- * @description makes sure the value of field under validation is
- * before defined offset
- * @method beforeOffsetOf
- * @param  {Object}      data
- * @param  {String}      field
- * @param  {String}      message
- * @param  {Array}      args
- * @param  {Function}      get
- * @return {Object}
- * @public
- */
-Validations.beforeOffsetOf = function (data, field, message, args) {
-  return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    const offset = Number(args[0]);
-    const key = args[1];
-    if (skippable(fieldValue)) {
-      resolve('validation skipped');
-      return;
-    }
-    if (Raw.beforeOffsetOf(fieldValue, offset, key)) {
-      resolve('validation passed');
-      return;
-    }
-    reject(message);
-  });
-};
-
-/**
  * @description makes sure the field under validation is a
  * valid alpha string
  * @method alpha
@@ -1048,62 +990,6 @@ Validations.different = function (data, field, message, args) {
     }
 
     if (targetedFieldValue !== fieldValue) {
-      resolve('validation passed');
-      return;
-    }
-    reject(message);
-  });
-};
-
-/**
- * @description makes sure the value of field under
- * validation is equal to defined value
- * @method equals
- * @param  {Object} data
- * @param  {String} field
- * @param  {String} message
- * @param  {Array} args
- * @return {Object}
- * @public
- */
-Validations.equals = function (data, field, message, args) {
-  const targetedValue = args[0];
-  return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
-      resolve('validation skipped');
-      return;
-    }
-
-    if (String(targetedValue) === String(fieldValue)) { // eslint-disable-line eqeqeq
-      resolve('validation passed');
-      return;
-    }
-    reject(message);
-  });
-};
-
-/**
- * @description makes sure the value of field under
- * validation is not equal to the defined value
- * @method notEquals
- * @param  {Object} data
- * @param  {String} field
- * @param  {String} message
- * @param  {Array} args
- * @return {Object}
- * @public
- */
-Validations.notEquals = function (data, field, message, args) {
-  const targetedValue = args[0];
-  return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
-      resolve('validation skipped');
-      return;
-    }
-
-    if (targetedValue !== fieldValue) {
       resolve('validation passed');
       return;
     }
