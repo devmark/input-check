@@ -922,7 +922,6 @@ Validations.requiredWithoutAll = function (data, field, message, args) {
         return;
       }
     });
-
     if (withOutFieldCounts !== args.length) {
       resolve('validation skipped');
       return;
@@ -1229,6 +1228,58 @@ Validations.string = function (data, field, message, args) {
     }
 
     if (Raw.string(fieldValue)) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
+/**
+ * @description makes sure field under validation is lower case
+ * @method regex
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
+Validations.lowercase = function (data, field, message, args) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+
+    if (String(fieldValue).toLowerCase() === String(fieldValue)) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
+/**
+ * @description makes sure field under validation is upper case
+ * @method regex
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
+Validations.uppercase = function (data, field, message, args) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+
+    if (String(fieldValue).toUpperCase() === String(fieldValue)) {
       resolve('validation passed');
       return;
     }

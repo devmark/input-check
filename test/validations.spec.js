@@ -2305,7 +2305,92 @@ describe('Validations', function () {
       const field = 'username';
       const message = 'Username should be a string';
       const args = [];
-      const passes = yield Validations.string(data, field, message, args);
+      const passes = yield Validations.lowercase(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
+  describe('Lowercase', function () {
+    it('should work fine when field value is lower case string', function *() {
+      const data = {username: 'david'};
+      const field = 'username';
+      const message = 'Username should be a lower case string';
+      const args = [];
+      const passes = yield Validations.lowercase(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should throw an error when the confirmed field is a upper case', function *() {
+      const data = {username: 'Abc'};
+      const field = 'username';
+      const message = 'Username should be a lower case string';
+      const args = [];
+      try {
+        const passes = yield Validations.lowercase(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should skip validation when field value is not defined', function *() {
+      const data = {};
+      const field = 'username';
+      const message = 'Username should be a lower case string';
+      const args = [];
+      const passes = yield Validations.lowercase(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = {username: undefined};
+      const field = 'username';
+      const message = 'Username should be a lower case string';
+      const args = [];
+      const passes = yield Validations.lowercase(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
+
+  describe('Uppercase', function () {
+    it('should work fine when field value is upper case string', function *() {
+      const data = {username: 'DDD'};
+      const field = 'username';
+      const message = 'Username should be a upper case string';
+      const args = [];
+      const passes = yield Validations.uppercase(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should throw an error when the confirmed field is a upper case', function *() {
+      const data = {username: 'aaD'};
+      const field = 'username';
+      const message = 'Username should be a upper case string';
+      const args = [];
+      try {
+        const passes = yield Validations.uppercase(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should skip validation when field value is not defined', function *() {
+      const data = {};
+      const field = 'username';
+      const message = 'Username should be a upper case string';
+      const args = [];
+      const passes = yield Validations.uppercase(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = {username: undefined};
+      const field = 'username';
+      const message = 'Username should be a upper case string';
+      const args = [];
+      const passes = yield Validations.uppercase(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
