@@ -7,6 +7,107 @@ Validator for nodejs and web.
 [![NPM](https://nodei.co/npm/input-check.png?downloads=true)](https://nodei.co/npm/input-check/)
 
 
+
+## Installation
+
+Installing requires node 4.0 or greater with npm installed.
+
+```javascript
+npm install --save input-check
+```
+
+## Basics
+
+```javascript
+const inputCheck = require('input-check')
+```
+
+#### validate (data, rules, [messages])
+Validate method will run the validation cycle, which gets terminated on the first error.
+
+```javascript
+
+const rules = {
+  username: 'required'
+}
+
+const data = {
+  username: null
+}
+
+inputCheck
+.validate(data, rules)
+.then(function () {
+  // validation passed
+})
+.catch(function (errors) {
+  // validation failed
+})
+```
+
+
+## Custom messages
+```javascript
+const messages = {
+  required: 'This field is required to complete the registration process.'
+}
+
+inputCheck
+.validate(data, rules, messages)
+.then(function () {
+  // validation passed
+})
+.catch(function (errors) {
+  // validation failed
+})
+```
+
+## Custom Validation
+```javascript
+const _ = require('lodash');
+
+const unique = function (data, field, message, args) {
+
+  return new Promise(function (resolve, reject) {
+
+    // get value of field under validation
+    const fieldValue = _.get(data, field);
+
+    // resolve if value does not exists, value existence
+    // should be taken care by required rule.
+    if(!fieldValue) {
+      return resolve('validation skipped');
+    }
+
+    // checking for username inside database
+    User
+    .where('username', fieldValue)
+    .then(function (result) {
+      if(result){
+        reject(message);
+      }else{
+        resolve('username does not exists');
+      }
+    });
+    .catch(resolve);
+
+  });
+
+};
+```
+
+- data - It is the actual data object passed to validate method.
+- field - Field is a string value of field under validation.
+- message - Error message to return.
+- args - An array of values your rule is expecting, it may be empty depending upon your rule expectations. For example min:4 will have args array as [4].
+
+```javascript
+inputCheck.extend('unique', unique, 'Field should be unique')
+```
+
+
+
+
 ## Available Validation Rules
 Below is a list of all available validation rules and their function:
 
@@ -23,7 +124,7 @@ The field under validation must have a valid A or AAAA record.
 after:(date|time)
 ----
 The field under validation must be a value after a given date or time. 
-```
+```javascript
 const rules = {
   'createdAt'  : 'date|after:2016-11-11',
   'time'  : 'time|after:14:00:00'
@@ -58,7 +159,7 @@ The field under validation must be a array.
 before:date
 ----
 The field under validation must be a value preceding the given date or time.
-```
+```javascript
 const rules = {
   'createdAt'  : 'date|before:2016-11-11',
   'time'  : 'time|before:14:00:00'
@@ -128,14 +229,14 @@ in:foo,bar,...  (in_array)
 ----
 The field under validation must be included in the given list of values. Since this rule often requires you to implode an array.
 
-```
+```javascript
 const rules = {
   'company'  : 'string|in:google,yahoo,facebook',
 }
 ```
 
 in array example:
-```
+```javascript
 const rules = {
   'company.*'  : 'in:google,yahoo,facebook',
 }
@@ -246,7 +347,7 @@ The field under validation must be present and not empty only when all of the ot
 The given field must match the field under validation.
 
 
-~~size:value~~
+size:value
 ----
 The field under validation must have a size matching the given value. For string data, value corresponds to the number of characters. For numeric data, value corresponds to a given integer value. For an array, size corresponds to the count of the array. For files, size corresponds to the file size in kilobytes.
 
@@ -314,30 +415,37 @@ you may be interested in the following modules:
   * [multer](https://www.npmjs.org/package/multer#readme)
 When you using above modules, you could get the file or image information.
 Then, you must to transfer information below before use file validation:
-```
-const file = {
-  mimetype: 'image/png', // for mime type or other valiations
-  path: '/var/tmp/xxxx.png', // for dimensions 
+```javascript
+const rules = {
+  file: 'file|image'
 }
+
+const data = {
+  file: {
+      mimetype: 'image/png', // for mime type validation 
+      path: '/var/tmp/xxxx.png', // for dimensions 
+  }
+}
+
+inputCheck
+.validate(data, rules)
+.then(function () {
+  // validation passed
+})
+.catch(function (errors) {
+  // validation failed
+})
+
 ```
 
-#### Image 
-Before using validation, you need to download and install [GraphicsMagick](http://www.graphicsmagick.org/) or [ImageMagick](http://www.imagemagick.org/). In Mac OS X, you can simply use [Homebrew](http://mxcl.github.io/homebrew/) and do:
-```
-    brew install imagemagick
-    brew install graphicsmagick
-```
-More details: https://github.com/aheckmann/gm#getting-started
-
-
-~~file~~
+file
 ----
 The field under validation must be a successfully uploaded file.
 
-~~image~~
+image
 ----
 The file under validation must be an image (jpeg, png, bmp, gif, or svg)
-```
+```javascript
 const rules = {
   'file'  : 'image',
 }
@@ -354,74 +462,13 @@ The file under validation must have a MIME type corresponding to one of the list
 dimensions
 ----
 The file under validation must be an image meeting the dimension constraints as specified by the rule's parameters:
-```
+```javascript
 const rules = {
   'image'  : 'dimensions:min_width=100,min_height=200,ratio=3/2',
 }
 ```
 
 Available constraints are: min_width, max_width, min_height, max_height, width, height, ratio.
-
-## Custom messages
-```
-const messages = {
-  required: 'This field is required to complete the registration process.'
-}
-
-inputCheck
-.validate(data, rules, messages)
-.then(function () {
-  // validation passed
-})
-.catch(function (errors) {
-  // validation failed
-})
-```
-
-
-
-## Custom Validation
-```
-const _ = require('lodash');
-
-const unique = function (data, field, message, args) {
-
-  return new Promise(function (resolve, reject) {
-
-    // get value of field under validation
-    const fieldValue = _.get(data, field);
-
-    // resolve if value does not exists, value existence
-    // should be taken care by required rule.
-    if(!fieldValue) {
-      return resolve('validation skipped');
-    }
-
-    // checking for username inside database
-    User
-    .where('username', fieldValue)
-    .then(function (result) {
-      if(result){
-        reject(message);
-      }else{
-        resolve('username does not exists');
-      }
-    });
-    .catch(resolve);
-
-  });
-
-};
-```
-
-- data - It is the actual data object passed to validate method.
-- field - Field is a string value of field under validation.
-- message - Error message to return.
-- args - An array of values your rule is expecting, it may be empty depending upon your rule expectations. For example min:4 will have args array as [4].
-
-```
-inputCheck.extend('unique', unique, 'Field should be unique')
-```
 
 ## License
 
