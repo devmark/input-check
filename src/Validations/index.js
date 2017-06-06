@@ -38,7 +38,6 @@ const skippable = function (value) {
 const getSize = function (fieldValue, hasNumericRule, hasFileRule) {
   hasNumericRule = _.isUndefined(hasNumericRule) ? false : hasNumericRule;
   hasFileRule = _.isUndefined(hasFileRule) ? false : hasFileRule;
-  console.log(hasFileRule);
   if (Raw.numeric(fieldValue) && hasNumericRule) {
     return fieldValue;
   } else if (fieldValue instanceof Array) {
@@ -46,7 +45,6 @@ const getSize = function (fieldValue, hasNumericRule, hasFileRule) {
   } else if (hasFileRule) {
     const stat = fs.statSync(fieldValue.path);
     const size = _.get(stat, 'size');
-    console.log(fieldValue.path, size, ( size / 1024 ).toFixed(2) * 1);
     if (!_.isUndefined(size)) return (size / 1024).toFixed(2) * 1;
   }
 
