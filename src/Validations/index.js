@@ -3,7 +3,7 @@
 const Raw = require('../Raw');
 const Modes = require('../Modes');
 const _ = require('lodash');
-const gm = require('gm');
+const sharp = require('sharp');
 
 /**
  * @module Validations
@@ -68,14 +68,6 @@ const hasRule = function (validations, rules) {
  * @private
  */
 const numericRules = ['numeric', 'integer'];
-
-/**
- * The image mimt types
- *
- * @return {Array}
- * @private
- */
-const imageMimeTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/gif', 'image/svg+xml'];
 
 /**
  * @description enforces a field to be confirmed by another.
@@ -1321,11 +1313,16 @@ Validations.image = function (data, field, message, args) {
       return;
     }
 
-    if (!_.isUndefined(fieldValue.mimetype) && imageMimeTypes.indexOf(fieldValue.mimetype) !== -1) {
-      resolve('validation passed');
-      return;
-    }
-    reject(message);
+    const image = sharp(fieldValue.path);
+    image.metadata()
+      .then(function () {
+        resolve('validation passed');
+        return;
+      })
+      .catch(function (err) {
+        reject(message);
+        return;
+      });
   });
 };
 
@@ -1347,37 +1344,42 @@ Validations.dimensions = function (data, field, message, args) {
       return;
     }
 
-    gm(fieldValue.path).identify(function (err, data) {
-      if (err) return reject(message);
+    const image = sharp(fieldValue.path);
+    image.metadata()
+      .then(function (metadata) {
+        let parameters = {};
+        _.each(args, (arg) => {
+          const argValue = arg.split('=');
+          parameters[argValue[0]] = argValue[1];
+        });
 
-      let parameters = {};
-      _.each(args, (arg) => {
-        const argValue = arg.split('=');
-        parameters[argValue[0]] = argValue[1];
+        if (
+          !_.isUndefined(parameters.width) && parseInt(parameters.width) !== metadata.width ||
+          !_.isUndefined(parameters.min_width) && parseInt(parameters.min_width) > metadata.width ||
+          !_.isUndefined(parameters.max_width) && parseInt(parameters.max_width) < metadata.width ||
+          !_.isUndefined(parameters.height) && parseInt(parameters.height) !== metadata.height ||
+          !_.isUndefined(parameters.min_height) && parseInt(parameters.min_height) > metadata.height ||
+          !_.isUndefined(parameters.max_height) && parseInt(parameters.max_height) < metadata.height
+        ) {
+          reject(message);
+          return;
+        }
+
+        if (!_.isUndefined(parameters.ratio)) {
+          let ratio = parameters.ratio.split('/');
+
+          let numerator = !_.isUndefined(ratio[0]) && ratio[0] !== '' ? parseInt(ratio[0]) : 1;
+          let denominator = !_.isUndefined(ratio[0]) && ratio[1] !== '' ? parseInt(ratio[1]) : 1;
+          if (numerator / denominator !== metadata.width / metadata.height) return reject(message);
+        }
+
+        resolve('validation passed');
+        return;
+      })
+      .catch(function (err) {
+        reject(message);
+        return;
       });
-
-      if (
-        !_.isUndefined(parameters.width) && parseInt(parameters.width) !== data.size.width ||
-        !_.isUndefined(parameters.min_width) && parseInt(parameters.min_width) > data.size.width ||
-        !_.isUndefined(parameters.max_width) && parseInt(parameters.max_width) < data.size.width ||
-        !_.isUndefined(parameters.height) && parseInt(parameters.height) !== data.size.height ||
-        !_.isUndefined(parameters.min_height) && parseInt(parameters.min_height) > data.size.height ||
-        !_.isUndefined(parameters.max_height) && parseInt(parameters.max_height) < data.size.height
-      ) {
-        return reject(message);
-      }
-
-      if (!_.isUndefined(parameters.ratio)) {
-        let ratio = parameters.ratio.split('/');
-
-        let numerator = !_.isUndefined(ratio[0]) && ratio[0] !== '' ? parseInt(ratio[0]) : 1;
-        let denominator = !_.isUndefined(ratio[0]) && ratio[1] !== '' ? parseInt(ratio[1]) : 1;
-        if (numerator / denominator !== data.size.width / data.size.height) return reject(message);
-      }
-
-      resolve('validation passed');
-      return;
-    });
   });
 };
 

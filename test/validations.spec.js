@@ -21,7 +21,7 @@ describe('Validations', function () {
     });
 
     it('should reject promise when field is defined but empty', function *() {
-      const data = {name: ''};
+      const data = { name: '' };
       const field = 'name';
       const message = 'name is required';
       const args = [];
@@ -33,7 +33,7 @@ describe('Validations', function () {
     });
 
     it('should resolve promise when field is defined and has value', function *() {
-      const data = {name: 'virk'};
+      const data = { name: 'virk' };
       const field = 'name';
       const message = 'name is required';
       const args = [];
@@ -42,7 +42,7 @@ describe('Validations', function () {
     });
 
     it('should resolve promise when field is defined and has boolean negative value', function *() {
-      const data = {name: false};
+      const data = { name: false };
       const field = 'name';
       const message = 'name is required';
       const args = [];
@@ -51,7 +51,7 @@ describe('Validations', function () {
     });
 
     it('should resolve promise when field is defined and has numeric value', function *() {
-      const data = {name: 0};
+      const data = { name: 0 };
       const field = 'name';
       const message = 'name is required';
       const args = [];
@@ -62,7 +62,7 @@ describe('Validations', function () {
 
   describe('email', function () {
     it('should return error when field is defined and does not have valid email', function *() {
-      const data = {email: 'virk'};
+      const data = { email: 'virk' };
       const field = 'email';
       const message = 'email must be email';
       const args = [];
@@ -75,7 +75,7 @@ describe('Validations', function () {
     });
 
     it('should return error when field is defined as negative boolean', function *() {
-      const data = {email: false};
+      const data = { email: false };
       const field = 'email';
       const message = 'email must be email';
       const args = [];
@@ -88,7 +88,7 @@ describe('Validations', function () {
     });
 
     it('should return error when field is defined as 0', function *() {
-      const data = {email: 0};
+      const data = { email: 0 };
       const field = 'email';
       const message = 'email must be email';
       const args = [];
@@ -110,7 +110,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when valid email is provided', function *() {
-      const data = {email: 'foo@bar.com'};
+      const data = { email: 'foo@bar.com' };
       const field = 'email';
       const message = 'email must be email';
       const args = [];
@@ -119,7 +119,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when valid email with extension is provided', function *() {
-      const data = {email: 'foo+baz@bar.com'};
+      const data = { email: 'foo+baz@bar.com' };
       const field = 'email';
       const message = 'email must be email';
       const args = [];
@@ -130,7 +130,7 @@ describe('Validations', function () {
 
   describe('Accepted', function () {
     it('should return error when field is defined but not accepted', function *() {
-      const data = {terms: false};
+      const data = { terms: false };
       const field = 'terms';
       const message = 'terms must be accepted';
       const args = [];
@@ -143,7 +143,7 @@ describe('Validations', function () {
     });
 
     it('should pass validation when field is defined and accepted using true', function *() {
-      const data = {terms: true};
+      const data = { terms: true };
       const field = 'terms';
       const message = 'terms must be accepted';
       const args = [];
@@ -152,7 +152,7 @@ describe('Validations', function () {
     });
 
     it('should pass validation when field is defined and accepted using string', function *() {
-      const data = {terms: 'yes'};
+      const data = { terms: 'yes' };
       const field = 'terms';
       const message = 'terms must be accepted';
       const args = [];
@@ -161,7 +161,7 @@ describe('Validations', function () {
     });
 
     it('should pass validation when field is defined and accepted using string', function *() {
-      const data = {terms: 'okay'};
+      const data = { terms: 'okay' };
       const field = 'terms';
       const message = 'terms must be accepted';
       const args = [];
@@ -181,7 +181,7 @@ describe('Validations', function () {
 
   describe('after', function () {
     it('should throw an error when date is not after defined date', function *() {
-      const data = {dob: '1980-11-20'};
+      const data = { dob: '1980-11-20' };
       const field = 'dob';
       const message = 'dob should be after 2010';
       const args = ['2010-11-20'];
@@ -194,7 +194,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is after defined date', function *() {
-      const data = {dob: '2011-01-01'};
+      const data = { dob: '2011-01-01' };
       const field = 'dob';
       const message = 'dob should be after 2010';
       const args = ['2010-11-20'];
@@ -212,7 +212,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when dob is undefined', function *() {
-      const data = {dob: undefined};
+      const data = { dob: undefined };
       const field = 'dob';
       const message = 'dob should be after 2010';
       const args = ['2010-11-20'];
@@ -223,7 +223,7 @@ describe('Validations', function () {
 
   describe('alpha', function () {
     it('should throw an error when value is not alpha', function *() {
-      const data = {username: 'virk1234'};
+      const data = { username: 'virk1234' };
       const field = 'username';
       const message = 'username must contain letters only';
       const args = [];
@@ -236,7 +236,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid alpha', function *() {
-      const data = {username: 'virk'};
+      const data = { username: 'virk' };
       const field = 'username';
       const message = 'username must contain letters only';
       const args = [];
@@ -254,7 +254,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'username must contain letters only';
       const args = [];
@@ -265,7 +265,7 @@ describe('Validations', function () {
 
   describe('before', function () {
     it('should throw an error when date is not before defined date', function *() {
-      const data = {dob: '2012-11-20'};
+      const data = { dob: '2012-11-20' };
       const field = 'dob';
       const message = 'dob should be before 2010';
       const args = ['2010-11-20'];
@@ -278,7 +278,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is before defined date', function *() {
-      const data = {dob: '2009-01-01'};
+      const data = { dob: '2009-01-01' };
       const field = 'dob';
       const message = 'dob should be before 2010';
       const args = ['2010-11-20'];
@@ -296,7 +296,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when dob is undefined', function *() {
-      const data = {dob: undefined};
+      const data = { dob: undefined };
       const field = 'dob';
       const message = 'dob should be before 2010';
       const args = ['2010-11-20'];
@@ -307,7 +307,7 @@ describe('Validations', function () {
 
   describe('date', function () {
     it('should throw an error when field value is not a valid date', function *() {
-      const data = {dob: '10th'};
+      const data = { dob: '10th' };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = [];
@@ -320,7 +320,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value of field is a valid date', function *() {
-      const data = {dob: '2015-10-20'};
+      const data = { dob: '2015-10-20' };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = [];
@@ -329,7 +329,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value of field is a valid date but with a different date format', function *() {
-      const data = {dob: '10/20/2015'};
+      const data = { dob: '10/20/2015' };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = [];
@@ -338,7 +338,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value of field is a valid date but with a iso 8601 date format', function *() {
-      const data = {dob: '2016-11-11T01:02:03+08:00'};
+      const data = { dob: '2016-11-11T01:02:03+08:00' };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = [];
@@ -356,7 +356,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {dob: undefined};
+      const data = { dob: undefined };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = [];
@@ -367,7 +367,7 @@ describe('Validations', function () {
 
   describe('dateFormat', function () {
     it('should throw an error when field value is not a valid date', function *() {
-      const data = {dob: '10th'};
+      const data = { dob: '10th' };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = ['YYYY/MM/DD'];
@@ -380,7 +380,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when field value is a valid date but not according to defined format', function *() {
-      const data = {dob: '10-20-2015'};
+      const data = { dob: '10-20-2015' };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = ['YYYY/MM/DD'];
@@ -393,7 +393,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value is a valid date according to given format', function *() {
-      const data = {dob: '2015/10/20'};
+      const data = { dob: '2015/10/20' };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = ['YYYY/MM/DD'];
@@ -411,7 +411,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field is undefined', function *() {
-      const data = {dob: undefined};
+      const data = { dob: undefined };
       const field = 'dob';
       const message = 'dob should be a valid date';
       const args = ['YYYY/MM/DD'];
@@ -422,7 +422,7 @@ describe('Validations', function () {
 
   describe('time', function () {
     it('should throw an error when field value is a date', function *() {
-      const data = {dob: '2015-11-11'};
+      const data = { dob: '2015-11-11' };
       const field = 'dob';
       const message = 'dob should be a valid time';
       const args = [];
@@ -435,7 +435,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when field value is not a valid time', function *() {
-      const data = {dob: '14:62'};
+      const data = { dob: '14:62' };
       const field = 'dob';
       const message = 'dob should be a valid time';
       const args = [];
@@ -448,7 +448,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value of field is a valid time(HH:mm)', function *() {
-      const data = {dob: '14:23'};
+      const data = { dob: '14:23' };
       const field = 'dob';
       const message = 'dob should be a valid time';
       const args = [];
@@ -457,7 +457,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value of field is a valid time but with a different time format(HH:mm:ss)', function *() {
-      const data = {dob: '15:22:11'};
+      const data = { dob: '15:22:11' };
       const field = 'dob';
       const message = 'dob should be a valid time';
       const args = [];
@@ -466,7 +466,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value of field is a valid time but with a different time format(HH:mm a)', function *() {
-      const data = {dob: '01:02 pm'};
+      const data = { dob: '01:02 pm' };
       const field = 'dob';
       const message = 'dob should be a valid time';
       const args = [];
@@ -484,7 +484,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {dob: undefined};
+      const data = { dob: undefined };
       const field = 'dob';
       const message = 'dob should be a valid time';
       const args = [];
@@ -495,7 +495,7 @@ describe('Validations', function () {
 
   describe('in', function () {
     it('should throw an error when field value is not in defined fields', function *() {
-      const data = {gender: 'Foo'};
+      const data = { gender: 'Foo' };
       const field = 'gender';
       const message = 'select valid gender';
       const args = ['F', 'M', 'O'];
@@ -508,7 +508,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value of field is under one of the defined values', function *() {
-      const data = {gender: 'F'};
+      const data = { gender: 'F' };
       const field = 'gender';
       const message = 'select valid gender';
       const args = ['F', 'M', 'O'];
@@ -517,7 +517,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when expected values are integer', function *() {
-      const data = {marks: 10};
+      const data = { marks: 10 };
       const field = 'marks';
       const message = 'select valid marks';
       const args = [10, 20, 40];
@@ -526,7 +526,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when expected values are integer and args are string', function *() {
-      const data = {marks: 10};
+      const data = { marks: 10 };
       const field = 'marks';
       const message = 'select valid marks';
       const args = ['10', '20', '40'];
@@ -544,7 +544,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {marks: undefined};
+      const data = { marks: undefined };
       const field = 'marks';
       const message = 'select valid marks';
       const args = [10, 20, 40];
@@ -555,7 +555,7 @@ describe('Validations', function () {
 
   describe('notIn', function () {
     it('should throw an error when field value is in defined fields', function *() {
-      const data = {username: 'admin'};
+      const data = { username: 'admin' };
       const field = 'username';
       const message = 'select valid username';
       const args = ['admin', 'super', 'root'];
@@ -568,7 +568,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value is not one of the given options', function *() {
-      const data = {username: 'foo'};
+      const data = { username: 'foo' };
       const field = 'username';
       const message = 'select valid username';
       const args = ['admin', 'super', 'root'];
@@ -586,7 +586,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'select valid username';
       const args = ['admin', 'super', 'root'];
@@ -606,7 +606,7 @@ describe('Validations', function () {
     });
 
     it('should throw error when conditional field exists and field under validation is missing', function *() {
-      const data = {password: 'foobar'};
+      const data = { password: 'foobar' };
       const field = 'password_confirm';
       const message = 'please confirm password';
       const args = ['password'];
@@ -619,7 +619,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when conditional field is null', function *() {
-      const data = {password: null};
+      const data = { password: null };
       const field = 'password_confirm';
       const message = 'please confirm password';
       const args = ['password'];
@@ -628,7 +628,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field under validation is available', function *() {
-      const data = {password: 'foobar', 'password_confirm': 'foobar'};
+      const data = { password: 'foobar', 'password_confirm': 'foobar' };
       const field = 'password_confirm';
       const message = 'please confirm password';
       const args = ['password'];
@@ -648,7 +648,7 @@ describe('Validations', function () {
     });
 
     it('should thrown an error when any of the targeted fields are present but actual field is missing', function *() {
-      const data = {username: 'foo'};
+      const data = { username: 'foo' };
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
@@ -661,7 +661,7 @@ describe('Validations', function () {
     });
 
     it('should thrown an error when any of the targeted fields are present but actual field is value is null', function *() {
-      const data = {username: 'foo', password: null};
+      const data = { username: 'foo', password: null };
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
@@ -674,7 +674,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when any of the targeted fields are present and actual field value is valid', function *() {
-      const data = {username: 'foo', password: 'bar'};
+      const data = { username: 'foo', password: 'bar' };
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
@@ -694,7 +694,7 @@ describe('Validations', function () {
     });
 
     it('should thrown an error when all of the targeted fields are present but actual field is missing', function *() {
-      const data = {username: 'foo', 'email': 'foo@bar.com'};
+      const data = { username: 'foo', 'email': 'foo@bar.com' };
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
@@ -707,7 +707,7 @@ describe('Validations', function () {
     });
 
     it('should thrown an error when all of the targeted fields are present but actual field is value is null', function *() {
-      const data = {username: 'foo', email: 'foo@bar.com', password: null};
+      const data = { username: 'foo', email: 'foo@bar.com', password: null };
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
@@ -720,7 +720,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when all of the targeted fields are present and actual field value is valid', function *() {
-      const data = {username: 'foo', password: 'bar', 'email': 'foo@bar.com'};
+      const data = { username: 'foo', password: 'bar', 'email': 'foo@bar.com' };
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
@@ -729,7 +729,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when any of the targeted fields are missings and actual field value is missing too', function *() {
-      const data = {username: 'foo'};
+      const data = { username: 'foo' };
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
@@ -740,7 +740,7 @@ describe('Validations', function () {
 
   describe('requiredWithoutAny', function () {
     it('should work fine when all the targeted fields are present', function *() {
-      const data = {username: 'foo', email: 'foo@bar.com'};
+      const data = { username: 'foo', email: 'foo@bar.com' };
       const field = 'password';
       const message = 'enter email or password';
       const args = ['username', 'email'];
@@ -749,7 +749,7 @@ describe('Validations', function () {
     });
 
     it('should thrown an error when any of the targeted fields are missing and actual field is missing', function *() {
-      const data = {username: 'foo'};
+      const data = { username: 'foo' };
       const field = 'password';
       const message = 'enter email or password';
       const args = ['username', 'email'];
@@ -762,7 +762,7 @@ describe('Validations', function () {
     });
 
     it('should thrown an error when any of the targeted fields are missing and actual field is value is null', function *() {
-      const data = {username: 'foo', password: null};
+      const data = { username: 'foo', password: null };
       const field = 'password';
       const message = 'enter email or password';
       const args = ['username', 'email'];
@@ -775,7 +775,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when all of the targeted fields are missing and actual field value is valid', function *() {
-      const data = {password: 'foobar'};
+      const data = { password: 'foobar' };
       const field = 'password';
       const message = 'enter email or password';
       const args = ['username', 'email'];
@@ -786,7 +786,7 @@ describe('Validations', function () {
 
   describe('requiredWithoutAll', function () {
     it('should work fine when all the targeted fields are present', function *() {
-      const data = {username: 'foo', email: 'foo@bar.com'};
+      const data = { username: 'foo', email: 'foo@bar.com' };
       const field = 'password';
       const message = 'enter username, email or password';
       const args = ['username', 'email'];
@@ -808,7 +808,7 @@ describe('Validations', function () {
     });
 
     it('should thrown an error when all of the targeted fields are missing and actual field is value is null', function *() {
-      const data = {password: null};
+      const data = { password: null };
       const field = 'password';
       const message = 'enter username, email or password';
       const args = ['username', 'email'];
@@ -821,7 +821,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when all of the targeted fields are missing and actual field value is valid', function *() {
-      const data = {password: 'foobar'};
+      const data = { password: 'foobar' };
       const field = 'password';
       const message = 'enter username, email or password';
       const args = ['username', 'email'];
@@ -830,7 +830,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when any of the targeted fields are missing and actual field value is not present', function *() {
-      const data = {username: 'foo'};
+      const data = { username: 'foo' };
       const field = 'password';
       const message = 'enter username, email or password';
       const args = ['username', 'email'];
@@ -841,7 +841,7 @@ describe('Validations', function () {
 
   describe('same', function () {
     it('should thrown an error when value of targeted field is not equal to defined field', function *() {
-      const data = {password: 'foo', 'password_confirm': 'bar'};
+      const data = { password: 'foo', 'password_confirm': 'bar' };
       const field = 'password_confirm';
       const message = 'password should match';
       const args = ['password'];
@@ -854,7 +854,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when target field does not exists', function *() {
-      const data = {'password_confirm': 'bar'};
+      const data = { 'password_confirm': 'bar' };
       const field = 'password_confirm';
       const message = 'password should match';
       const args = ['password'];
@@ -872,7 +872,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value for both field matches', function *() {
-      const data = {password: 'foo', password_confirm: 'foo'};
+      const data = { password: 'foo', password_confirm: 'foo' };
       const field = 'password_confirm';
       const message = 'password should match';
       const args = ['password'];
@@ -881,7 +881,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when targeted field value exists but actual field does not exists', function *() {
-      const data = {password: 'foo'};
+      const data = { password: 'foo' };
       const field = 'password_confirm';
       const message = 'password should match';
       const args = ['password'];
@@ -892,7 +892,7 @@ describe('Validations', function () {
 
   describe('different', function () {
     it('should thrown an error when value of targeted field is equal to defined field', function *() {
-      const data = {dob: '2011-20-10', 'enrollment_date': '2011-20-10'};
+      const data = { dob: '2011-20-10', 'enrollment_date': '2011-20-10' };
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
       const args = ['dob'];
@@ -905,7 +905,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when target field does not exists', function *() {
-      const data = {'enrollment_date': '2011-20-10'};
+      const data = { 'enrollment_date': '2011-20-10' };
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
       const args = ['dob'];
@@ -923,7 +923,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value for both fields are different', function *() {
-      const data = {dob: '2011-20-10', 'enrollment_date': '2011-20-20'};
+      const data = { dob: '2011-20-10', 'enrollment_date': '2011-20-20' };
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
       const args = ['dob'];
@@ -932,7 +932,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when targeted field value exists but actual field does not exists', function *() {
-      const data = {dob: '2011-20-10'};
+      const data = { dob: '2011-20-10' };
       const field = 'enrollment_date';
       const message = 'enrollment date should be different from dob';
       const args = ['dob'];
@@ -943,7 +943,7 @@ describe('Validations', function () {
 
   describe('range', function () {
     it('should throw an error when value of field is less then defined range', function *() {
-      const data = {age: 16};
+      const data = { age: 16 };
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = [18, 60];
@@ -956,7 +956,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when value of field is greater then defined range', function *() {
-      const data = {age: 61};
+      const data = { age: 61 };
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = [18, 60];
@@ -969,7 +969,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when min value is not defined', function *() {
-      const data = {age: 61};
+      const data = { age: 61 };
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = [null, 60];
@@ -982,7 +982,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when max value is not defined', function *() {
-      const data = {age: 61};
+      const data = { age: 61 };
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = [18];
@@ -1004,7 +1004,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {age: undefined};
+      const data = { age: undefined };
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = [18, 60];
@@ -1013,8 +1013,8 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value is under defined range(string)', function *() {
-      const data = {age: 20};
-      const validations = [{name: 'numeric', args: []}];
+      const data = { age: 20 };
+      const validations = [{ name: 'numeric', args: [] }];
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = ['18', 60];
@@ -1023,8 +1023,8 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value is under defined range', function *() {
-      const data = {age: 20};
-      const validations = [{name: 'numeric', args: []}];
+      const data = { age: 20 };
+      const validations = [{ name: 'numeric', args: [] }];
       const field = 'age';
       const message = 'only adults less than 60 years of age are allowed';
       const args = [18, 60];
@@ -1036,8 +1036,8 @@ describe('Validations', function () {
   describe('min', function () {
     describe('number', function () {
       it('should throw error when length of string field is less than defined length', function *() {
-        const data = {price: '4'};
-        const validations = [{name: 'string', args: []}];
+        const data = { price: '4' };
+        const validations = [{ name: 'string', args: [] }];
         const field = 'price';
         const message = 'price should be at least 3';
         const args = [3];
@@ -1050,8 +1050,8 @@ describe('Validations', function () {
       });
 
       it('should throw error when length of field is less than defined length', function *() {
-        const data = {price: 2};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: 2 };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be at least 3';
         const args = [3];
@@ -1065,7 +1065,7 @@ describe('Validations', function () {
 
       it('should skip validation when field does not exists', function *() {
         const data = {};
-        const validations = [{name: 'numeric', args: []}];
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6 characters';
         const args = [6];
@@ -1074,8 +1074,8 @@ describe('Validations', function () {
       });
 
       it('should skip validation when field value is undefined', function *() {
-        const data = {price: undefined};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: undefined };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6 characters';
         const args = [6];
@@ -1084,8 +1084,8 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is greater than defined length', function *() {
-        const data = {price: 10};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: 10 };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6';
         const args = [6];
@@ -1094,8 +1094,8 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is equal to the defined length', function *() {
-        const data = {price: 6};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: 6 };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6';
         const args = [6];
@@ -1106,7 +1106,7 @@ describe('Validations', function () {
     });
     describe('string: ', function () {
       it('should throw error when length of field is less than defined length', function *() {
-        const data = {password: 'foo'};
+        const data = { password: 'foo' };
         const field = 'password';
         const message = 'password should be over 6 characters';
         const args = [6];
@@ -1119,7 +1119,7 @@ describe('Validations', function () {
       });
 
       it('should throw error when length of field as number is less than defined length', function *() {
-        const data = {password: 990};
+        const data = { password: 990 };
         const field = 'password';
         const message = 'password should be over 6 characters';
         const args = [6];
@@ -1141,7 +1141,7 @@ describe('Validations', function () {
       });
 
       it('should skip validation when field value is undefined', function *() {
-        const data = {password: undefined};
+        const data = { password: undefined };
         const field = 'password';
         const message = 'password should be over 6 characters';
         const args = [6];
@@ -1150,7 +1150,7 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is greater than defined length', function *() {
-        const data = {password: 'foobarbaz'};
+        const data = { password: 'foobarbaz' };
         const field = 'password';
         const message = 'password should be over 6 characters';
         const args = [6];
@@ -1159,7 +1159,7 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is equal to the defined length', function *() {
-        const data = {password: 'foobar'};
+        const data = { password: 'foobar' };
         const field = 'password';
         const message = 'password should be over 6 characters';
         const args = [6];
@@ -1169,7 +1169,7 @@ describe('Validations', function () {
     });
     describe('array: ', function () {
       it('should throw error when length of field as array is less than defined length', function *() {
-        const data = {user: ['1', '2', '3']};
+        const data = { user: ['1', '2', '3'] };
         const field = 'user';
         const message = 'user should be less than 4 length';
         const args = [4];
@@ -1182,7 +1182,7 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is equal to the defined length', function *() {
-        const data = {user: ['1', '2']};
+        const data = { user: ['1', '2'] };
         const field = 'user';
         const message = 'user should be less than 2 length';
         const args = [2];
@@ -1195,8 +1195,8 @@ describe('Validations', function () {
   describe('max', function () {
     describe('number', function () {
       it('should throw error when length of string field is less than defined length', function *() {
-        const data = {price: '0.5'};
-        const validations = [{name: 'string', args: []}];
+        const data = { price: '0.5' };
+        const validations = [{ name: 'string', args: [] }];
         const field = 'price';
         const message = 'price should be max 1';
         const args = [1];
@@ -1209,8 +1209,8 @@ describe('Validations', function () {
       });
 
       it('should throw error when length of field is greater than defined length', function *() {
-        const data = {price: 2};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: 2 };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be at least 3';
         const args = [1];
@@ -1224,7 +1224,7 @@ describe('Validations', function () {
 
       it('should skip validation when field does not exists', function *() {
         const data = {};
-        const validations = [{name: 'numeric', args: []}];
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6 characters';
         const args = [6];
@@ -1233,8 +1233,8 @@ describe('Validations', function () {
       });
 
       it('should skip validation when field value is undefined', function *() {
-        const data = {price: undefined};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: undefined };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6 characters';
         const args = [6];
@@ -1243,8 +1243,8 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is less than defined length', function *() {
-        const data = {price: 10};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: 10 };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6';
         const args = [11];
@@ -1253,8 +1253,8 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is equal to the defined length', function *() {
-        const data = {price: 6};
-        const validations = [{name: 'numeric', args: []}];
+        const data = { price: 6 };
+        const validations = [{ name: 'numeric', args: [] }];
         const field = 'price';
         const message = 'price should be over 6';
         const args = [6];
@@ -1265,7 +1265,7 @@ describe('Validations', function () {
     });
     describe('string: ', function () {
       it('should throw error when length of field is greater than defined length', function *() {
-        const data = {password: 'foobarbaz'};
+        const data = { password: 'foobarbaz' };
         const field = 'password';
         const message = 'password should be less than 6 characters';
         const args = [6];
@@ -1278,7 +1278,7 @@ describe('Validations', function () {
       });
 
       it('should throw error when length of field as number is greater than defined length', function *() {
-        const data = {password: 1990909990};
+        const data = { password: 1990909990 };
         const field = 'password';
         const message = 'password should be less than 6 characters';
         const args = [6];
@@ -1300,7 +1300,7 @@ describe('Validations', function () {
       });
 
       it('should skip validation when field value is undefined', function *() {
-        const data = {password: undefined};
+        const data = { password: undefined };
         const field = 'password';
         const message = 'password should be less than 6 characters';
         const args = [6];
@@ -1309,7 +1309,7 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is less than defined length', function *() {
-        const data = {password: 'foo'};
+        const data = { password: 'foo' };
         const field = 'password';
         const message = 'password should be less than 6 characters';
         const args = [6];
@@ -1318,7 +1318,7 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is equal to the defined length', function *() {
-        const data = {password: 'foobar'};
+        const data = { password: 'foobar' };
         const field = 'password';
         const message = 'password should be less than 6 characters';
         const args = [6];
@@ -1328,7 +1328,7 @@ describe('Validations', function () {
     });
     describe('array: ', function () {
       it('should throw error when length of field as array is greater than defined length', function *() {
-        const data = {user: ['1', '2', '3']};
+        const data = { user: ['1', '2', '3'] };
         const field = 'user';
         const message = 'user should be less than 2 length';
         const args = [2];
@@ -1341,7 +1341,7 @@ describe('Validations', function () {
       });
 
       it('should work fine when length of value of field is equal to the defined length', function *() {
-        const data = {user: ['1', '2']};
+        const data = { user: ['1', '2'] };
         const field = 'user';
         const message = 'user should be less than 2 length';
         const args = [2];
@@ -1353,7 +1353,7 @@ describe('Validations', function () {
 
   describe('includes', function () {
     it('should throw an error when string does not include defined substring', function *() {
-      const data = {dpath: 'foo/bar'};
+      const data = { dpath: 'foo/bar' };
       const field = 'dpath';
       const message = 'path should include app directory';
       const args = ['app'];
@@ -1375,7 +1375,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {dpath: undefined};
+      const data = { dpath: undefined };
       const field = 'dpath';
       const message = 'path should include app directory';
       const args = ['app'];
@@ -1384,7 +1384,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value includes given string', function *() {
-      const data = {dpath: '/app/bar'};
+      const data = { dpath: '/app/bar' };
       const field = 'dpath';
       const message = 'path should include app directory';
       const args = ['app'];
@@ -1395,7 +1395,7 @@ describe('Validations', function () {
 
   describe('startsWith', function () {
     it('should throw an error when string does not startsWith defined substring', function *() {
-      const data = {username: 'foo'};
+      const data = { username: 'foo' };
       const field = 'username';
       const message = 'username should start with D';
       const args = ['D'];
@@ -1417,7 +1417,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'username should start with D';
       const args = ['D'];
@@ -1426,7 +1426,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value startsWith given string', function *() {
-      const data = {username: 'Doe'};
+      const data = { username: 'Doe' };
       const field = 'username';
       const message = 'username should start with D';
       const args = ['D'];
@@ -1437,7 +1437,7 @@ describe('Validations', function () {
 
   describe('endsWith', function () {
     it('should throw an error when string does not endsWith defined substring', function *() {
-      const data = {username: 'foo'};
+      const data = { username: 'foo' };
       const field = 'username';
       const message = 'username should end with e';
       const args = ['e'];
@@ -1459,7 +1459,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'username should end with e';
       const args = ['e'];
@@ -1468,7 +1468,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value endsWith given string', function *() {
-      const data = {username: 'Doe'};
+      const data = { username: 'Doe' };
       const field = 'username';
       const message = 'username should end with e';
       const args = ['e'];
@@ -1479,7 +1479,7 @@ describe('Validations', function () {
 
   describe('regex', function () {
     it('should throw an error when value does not match regex', function *() {
-      const data = {email: 'foo'};
+      const data = { email: 'foo' };
       const field = 'email';
       const message = 'email should match given regex';
       const args = [/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0, 66})\.([a-z]{2, 6}(?:\.[a-z]{2})?)$/];
@@ -1501,7 +1501,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when fields value is undefined', function *() {
-      const data = {country: undefined};
+      const data = { country: undefined };
       const field = 'country';
       const message = 'country should be India with I as uppercase';
       const args = ['[a-z]'];
@@ -1510,7 +1510,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field value satisfies regex pattern', function *() {
-      const data = {country: 'India'};
+      const data = { country: 'India' };
       const field = 'country';
       const message = 'country should be India with I as uppercase';
       const args = ['[a-z]', 'i'];
@@ -1521,7 +1521,7 @@ describe('Validations', function () {
 
   describe('alphaNumeric', function () {
     it('should throw an error when value is not alpha numeric', function *() {
-      const data = {username: 'virk@123'};
+      const data = { username: 'virk@123' };
       const field = 'username';
       const message = 'username must letters and numbers only';
       const args = [];
@@ -1534,7 +1534,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid alpha numeric', function *() {
-      const data = {username: 'virk123'};
+      const data = { username: 'virk123' };
       const field = 'username';
       const message = 'username must letters and numbers only';
       const args = [];
@@ -1552,7 +1552,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'username must letters and numbers only';
       const args = [];
@@ -1563,7 +1563,7 @@ describe('Validations', function () {
 
   describe('array', function () {
     it('should throw an error when value is not a valid array', function *() {
-      const data = {users: 'foo'};
+      const data = { users: 'foo' };
       const field = 'users';
       const message = 'users list must be an array';
       const args = [];
@@ -1576,7 +1576,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid array', function *() {
-      const data = {users: ['doe', 'foo', 'bar']};
+      const data = { users: ['doe', 'foo', 'bar'] };
       const field = 'users';
       const message = 'users list must be an array';
       const args = [];
@@ -1594,7 +1594,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {users: undefined};
+      const data = { users: undefined };
       const field = 'users';
       const message = 'users list must be an array';
       const args = [];
@@ -1603,7 +1603,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when value of field is an object', function *() {
-      const data = {users: {name: 'foo'}};
+      const data = { users: { name: 'foo' } };
       const field = 'users';
       const message = 'users list must be an array';
       const args = [];
@@ -1618,7 +1618,7 @@ describe('Validations', function () {
 
   describe('url', function () {
     it('should throw an error when value is not a valid url', function *() {
-      const data = {github_profile: 'foo'};
+      const data = { github_profile: 'foo' };
       const field = 'github_profile';
       const message = 'github profile must point to a valid url ';
       const args = [];
@@ -1631,7 +1631,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid url', function *() {
-      const data = {github_profile: 'http://github.com/thetutlage'};
+      const data = { github_profile: 'http://github.com/thetutlage' };
       const field = 'github_profile';
       const message = 'github profile must point to a valid url ';
       const args = [];
@@ -1649,7 +1649,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {github_profile: undefined};
+      const data = { github_profile: undefined };
       const field = 'github_profile';
       const message = 'github profile must point to a valid url ';
       const args = [];
@@ -1660,7 +1660,7 @@ describe('Validations', function () {
 
   describe('uuid', function () {
     it('should throw an error when value is not a valid uuid', function *() {
-      const data = {github_profile: 'foo'};
+      const data = { github_profile: 'foo' };
       const field = 'github_profile';
       const message = 'github profile must point to a valid uuid ';
       const args = [];
@@ -1673,7 +1673,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid uuid', function *() {
-      const data = {github_profile: '135b71db-ee7d-43ea-9f6d-16227fa82ad9'};
+      const data = { github_profile: '135b71db-ee7d-43ea-9f6d-16227fa82ad9' };
       const field = 'github_profile';
       const message = 'github profile must point to a valid uuid ';
       const args = [];
@@ -1691,7 +1691,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {github_profile: undefined};
+      const data = { github_profile: undefined };
       const field = 'github_profile';
       const message = 'github profile must point to a valid uuid ';
       const args = [];
@@ -1702,7 +1702,7 @@ describe('Validations', function () {
 
   describe('ip', function () {
     it('should throw an error when value is not a valid ip address', function *() {
-      const data = {user_ip: '909090909'};
+      const data = { user_ip: '909090909' };
       const field = 'user_ip';
       const message = 'invalid ip address';
       const args = [];
@@ -1715,7 +1715,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid ip address', function *() {
-      const data = {user_ip: '127.0.0.1'};
+      const data = { user_ip: '127.0.0.1' };
       const field = 'user_ip';
       const message = 'invalid ip address';
       const args = [];
@@ -1733,7 +1733,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {user_ip: undefined};
+      const data = { user_ip: undefined };
       const field = 'user_ip';
       const message = 'invalid ip address';
       const args = [];
@@ -1744,7 +1744,7 @@ describe('Validations', function () {
 
   describe('integer', function () {
     it('should throw an error when value is a string', function *() {
-      const data = {marks: '10'};
+      const data = { marks: '10' };
       const field = 'marks';
       const message = 'marks should be an integer';
       const args = [];
@@ -1757,7 +1757,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when value is a float', function *() {
-      const data = {marks: 10.1};
+      const data = { marks: 10.1 };
       const field = 'marks';
       const message = 'marks should be an integer';
       const args = [];
@@ -1779,7 +1779,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {marks: undefined};
+      const data = { marks: undefined };
       const field = 'marks';
       const message = 'marks should be an integer';
       const args = [];
@@ -1788,7 +1788,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is an integer', function *() {
-      const data = {marks: 10};
+      const data = { marks: 10 };
       const field = 'marks';
       const message = 'marks should be an integer';
       const args = [];
@@ -1797,7 +1797,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is an integer with zero precision', function *() {
-      const data = {marks: 10.0};
+      const data = { marks: 10.0 };
       const field = 'marks';
       const message = 'marks should be an integer';
       const args = [];
@@ -1808,7 +1808,7 @@ describe('Validations', function () {
 
   describe('boolean', function () {
     it('should throw an error when value is not a boolean', function *() {
-      const data = {is_admin: 20};
+      const data = { is_admin: 20 };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1821,7 +1821,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when value is a string', function *() {
-      const data = {is_admin: '20'};
+      const data = { is_admin: '20' };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1843,7 +1843,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {is_admin: undefined};
+      const data = { is_admin: undefined };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1852,7 +1852,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid positive boolean', function *() {
-      const data = {is_admin: true};
+      const data = { is_admin: true };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1861,7 +1861,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid negative boolean', function *() {
-      const data = {is_admin: false};
+      const data = { is_admin: false };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1870,7 +1870,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid positive numeric boolean', function *() {
-      const data = {is_admin: 1};
+      const data = { is_admin: 1 };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1879,7 +1879,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid negative numeric boolean', function *() {
-      const data = {is_admin: 0};
+      const data = { is_admin: 0 };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1888,7 +1888,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a string representation of 0', function *() {
-      const data = {is_admin: '0'};
+      const data = { is_admin: '0' };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1897,7 +1897,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a string representation of 1', function *() {
-      const data = {is_admin: '1'};
+      const data = { is_admin: '1' };
       const field = 'is_admin';
       const message = 'admin identifier should be boolean indicator';
       const args = [];
@@ -1908,7 +1908,7 @@ describe('Validations', function () {
 
   describe('object', function () {
     it('should throw an error when value is not a valid object', function *() {
-      const data = {profile: 'foo'};
+      const data = { profile: 'foo' };
       const field = 'profile';
       const message = 'profile must be an object';
       const args = [];
@@ -1921,7 +1921,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid object', function *() {
-      const data = {profile: {username: 'foo'}};
+      const data = { profile: { username: 'foo' } };
       const field = 'profile';
       const message = 'profile must be an object';
       const args = [];
@@ -1939,7 +1939,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {profile: undefined};
+      const data = { profile: undefined };
       const field = 'profile';
       const message = 'profile must be an object';
       const args = [];
@@ -1948,7 +1948,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when value of field is an array', function *() {
-      const data = {profile: ['username']};
+      const data = { profile: ['username'] };
       const field = 'profile';
       const message = 'profile must be an object';
       const args = [];
@@ -1963,7 +1963,7 @@ describe('Validations', function () {
 
   describe('numeric', function () {
     it('should throw an error when value is not a valid numeric', function *() {
-      const data = {profile: 'foo'};
+      const data = { profile: 'foo' };
       const field = 'profile';
       const message = 'profile must be an number';
       const args = [];
@@ -1976,7 +1976,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid numeric', function *() {
-      const data = {profile: 123};
+      const data = { profile: 123 };
       const field = 'profile';
       const message = 'profile must be an number';
       const args = [];
@@ -1985,7 +1985,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid numeric(string)', function *() {
-      const data = {profile: '213'};
+      const data = { profile: '213' };
       const field = 'profile';
       const message = 'profile must be an number';
       const args = [];
@@ -2003,7 +2003,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {profile: undefined};
+      const data = { profile: undefined };
       const field = 'profile';
       const message = 'profile must be an number';
       const args = [];
@@ -2015,7 +2015,7 @@ describe('Validations', function () {
 
   describe('json', function () {
     it('should throw an error when value is not a valid json string', function *() {
-      const data = {profile: 'foo'};
+      const data = { profile: 'foo' };
       const field = 'profile';
       const message = 'profile must be in json';
       const args = [];
@@ -2028,7 +2028,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid json string', function *() {
-      const data = {profile: JSON.stringify({name: 'foo'})};
+      const data = { profile: JSON.stringify({ name: 'foo' }) };
       const field = 'profile';
       const message = 'profile must be in json';
       const args = [];
@@ -2046,7 +2046,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {profile: undefined};
+      const data = { profile: undefined };
       const field = 'profile';
       const message = 'profile must be in json';
       const args = [];
@@ -2057,7 +2057,7 @@ describe('Validations', function () {
 
   describe('ipv4', function () {
     it('should throw an error when value is not a valid ipv4 address', function *() {
-      const data = {user_ip: '2001:DB8:0:0:1::1'};
+      const data = { user_ip: '2001:DB8:0:0:1::1' };
       const field = 'user_ip';
       const message = 'invalid ipv4 address';
       const args = [];
@@ -2070,7 +2070,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid ipv4 address', function *() {
-      const data = {user_ip: '127.0.0.1'};
+      const data = { user_ip: '127.0.0.1' };
       const field = 'user_ip';
       const message = 'invalid ipv4 address';
       const args = [];
@@ -2088,7 +2088,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {user_ip: undefined};
+      const data = { user_ip: undefined };
       const field = 'user_ip';
       const message = 'invalid ipv4 address';
       const args = [];
@@ -2099,7 +2099,7 @@ describe('Validations', function () {
 
   describe('ipv6', function () {
     it('should throw an error when value is not a valid ipv6 address', function *() {
-      const data = {user_ip: '127.0.0.1'};
+      const data = { user_ip: '127.0.0.1' };
       const field = 'user_ip';
       const message = 'invalid ipv6 address';
       const args = [];
@@ -2112,7 +2112,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when value is a valid ipv6 address', function *() {
-      const data = {user_ip: '2001:DB8:0:0:1::1'};
+      const data = { user_ip: '2001:DB8:0:0:1::1' };
       const field = 'user_ip';
       const message = 'invalid ipv6 address';
       const args = [];
@@ -2130,7 +2130,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {user_ip: undefined};
+      const data = { user_ip: undefined };
       const field = 'user_ip';
       const message = 'invalid ipv6 address';
       const args = [];
@@ -2150,7 +2150,7 @@ describe('Validations', function () {
     });
 
     it('should throw error when conditional field value matches and field under validation is missing', function *() {
-      const data = {country: 'US'};
+      const data = { country: 'US' };
       const field = 'state';
       const message = 'state is required';
       const args = ['country', 'US'];
@@ -2163,7 +2163,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when of value of conditional field does not match', function *() {
-      const data = {country: 'UK'};
+      const data = { country: 'UK' };
       const field = 'state';
       const message = 'state is required';
       const args = ['country', 'US'];
@@ -2172,7 +2172,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when conditional field is null', function *() {
-      const data = {country: null};
+      const data = { country: null };
       const field = 'state';
       const message = 'state is required';
       const args = ['country', 'US'];
@@ -2181,7 +2181,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field under validation is available and conditional field value match', function *() {
-      const data = {country: 'US', state: 'NewYork'};
+      const data = { country: 'US', state: 'NewYork' };
       const field = 'state';
       const message = 'state is required';
       const args = ['country', 'US'];
@@ -2190,7 +2190,7 @@ describe('Validations', function () {
     });
 
     it('should work fine when field under validation is available and conditional field value match with boolean', function *() {
-      const data = {country: false, state: 'NewYork'};
+      const data = { country: false, state: 'NewYork' };
       const field = 'state';
       const message = 'state is required';
       const args = ['country', false];
@@ -2202,7 +2202,7 @@ describe('Validations', function () {
 
   describe('Confirmation', function () {
     it('should work fine when the confirmed field is equal', function *() {
-      const data = {password: '1234', password_confirmation: '1234'};
+      const data = { password: '1234', password_confirmation: '1234' };
       const field = 'password';
       const message = 'Password does not match!';
       const args = [];
@@ -2211,7 +2211,7 @@ describe('Validations', function () {
     });
 
     it("should throw an error when then confirmed field isn't equal", function *() {
-      const data = {password: '1234', password_confirmation: '12345'};
+      const data = { password: '1234', password_confirmation: '12345' };
       const field = 'password';
       const message = 'Password does not match!';
       const args = [];
@@ -2224,7 +2224,7 @@ describe('Validations', function () {
     });
 
     it("should throw an error when then confirmed field isn't equal", function *() {
-      const data = {password: '1234', password_confirmation: undefined};
+      const data = { password: '1234', password_confirmation: undefined };
       const field = 'password';
       const message = 'Password does not match!';
       const args = [];
@@ -2246,7 +2246,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {password: undefined, password_confirmation: undefined};
+      const data = { password: undefined, password_confirmation: undefined };
       const field = 'password';
       const message = 'Password does not match!';
       const args = [];
@@ -2257,7 +2257,7 @@ describe('Validations', function () {
 
   describe('String', function () {
     it('should work fine when the confirmed field is string', function *() {
-      const data = {username: 'david'};
+      const data = { username: 'david' };
       const field = 'username';
       const message = 'Username should be a string';
       const args = [];
@@ -2266,7 +2266,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when the confirmed field is a number', function *() {
-      const data = {username: 1234};
+      const data = { username: 1234 };
       const field = 'username';
       const message = 'Username should be a string';
       const args = [];
@@ -2279,7 +2279,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when the confirmed field is a boolean', function *() {
-      const data = {username: true};
+      const data = { username: true };
       const field = 'username';
       const message = 'Username should be a string';
       const args = [];
@@ -2301,7 +2301,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'Username should be a string';
       const args = [];
@@ -2312,7 +2312,7 @@ describe('Validations', function () {
 
   describe('Lowercase', function () {
     it('should work fine when field value is lower case string', function *() {
-      const data = {username: 'david'};
+      const data = { username: 'david' };
       const field = 'username';
       const message = 'Username should be a lower case string';
       const args = [];
@@ -2321,7 +2321,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when the confirmed field is a upper case', function *() {
-      const data = {username: 'Abc'};
+      const data = { username: 'Abc' };
       const field = 'username';
       const message = 'Username should be a lower case string';
       const args = [];
@@ -2343,7 +2343,7 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'Username should be a lower case string';
       const args = [];
@@ -2352,10 +2352,9 @@ describe('Validations', function () {
     });
   });
 
-
   describe('Uppercase', function () {
     it('should work fine when field value is upper case string', function *() {
-      const data = {username: 'DDD'};
+      const data = { username: 'DDD' };
       const field = 'username';
       const message = 'Username should be a upper case string';
       const args = [];
@@ -2364,7 +2363,7 @@ describe('Validations', function () {
     });
 
     it('should throw an error when the confirmed field is a upper case', function *() {
-      const data = {username: 'aaD'};
+      const data = { username: 'aaD' };
       const field = 'username';
       const message = 'Username should be a upper case string';
       const args = [];
@@ -2386,13 +2385,393 @@ describe('Validations', function () {
     });
 
     it('should skip validation when field value is undefined', function *() {
-      const data = {username: undefined};
+      const data = { username: undefined };
       const field = 'username';
       const message = 'Username should be a upper case string';
       const args = [];
       const passes = yield Validations.uppercase(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
+  });
+
+  describe('mimetypes', function () {
+    it('should work fine when field value mimetype is match', function *() {
+      const data = {
+        file: {
+          mimetype: 'image/png',
+          path: './test/sample-file/200x200.png',
+        }
+      };
+      const field = 'file';
+      const message = 'file should be a correct mimetype';
+      const args = ['image/png'];
+      const passes = yield Validations.mimetypes(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should throw an error when value is not image', function *() {
+      const data = {
+        file: {
+          mimetype: 'image/png',
+          path: './test/sample-file/file.txt',
+        }
+      };
+      const field = 'file';
+      const message = 'file should be a correct mimetype';
+      const args = ['image/jpeg'];
+      try {
+        const passes = yield Validations.mimetypes(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should skip validation when field value is not defined', function *() {
+      const data = {};
+      const field = 'file';
+      const message = 'file should be a correct mimetype';
+      const args = [];
+      const passes = yield Validations.mimetypes(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = { file: undefined };
+      const field = 'file';
+      const message = 'file should be a correct mimetype';
+      const args = [];
+      const passes = yield Validations.mimetypes(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
+  describe('images', function () {
+    it('should work fine when field value is image', function *() {
+      const data = {
+        file: {
+          mimetype: 'image/png',
+          path: './test/sample-file/200x200.png',
+        }
+      };
+      const field = 'file';
+      const message = 'file should be a image';
+      const args = [];
+      const passes = yield Validations.image(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should throw an error when value is not image', function *() {
+      const data = {
+        file: {
+          mimetype: 'image/png',
+          path: './test/sample-file/file.txt',
+        }
+      };
+      const field = 'file';
+      const message = 'file should be a image';
+      const args = [];
+      try {
+        const passes = yield Validations.image(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should skip validation when field value is not defined', function *() {
+      const data = {};
+      const field = 'file';
+      const message = 'File should be a image';
+      const args = [];
+      const passes = yield Validations.image(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = { file: undefined };
+      const field = 'file';
+      const message = 'File should be a image';
+      const args = [];
+      const passes = yield Validations.image(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
+  describe('dimensions', function () {
+    it('should work fine when field value is image', function *() {
+      const data = {
+        file: {
+          mimetype: 'image/png',
+          path: './test/sample-file/200x200.png',
+        }
+      };
+      const field = 'file';
+      const message = 'file should has correct image dimensions';
+      const args = ['min_width=0'];
+      const passes = yield Validations.dimensions(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should throw an error when value is not image', function *() {
+      const data = {
+        file: {
+          mimetype: 'image/png',
+          path: './test/sample-file/file.txt',
+        }
+      };
+      const field = 'file';
+      const message = 'file should has correct image dimensions';
+      const args = ['min_width=201'];
+      try {
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should throw an error when value args is not correct', function *() {
+      const data = {
+        file: {
+          mimetype: 'image/png',
+          path: './test/sample-file/200x200.png',
+        }
+      };
+      const field = 'file';
+      const message = 'file should has correct image dimensions';
+      const args = ['width='];
+      try {
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should skip validation when field value is not defined', function *() {
+      const data = {};
+      const field = 'file';
+      const message = 'File should be a image';
+      const args = [];
+      const passes = yield Validations.dimensions(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = { file: undefined };
+      const field = 'file';
+      const message = 'File should be a image';
+      const args = [];
+      const passes = yield Validations.dimensions(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    describe('min_width part', function () {
+      it('should work fine when field value width is match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['min_width=0'];
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should throw an error when value width is not match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['min_width=201'];
+        try {
+          const passes = yield Validations.dimensions(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+    });
+
+    describe('max_width part', function () {
+      it('should work fine when field value width is match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['max_width=200'];
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should throw an error when value width is not match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['max_width=199'];
+        try {
+          const passes = yield Validations.dimensions(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+    });
+
+    describe('width part', function () {
+      it('should work fine when field value width is match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['width=200'];
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should throw an error when value width is not match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['width=201'];
+        try {
+          const passes = yield Validations.dimensions(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+    });
+
+
+    describe('min_height part', function () {
+      it('should work fine when field value height is match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['min_height=0'];
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should throw an error when value height is not match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['min_height=201'];
+        try {
+          const passes = yield Validations.dimensions(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+    });
+
+    describe('max_height part', function () {
+      it('should work fine when field value height is match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['max_height=200'];
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should throw an error when value height is not match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['max_height=199'];
+        try {
+          const passes = yield Validations.dimensions(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+    });
+
+    describe('height part', function () {
+      it('should work fine when field value height is match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['height=200'];
+        const passes = yield Validations.dimensions(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
+
+      it('should throw an error when value height is not match', function *() {
+        const data = {
+          file: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const field = 'file';
+        const message = 'file should has correct image dimensions';
+        const args = ['height=201'];
+        try {
+          const passes = yield Validations.dimensions(data, field, message, args);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+    });
+
   });
 
 });
