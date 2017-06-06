@@ -1,11 +1,16 @@
 language: node_js
-compiler:
-  - clang
-  - gcc
 node_js:
 - node
 - 6
 - 5
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 sudo: false
 install:
 - npm install
