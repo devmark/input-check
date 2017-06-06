@@ -4,6 +4,7 @@ const Raw = require('../Raw');
 const Modes = require('../Modes');
 const _ = require('lodash');
 const sharp = require('sharp');
+const fs = require('fs');
 
 /**
  * @module Validations
@@ -30,17 +31,25 @@ const skippable = function (value) {
  * @method getSize
  * @param  {Mixed}  fieldValue
  * @param  {Boolean}  hasNumericRule
+ * @param  {Boolean}  hasFileRule
  * @return {Boolean}
  * @private
  */
-const getSize = function (fieldValue, hasNumericRule) {
+const getSize = function (fieldValue, hasNumericRule, hasFileRule) {
   hasNumericRule = _.isUndefined(hasNumericRule) ? false : hasNumericRule;
-
+  hasFileRule = _.isUndefined(hasFileRule) ? false : hasFileRule;
+  console.log(hasFileRule);
   if (Raw.numeric(fieldValue) && hasNumericRule) {
     return fieldValue;
   } else if (fieldValue instanceof Array) {
     return fieldValue.length;
+  } else if (hasFileRule) {
+    const stat = fs.statSync(fieldValue.path);
+    const size = _.get(stat, 'size');
+    console.log(fieldValue.path, size, ( size / 1024 ).toFixed(2) * 1);
+    if (!_.isUndefined(size)) return (size / 1024).toFixed(2) * 1;
   }
+
   return String(fieldValue).length;
 };
 
@@ -68,6 +77,14 @@ const hasRule = function (validations, rules) {
  * @private
  */
 const numericRules = ['numeric', 'integer'];
+
+/**
+ * The file related validation rules.
+ *
+ * @return {Array}
+ * @private
+ */
+const fileRules = ['file', 'image'];
 
 /**
  * @description enforces a field to be confirmed by another.
@@ -1051,7 +1068,8 @@ Validations.min = function (data, field, message, args, validations) {
     }
 
     const isNumeric = hasRule(validations, numericRules);
-    if (Number(getSize(fieldValue, isNumeric)) >= Number(args[0])) {
+    const isFile = hasRule(validations, fileRules);
+    if (Number(getSize(fieldValue, isNumeric, isFile)) >= Number(args[0])) {
       resolve('validation passed');
       return;
     }
@@ -1079,7 +1097,8 @@ Validations.max = function (data, field, message, args, validations) {
     }
 
     const isNumeric = hasRule(validations, numericRules);
-    if (Number(getSize(fieldValue, isNumeric)) <= Number(args[0])) {
+    const isFile = hasRule(validations, fileRules);
+    if (Number(getSize(fieldValue, isNumeric, isFile)) <= Number(args[0])) {
       resolve('validation passed');
       return;
     }
@@ -1280,6 +1299,68 @@ Validations.uppercase = function (data, field, message, args) {
 };
 
 /**
+ * @description Validate the input has correct size
+ * @method max
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
+Validations.size = function (data, field, message, args, validations) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+    const isNumeric = hasRule(validations, numericRules);
+    const isFile = hasRule(validations, fileRules);
+    if (Number(getSize(fieldValue, isNumeric, isFile)) === Number(args[0])) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
+/**
+ * @description Validate the input is a file
+ * @method regex
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
+Validations.file = function (data, field, message, args) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue)) {
+      resolve('validation skipped');
+      return;
+    }
+
+    if (!_.isObject(fieldValue) && !_.has(fieldValue, 'mimetype') && !_.has(fieldValue, 'path')) {
+      reject(message);
+      return;
+    }
+
+    fs.exists(fieldValue.path, (exists) => {
+      if (!exists) {
+        reject(message);
+        return;
+      }
+
+      resolve('validation passed');
+      return;
+    });
+  });
+};
+
+/**
  * @description Validate the mime type of an file matches the given values
  * @method regex
  * @param  {Object} data
@@ -1305,6 +1386,16 @@ Validations.mimetypes = function (data, field, message, args) {
   });
 };
 
+/**
+ * @description Validate the file is a image type
+ * @method regex
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @return {Object}
+ * @public
+ */
 Validations.image = function (data, field, message, args) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);

@@ -1190,6 +1190,45 @@ describe('Validations', function () {
         expect(passes).to.equal('validation passed');
       });
     });
+
+    describe('file:', function () {
+      it('should throw error when length of field as file is less than defined length', function *() {
+        const data = {
+          user: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const validations = [{ name: 'file', args: [] }];
+        const field = 'user';
+        const message = 'user should be less than 5.04 KB';
+
+        // size is 5162 bytes, 5.04 KB
+        const args = [5.05];
+        try {
+          const passes = yield Validations.min(data, field, message, args, validations);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {
+          user: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const validations = [{ name: 'file', args: [] }];
+        const field = 'user';
+        const message = 'user should be less than 5.04 KB';
+        // size is 5162 bytes, 5.04 KB
+        const args = [5.04];
+        const passes = yield Validations.min(data, field, message, args, validations);
+        expect(passes).to.equal('validation passed');
+      });
+    });
   });
 
   describe('max', function () {
@@ -1346,6 +1385,45 @@ describe('Validations', function () {
         const message = 'user should be less than 2 length';
         const args = [2];
         const passes = yield Validations.max(data, field, message, args);
+        expect(passes).to.equal('validation passed');
+      });
+    });
+
+    describe('file:', function () {
+      it('should throw error when length of field as file is less than defined length', function *() {
+        const data = {
+          user: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const validations = [{ name: 'file', args: [] }];
+        const field = 'user';
+        const message = 'user should be less than 5.04 KB';
+
+        // size is 5162 bytes, 5.04 KB
+        const args = [5.03];
+        try {
+          const passes = yield Validations.max(data, field, message, args, validations);
+          expect(passes).not.to.exist();
+        } catch (e) {
+          expect(e).to.equal(message);
+        }
+      });
+
+      it('should work fine when length of value of field is equal to the defined length', function *() {
+        const data = {
+          user: {
+            mimetype: 'image/png',
+            path: './test/sample-file/200x200.png',
+          }
+        };
+        const validations = [{ name: 'file', args: [] }];
+        const field = 'user';
+        const message = 'user should be less than 5.04 KB';
+        // size is 5162 bytes, 5.04 KB
+        const args = [5.04];
+        const passes = yield Validations.max(data, field, message, args, validations);
         expect(passes).to.equal('validation passed');
       });
     });
@@ -2442,6 +2520,58 @@ describe('Validations', function () {
       const message = 'file should be a correct mimetype';
       const args = [];
       const passes = yield Validations.mimetypes(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
+  describe('file', function () {
+    it('should work fine when field value is file', function *() {
+      const data = {
+        file: {
+          mimetype: 'file/png',
+          path: './test/sample-file/200x200.png',
+        }
+      };
+      const field = 'file';
+      const message = 'file should be a file';
+      const args = [];
+      const passes = yield Validations.file(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should throw an error when value is not file', function *() {
+      const data = {
+        file: {
+          mimetype: 'file/png',
+          path: './test/sample-file/invalidss.txt',
+        }
+      };
+      const field = 'file';
+      const message = 'file should be a file';
+      const args = [];
+      try {
+        const passes = yield Validations.file(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should skip validation when field value is not defined', function *() {
+      const data = {};
+      const field = 'file';
+      const message = 'File should be a file';
+      const args = [];
+      const passes = yield Validations.file(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when field value is undefined', function *() {
+      const data = { file: undefined };
+      const field = 'file';
+      const message = 'File should be a file';
+      const args = [];
+      const passes = yield Validations.file(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
