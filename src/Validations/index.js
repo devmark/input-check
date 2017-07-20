@@ -19,11 +19,17 @@ let Validations = module.exports = {};
  * should be validated using required.
  * @method skippable
  * @param  {Mixed}  value
+ * @param  {Boolean} nullable
  * @return {Boolean}
  * @private
  */
-const skippable = function (value) {
-  return Modes.get() === 'strict' ? typeof (value) === undefined : !Raw.existy(value);
+const skippable = function (value, nullable) {
+  if (Modes.get() === 'strict') return typeof value === 'undefined';
+
+  if (typeof value === 'string') {
+    return value.length === 0;
+  }
+  return typeof value === 'undefined' || (value === null && nullable === true);
 };
 
 /**
@@ -91,14 +97,15 @@ const fileRules = ['file', 'image'];
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.confirmed = function (data, field, message, args) {
+Validations.confirmed = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
     const confirmedFieldValue = _.get(data, `${field}_confirmation`);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -117,13 +124,14 @@ Validations.confirmed = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.email = function (data, field, message, args) {
+Validations.email = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -142,13 +150,14 @@ Validations.email = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.accepted = function (data, field, message, args) {
+Validations.accepted = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -167,13 +176,14 @@ Validations.accepted = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.after = function (data, field, message, args) {
+Validations.after = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -193,13 +203,14 @@ Validations.after = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.alpha = function (data, field, message, args) {
+Validations.alpha = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -219,13 +230,14 @@ Validations.alpha = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.alphaNumeric = function (data, field, message, args) {
+Validations.alphaNumeric = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -245,13 +257,14 @@ Validations.alphaNumeric = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.array = function (data, field, message, args) {
+Validations.array = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -271,13 +284,14 @@ Validations.array = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.url = function (data, field, message, args) {
+Validations.url = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -297,13 +311,14 @@ Validations.url = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.uuid = function (data, field, message, args) {
+Validations.uuid = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -323,13 +338,14 @@ Validations.uuid = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.numeric = function (data, field, message, args) {
+Validations.numeric = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -350,13 +366,14 @@ Validations.numeric = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.object = function (data, field, message, args) {
+Validations.object = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -376,13 +393,14 @@ Validations.object = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.json = function (data, field, message, args) {
+Validations.json = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -402,13 +420,14 @@ Validations.json = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.ip = function (data, field, message, args) {
+Validations.ip = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -428,13 +447,14 @@ Validations.ip = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.ipv4 = function (data, field, message, args) {
+Validations.ipv4 = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -454,13 +474,14 @@ Validations.ipv4 = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.ipv6 = function (data, field, message, args) {
+Validations.ipv6 = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -480,13 +501,14 @@ Validations.ipv6 = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.integer = function (data, field, message, args) {
+Validations.integer = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -507,13 +529,14 @@ Validations.integer = function (data, field, message, args) {
  * @param  {String} message
  * @param  {Array} args
  * @return {Object}
+ * @return {validations
  * @example
  *   accepts : true,false,0,1,"0","1"
  */
-Validations.boolean = function (data, field, message, args) {
+Validations.boolean = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -543,13 +566,14 @@ Validations.boolean = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.before = function (data, field, message, args) {
+Validations.before = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -569,13 +593,14 @@ Validations.before = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.date = function (data, field, message, args) {
+Validations.date = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -595,14 +620,15 @@ Validations.date = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.dateFormat = function (data, field, message, args) {
+Validations.dateFormat = function (data, field, message, args, validations) {
   const format = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -622,14 +648,15 @@ Validations.dateFormat = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.time = function (data, field, message, args) {
+Validations.time = function (data, field, message, args, validations) {
   const timeFormat = ['HH:mm:ss', 'HH:mm', 'HH:mm a'];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -649,13 +676,14 @@ Validations.time = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Boolean}
  * @public
  */
-Validations.in = function (data, field, message, args) {
+Validations.in = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -675,13 +703,14 @@ Validations.in = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.notIn = function (data, field, message, args) {
+Validations.notIn = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -702,10 +731,11 @@ Validations.notIn = function (data, field, message, args) {
  * @param  {String} message
  * @param  {Array} args
  * @return {Object}
+ * @return {validations
  * @see  Raw.empty
  * @public
  */
-Validations.required = function (data, field, message, args) {
+Validations.required = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
     if (!Raw.empty(fieldValue)) {
@@ -725,14 +755,15 @@ Validations.required = function (data, field, message, args) {
  * @param  {String}   message
  * @param  {Array}   args
  * @param  {Function}   get
+ * @param  {Function}  validations
  * @return {Object}
  * @public
  */
-Validations.requiredIf = function (data, field, message, args) {
+Validations.requiredIf = function (data, field, message, args, validations) {
   const withField = args[0];
   return new Promise(function (resolve, reject) {
     const withFieldValue = _.get(data, withField);
-    if (!withFieldValue) {
+    if (skippable(withFieldValue)) {
       resolve('validation skipped');
       return;
     }
@@ -755,10 +786,11 @@ Validations.requiredIf = function (data, field, message, args) {
  * @param  {String}   message
  * @param  {Array}   args
  * @param  {Function}   get
+ * @param  {Function}  validations
  * @return {Object}
  * @public
  */
-Validations.requiredWhen = function (data, field, message, args) {
+Validations.requiredWhen = function (data, field, message, args, validations) {
   const withField = args[0];
   const withfieldExpectedValue = args[1];
   return new Promise(function (resolve, reject) {
@@ -786,10 +818,11 @@ Validations.requiredWhen = function (data, field, message, args) {
  * @param  {String}        message
  * @param  {Array}        args
  * @param  {Function}        get
+ * @param  {Function}       validations
  * @return {Object}
  * @public
  */
-Validations.requiredWithAny = function (data, field, message, args) {
+Validations.requiredWithAny = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let withFieldCount = 0;
 
@@ -799,7 +832,7 @@ Validations.requiredWithAny = function (data, field, message, args) {
      */
     args.forEach(function (item) {
       const itemValue = _.get(data, item);
-      if (itemValue) {
+      if (!skippable(itemValue)) {
         withFieldCount++;
         return;
       }
@@ -828,10 +861,11 @@ Validations.requiredWithAny = function (data, field, message, args) {
  * @param  {String}        message
  * @param  {Array}         args
  * @param  {Function}      get
+ * @param  {Function}     validations
  * @return {Object}
  * @public
  */
-Validations.requiredWithAll = function (data, field, message, args) {
+Validations.requiredWithAll = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let withFieldsCount = 0;
 
@@ -841,7 +875,7 @@ Validations.requiredWithAll = function (data, field, message, args) {
      */
     args.forEach(function (item) {
       const itemValue = _.get(data, item);
-      if (itemValue) {
+      if (!skippable(itemValue)) {
         withFieldsCount++;
       }
     });
@@ -869,10 +903,11 @@ Validations.requiredWithAll = function (data, field, message, args) {
  * @param  {String}        message
  * @param  {Array}        args
  * @param  {Function}        get
+ * @param  {Function}       validations
  * @return {Object}
  * @public
  */
-Validations.requiredWithoutAny = function (data, field, message, args) {
+Validations.requiredWithoutAny = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let withOutFieldCounts = 0;
 
@@ -882,7 +917,7 @@ Validations.requiredWithoutAny = function (data, field, message, args) {
      */
     args.forEach(function (item) {
       const itemValue = _.get(data, item);
-      if (!itemValue) {
+      if (skippable(itemValue)) {
         withOutFieldCounts++;
         return;
       }
@@ -911,10 +946,11 @@ Validations.requiredWithoutAny = function (data, field, message, args) {
  * @param  {String}        message
  * @param  {Array}         args
  * @param  {Function}      get
+ * @param  {Function}     validations
  * @return {Object}
  * @public
  */
-Validations.requiredWithoutAll = function (data, field, message, args) {
+Validations.requiredWithoutAll = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let withOutFieldCounts = 0;
 
@@ -924,7 +960,7 @@ Validations.requiredWithoutAll = function (data, field, message, args) {
      */
     args.forEach(function (item) {
       const itemValue = _.get(data, item);
-      if (!itemValue) {
+      if (skippable(itemValue)) {
         withOutFieldCounts++;
         return;
       }
@@ -951,10 +987,11 @@ Validations.requiredWithoutAll = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.same = function (data, field, message, args) {
+Validations.same = function (data, field, message, args, validations) {
   const targetedField = args[0];
   return new Promise(function (resolve, reject) {
     const targetedFieldValue = _.get(data, targetedField);
@@ -964,7 +1001,7 @@ Validations.same = function (data, field, message, args) {
     }
 
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -985,10 +1022,11 @@ Validations.same = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.different = function (data, field, message, args) {
+Validations.different = function (data, field, message, args, validations) {
   const targetedField = args[0];
   return new Promise(function (resolve, reject) {
     const targetedFieldValue = _.get(data, targetedField);
@@ -998,7 +1036,7 @@ Validations.different = function (data, field, message, args) {
     }
 
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1031,7 +1069,7 @@ Validations.range = function (data, field, message, args, validations) {
     }
 
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1060,7 +1098,7 @@ Validations.range = function (data, field, message, args, validations) {
 Validations.min = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1089,7 +1127,7 @@ Validations.min = function (data, field, message, args, validations) {
 Validations.max = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1112,14 +1150,15 @@ Validations.max = function (data, field, message, args, validations) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.includes = function (data, field, message, args) {
+Validations.includes = function (data, field, message, args, validations) {
   const substring = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1140,14 +1179,15 @@ Validations.includes = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.startsWith = function (data, field, message, args) {
+Validations.startsWith = function (data, field, message, args, validations) {
   const substring = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1168,14 +1208,15 @@ Validations.startsWith = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.endsWith = function (data, field, message, args) {
+Validations.endsWith = function (data, field, message, args, validations) {
   const substring = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1196,15 +1237,16 @@ Validations.endsWith = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.regex = function (data, field, message, args) {
+Validations.regex = function (data, field, message, args, validations) {
   const regexExp = args[0];
   const regexFlags = args[1];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1225,13 +1267,14 @@ Validations.regex = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.string = function (data, field, message, args) {
+Validations.string = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1251,13 +1294,14 @@ Validations.string = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.lowercase = function (data, field, message, args) {
+Validations.lowercase = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1277,13 +1321,14 @@ Validations.lowercase = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.uppercase = function (data, field, message, args) {
+Validations.uppercase = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1309,7 +1354,7 @@ Validations.uppercase = function (data, field, message, args) {
 Validations.size = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1330,13 +1375,14 @@ Validations.size = function (data, field, message, args, validations) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.file = function (data, field, message, args) {
+Validations.file = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1365,13 +1411,14 @@ Validations.file = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.mimetypes = function (data, field, message, args) {
+Validations.mimetypes = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1391,13 +1438,14 @@ Validations.mimetypes = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.image = function (data, field, message, args) {
+Validations.image = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1422,13 +1470,14 @@ Validations.image = function (data, field, message, args) {
  * @param  {String} field
  * @param  {String} message
  * @param  {Array} args
+ * @param  {Array} validations
  * @return {Object}
  * @public
  */
-Validations.dimensions = function (data, field, message, args) {
+Validations.dimensions = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue)) {
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
       resolve('validation skipped');
       return;
     }
@@ -1469,6 +1518,26 @@ Validations.dimensions = function (data, field, message, args) {
         reject(message);
         return;
       });
+  });
+};
+
+
+/**
+ * @description field value is allow null type
+ * values
+ * @method nullable
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @param  {Array} validations
+ * @return {Boolean}
+ * @public
+ */
+Validations.nullable = function (data, field, message, args, validations) {
+  return new Promise(function (resolve, reject) {
+    resolve('validation skipped');
+    return;
   });
 };
 

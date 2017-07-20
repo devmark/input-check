@@ -323,6 +323,39 @@ describe('Validator', function () {
     }
   });
 
+  it('should fail validation when null is passed for any rule without nullable', function *() {
+    const rules = {
+      select: 'array'
+    };
+
+    const body = {
+      select: null
+    };
+
+    try {
+      const passed = yield Validator.validate(body, rules);
+      expect(passed).not.to.exist();
+    } catch (e) {
+      expect(e).to.be.an('array');
+      expect(e[0].field).to.equal('select');
+      expect(e[0].validation).to.equal('array');
+    }
+  });
+
+  it('should not fail validation when null is passed for any rule with nullable', function *() {
+    const rules = {
+      select: 'array|nullable'
+    };
+
+    const body = {
+      select: null
+    };
+
+    const passed = yield Validator.validate(body, rules);
+    expect(passed).to.be.an('object');
+    expect(passed).to.have.property('select');
+  });
+
 
   it('should fail validation when empty string is passed for any rule with strict mode on', function *() {
     Validator.setMode('strict');
@@ -620,20 +653,6 @@ describe('Validator', function () {
     };
 
     Validator.setMode('strict');
-    const passed = yield Validator.validate(data, rules);
-    expect(passed).deep.equal(data);
-  });
-
-  it('should skip the string validation when value is null', function *() {
-    const rules = {
-      description: 'string'
-    };
-
-    const data = {
-      description: null
-    };
-
-    Validator.setMode('normal');
     const passed = yield Validator.validate(data, rules);
     expect(passed).deep.equal(data);
   });

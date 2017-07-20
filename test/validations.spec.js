@@ -7,6 +7,7 @@ const expect = chai.expect;
 require('co-mocha');
 
 describe('Validations', function () {
+
   describe('required', function () {
     it('should reject promise when field is not defined', function *() {
       const data = {};
@@ -618,13 +619,17 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when conditional field is null', function *() {
+    it('should throw error when conditional field is null and field under validation is missing', function *() {
       const data = { password: null };
       const field = 'password_confirm';
       const message = 'please confirm password';
       const args = ['password'];
-      const passes = yield Validations.requiredIf(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
+      try {
+        const passes = yield Validations.requiredIf(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
     });
 
     it('should work fine when field under validation is available', function *() {

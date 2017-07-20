@@ -1,6 +1,7 @@
 'use strict';
 
 const moment = require('moment');
+const _ = require('lodash');
 
 /**
  * list of creepy regex, no they work nice
@@ -243,7 +244,7 @@ Raw.empty = function (input) {
     case 'object' :
       return Object.keys(input).length === 0;
     case 'string' :
-      return input.length === 0;
+      return (_.trim(input)).length === 0;
   }
 };
 
