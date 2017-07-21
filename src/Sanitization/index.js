@@ -17,7 +17,7 @@ const filters = require('./filters');
  *
  * @private
  */
-function _getSanitizationMethod (filter) {
+function _getSanitizationMethod(filter) {
   return _.get(filters, _.camelCase(filter), function () {
     throw new Error(`${filter} is not defined as a filter`);
   });
@@ -35,7 +35,7 @@ function _getSanitizationMethod (filter) {
  *
  * @private
  */
-function _sanitizeFieldValue (data, rules, field) {
+function _sanitizeFieldValue(data, rules, field) {
   return _.reduce(rules, (value, rule) => {
     const ruleMethod = _getSanitizationMethod(rule.name);
     return ruleMethod(value, rule.args);
@@ -58,6 +58,22 @@ Sanitization.sanitize = function (data, rules) {
     _.set(result, field, _sanitizeFieldValue(data, rules, field));
     return result;
   }, clonedSet);
+};
+
+/**
+ * sanitizes all a given set of data with given a rule.
+ *
+ * @param  {Object} data
+ * @param  {String} rule
+ *
+ * @return {Object}
+ */
+Sanitization.sanitizeAll = function (data, rule) {
+  const newRules = {};
+  _.each(data, (result, field) => {
+    _.set(newRules, field, rule);
+  });
+  return Sanitization.sanitize(data, newRules);
 };
 
 Sanitization.sanitizor = filters;

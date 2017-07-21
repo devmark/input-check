@@ -16,7 +16,7 @@ let SanitizationFilters = module.exports = {};
  * @param  {String}                 domain
  * @return {Boolean}
  */
-function _isNormalizeableProvider (domain) {
+function _isNormalizeableProvider(domain) {
   return domains.test(domain);
 }
 
@@ -27,7 +27,7 @@ function _isNormalizeableProvider (domain) {
  * @return {Boolean}
  * @private
  */
-function _isHotmail (domain) {
+function _isHotmail(domain) {
   return /hotmail\.com$/.test(domain);
 }
 
@@ -41,7 +41,7 @@ function _isHotmail (domain) {
  * @return {Mixed}
  * @private
  */
-function _replace (value, pattern, subsitute) {
+function _replace(value, pattern, subsitute) {
   if (typeof (value) !== 'string') {
     return value;
   }
@@ -74,14 +74,14 @@ SanitizationFilters.escape = function (value) {
   }
 
   return (
-  value
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\//g, '&#x2F;')
-    .replace(/\//g, '&#96;')
+    value
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\//g, '&#x2F;')
+      .replace(/\//g, '&#96;')
   );
 };
 
@@ -262,4 +262,12 @@ SanitizationFilters.slug = function (value) {
 
 SanitizationFilters.humanize = function (value) {
   return inflect.humanize(value);
+};
+
+SanitizationFilters.trim = _.trim;
+SanitizationFilters.ltrim = _.trimStart;
+SanitizationFilters.rtrim = _.trimEnd;
+
+SanitizationFilters.emptyStringToNull = function (value) {
+  return typeof (value) === 'string' && value === '' ? null : value;
 };

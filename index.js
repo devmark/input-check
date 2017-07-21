@@ -11,5 +11,6 @@ module.exports = {
   'is.extend': Validator.is.extend,
   sanitize: Sanitization.sanitize,
   sanitizor: Sanitization.sanitizor,
+  sanitizeAll: Sanitization.sanitizeAll,
   'sanitizor.extend': Sanitization.sanitizor.extend
 };

@@ -17,8 +17,8 @@ describe('SanitizationFilters', function () {
   });
 
   it('should return actual value when value is not string', function () {
-    const sanitized = SanitizationFilters.escape({name: 'foo'});
-    expect(sanitized).deep.equal({name: 'foo'});
+    const sanitized = SanitizationFilters.escape({ name: 'foo' });
+    expect(sanitized).deep.equal({ name: 'foo' });
   });
 
   it('should accept the first arguement only', function () {
@@ -279,6 +279,27 @@ describe('SanitizationFilters', function () {
     const sanitized = SanitizationFilters.humanize('dot case');
     expect(sanitized).to.equal('Dot case');
   });
+
+  it('should trim a given value', function () {
+    const sanitized = SanitizationFilters.trim('  dot `` ');
+    expect(sanitized).to.equal('dot ``');
+  });
+
+  it('should ltrim a given value', function () {
+    const sanitized = SanitizationFilters.ltrim('  dot  ');
+    expect(sanitized).to.equal('dot  ');
+  });
+
+  it('should rtrim a given value', function () {
+    const sanitized = SanitizationFilters.rtrim('  dot  ');
+    expect(sanitized).to.equal('  dot');
+  });
+
+  it('should emptyStringToNull a given value', function () {
+    const sanitized = SanitizationFilters.emptyStringToNull('');
+    expect(sanitized).to.equal(null);
+  });
+
 });
 
 describe('Sanitization', function () {
@@ -294,7 +315,7 @@ describe('Sanitization', function () {
     };
 
     const sanitized = Sanitization.sanitize(data, rules);
-    expect(sanitized).deep.equal({email: 'barsneaky@gmail.com', body: 'Hello'});
+    expect(sanitized).deep.equal({ email: 'barsneaky@gmail.com', body: 'Hello' });
   });
 
   it('should sanitize nested values using sanitize method', function () {
@@ -311,7 +332,7 @@ describe('Sanitization', function () {
     };
 
     const sanitized = Sanitization.sanitize(data, rules);
-    expect(sanitized).deep.equal({profile: {email: 'barsneaky@gmail.com'}, body: 'Hello'});
+    expect(sanitized).deep.equal({ profile: { email: 'barsneaky@gmail.com' }, body: 'Hello' });
   });
 
   it('should run multiple sanizations on a given field', function () {
@@ -328,7 +349,10 @@ describe('Sanitization', function () {
     };
 
     const sanitized = Sanitization.sanitize(data, rules);
-    expect(sanitized).deep.equal({profile: {email: 'barsneaky@gmail.com'}, body: 'hello-world'});
+    expect(sanitized).deep.equal({
+      profile: { email: 'barsneaky@gmail.com' },
+      body: 'hello-world'
+    });
   });
 
   it('should pass arguments to sanization methods', function () {
@@ -345,7 +369,10 @@ describe('Sanitization', function () {
     };
 
     const sanitized = Sanitization.sanitize(data, rules);
-    expect(sanitized).deep.equal({profile: {email: 'bar.sneaky@gmail.com'}, body: 'hello-world'});
+    expect(sanitized).deep.equal({
+      profile: { email: 'bar.sneaky@gmail.com' },
+      body: 'hello-world'
+    });
   });
 
   it('should be able to sanitize values with array expressions', function () {
@@ -365,7 +392,7 @@ describe('Sanitization', function () {
     };
 
     const sanitized = Sanitization.sanitize(data, rules);
-    expect(sanitized).deep.equal({profile: [{email: 'barsneaky@gmail.com'}, {email: 'barfoo@gmail.com'}]});
+    expect(sanitized).deep.equal({ profile: [{ email: 'barsneaky@gmail.com' }, { email: 'barfoo@gmail.com' }] });
   });
 
   it('should be able to sanitize values with flat array expressions', function () {
@@ -378,7 +405,7 @@ describe('Sanitization', function () {
     };
 
     const sanitized = Sanitization.sanitize(data, rules);
-    expect(sanitized).deep.equal({emails: ['barsneaky@gmail.com', 'barfoo@gmail.com']});
+    expect(sanitized).deep.equal({ emails: ['barsneaky@gmail.com', 'barfoo@gmail.com'] });
   });
 
   it('should return the original data back when there are no matching filters found', function () {
@@ -406,7 +433,7 @@ describe('Sanitization', function () {
 
     const sanitized = Sanitization.sanitize(data, rules);
     expect(data).deep.equal(data);
-    expect(sanitized).deep.equal({email: 'barsneaky@gmail.com', body: 'foo'});
+    expect(sanitized).deep.equal({ email: 'barsneaky@gmail.com', body: 'foo' });
   });
 
   it('should throw an error when sanization rule method is not found', function () {
@@ -440,7 +467,24 @@ describe('Sanitization', function () {
       name: 'upper_case'
     };
     const sanitized = Sanitization.sanitize(data, rules);
-    expect(sanitized).deep.equal({name: 'DOE'});
+    expect(sanitized).deep.equal({ name: 'DOE' });
+  });
+
+  describe('sanitizorAll', function () {
+    it('should be able to sanitize values with all', function () {
+      const data = {
+        name: '   abc   ',
+        age: '   100   ',
+      };
+
+      const rule = 'to_int';
+
+      const sanitized = Sanitization.sanitizeAll(data, rule);
+      expect(sanitized).deep.equal({
+        name: NaN,
+        age: 100,
+      });
+    });
   });
 
   describe('Regression', function () {
