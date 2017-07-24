@@ -264,9 +264,17 @@ SanitizationFilters.humanize = function (value) {
   return inflect.humanize(value);
 };
 
-SanitizationFilters.trim = _.trim;
-SanitizationFilters.ltrim = _.trimStart;
-SanitizationFilters.rtrim = _.trimEnd;
+SanitizationFilters.trim = function (value) {
+  return _.trim(value);
+};
+
+SanitizationFilters.ltrim = function (value) {
+  return _.trimStart(value);
+};
+
+SanitizationFilters.rtrim = function (value) {
+  return _.trimEnd(value);
+};
 
 SanitizationFilters.emptyStringToNull = function (value) {
   return typeof (value) === 'string' && value === '' ? null : value;
