@@ -17,5 +17,5 @@ module.exports = {
   sanitizeAll: Sanitization.sanitizeAll,
   'sanitizor.extend': Sanitization.sanitizor.extend,
 
-  transform: Validator.Transform,
+  transform: Transform,
 };
