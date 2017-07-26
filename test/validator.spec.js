@@ -146,12 +146,13 @@ describe('Validator', function () {
       });
     };
     Validator.extend('phone', phone, 'Enter valid phone number');
-    Validator.extendImplicit('phone');
 
     const rules = {
       contact_no: 'phone'
     };
-    const body = {};
+    const body = {
+      contact_no: 'a'
+    };
 
     try {
       const validated = yield Validator.validate(body, rules);
@@ -357,28 +358,31 @@ describe('Validator', function () {
     expect(passed).to.have.property('select');
   });
 
+  it('should skip validation when empty string is passed for any rule', function *() {
+    const rules = {
+      select: 'array'
+    };
 
-  // it('should fail validation when empty string is passed for any rule with strict mode on', function *() {
-  //   Validator.setMode('strict');
-  //
-  //   const rules = {
-  //     select: 'array'
-  //   };
-  //
-  //   const body = {
-  //     select: ''
-  //   };
-  //
-  //   try {
-  //     const passed = yield Validator.validate(body, rules);
-  //     expect(passed).not.to.exist();
-  //   } catch (e) {
-  //     expect(e).to.be.an('array');
-  //     expect(e[0].field).to.equal('select');
-  //     expect(e[0].validation).to.equal('array');
-  //   }
-  // });
+    const body = {
+      select: ''
+    };
 
+    const passed = yield Validator.validateAll(body, rules);
+    expect(passed).to.equal(body);
+  });
+
+  it('should skip validation when undefined is passed for any rule', function *() {
+    const rules = {
+      select: 'array'
+    };
+
+    const body = {
+      select: undefined
+    };
+
+    const passed = yield Validator.validateAll(body, rules);
+    expect(passed).to.equal(body);
+  });
 
   it('should not fail validation when empty string is passed for any rule in normal mode', function *() {
     Validator.setMode('normal');

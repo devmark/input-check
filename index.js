@@ -7,6 +7,7 @@ module.exports = {
   validate: Validator.validate,
   validateAll: Validator.validateAll,
   extend: Validator.extend,
+  extendImplicit: Validator.extendImplicit,
   is: Validator.is,
   'is.extend': Validator.is.extend,
   sanitize: Sanitization.sanitize,
