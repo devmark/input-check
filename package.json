@@ -1,6 +1,6 @@
 {
   "name": "input-check",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "input validator for nodejs",
   "main": "index.js",
   "scripts": {

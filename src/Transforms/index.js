@@ -28,7 +28,6 @@ const Helper = {
 };
 
 const Transformer = function (input, rules) {
-  console.log(this, input);
   this.input = input || {};
   this.rules = rules || {};
   this.include = [];
