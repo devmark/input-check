@@ -105,10 +105,6 @@ Validations.confirmed = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
     const confirmedFieldValue = _.get(data, `${field}_confirmation`);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.same(fieldValue, confirmedFieldValue)) {
       resolve('validation passed');
       return;
@@ -131,10 +127,6 @@ Validations.confirmed = function (data, field, message, args, validations) {
 Validations.email = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.email(fieldValue)) {
       resolve('validation passed');
       return;
@@ -157,10 +149,6 @@ Validations.email = function (data, field, message, args, validations) {
 Validations.accepted = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.truthy(fieldValue)) {
       resolve('validation passed');
       return;
@@ -183,10 +171,6 @@ Validations.accepted = function (data, field, message, args, validations) {
 Validations.after = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.after(fieldValue, args[0])) {
       resolve('validation passed');
       return;
@@ -210,10 +194,6 @@ Validations.after = function (data, field, message, args, validations) {
 Validations.alpha = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.alpha(fieldValue) && fieldValue !== null) {
       resolve('validation passed');
       return;
@@ -237,10 +217,6 @@ Validations.alpha = function (data, field, message, args, validations) {
 Validations.alphaNumeric = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.alphaNumeric(fieldValue) && fieldValue !== null) {
       resolve('validation passed');
       return;
@@ -264,10 +240,6 @@ Validations.alphaNumeric = function (data, field, message, args, validations) {
 Validations.array = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.array(fieldValue)) {
       resolve('validation passed');
       return;
@@ -291,10 +263,6 @@ Validations.array = function (data, field, message, args, validations) {
 Validations.url = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.url(fieldValue)) {
       resolve('validation passed');
       return;
@@ -318,10 +286,6 @@ Validations.url = function (data, field, message, args, validations) {
 Validations.uuid = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.uuid(fieldValue)) {
       resolve('validation passed');
       return;
@@ -345,10 +309,6 @@ Validations.uuid = function (data, field, message, args, validations) {
 Validations.numeric = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (Raw.numeric(fieldValue)) {
       resolve('validation passed');
@@ -373,10 +333,6 @@ Validations.numeric = function (data, field, message, args, validations) {
 Validations.object = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.object(fieldValue)) {
       resolve('validation passed');
       return;
@@ -400,10 +356,6 @@ Validations.object = function (data, field, message, args, validations) {
 Validations.json = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.json(fieldValue)) {
       resolve('validation passed');
       return;
@@ -427,10 +379,6 @@ Validations.json = function (data, field, message, args, validations) {
 Validations.ip = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.ip(fieldValue)) {
       resolve('validation passed');
       return;
@@ -454,10 +402,6 @@ Validations.ip = function (data, field, message, args, validations) {
 Validations.ipv4 = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.ipv4(fieldValue)) {
       resolve('validation passed');
       return;
@@ -481,10 +425,6 @@ Validations.ipv4 = function (data, field, message, args, validations) {
 Validations.ipv6 = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.ipv6(fieldValue)) {
       resolve('validation passed');
       return;
@@ -508,10 +448,6 @@ Validations.ipv6 = function (data, field, message, args, validations) {
 Validations.integer = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Number.isInteger(fieldValue)) {
       resolve('validation passed');
       return;
@@ -536,10 +472,6 @@ Validations.integer = function (data, field, message, args, validations) {
 Validations.boolean = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     /**
      * converting 0 and 1 strings to numbers
@@ -573,10 +505,6 @@ Validations.boolean = function (data, field, message, args, validations) {
 Validations.before = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.before(fieldValue, args[0])) {
       resolve('validation passed');
       return;
@@ -600,10 +528,6 @@ Validations.before = function (data, field, message, args, validations) {
 Validations.date = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.dateFormat(fieldValue)) {
       resolve('validation passed');
       return;
@@ -628,10 +552,6 @@ Validations.dateFormat = function (data, field, message, args, validations) {
   const format = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.dateFormat(fieldValue, format)) {
       resolve('validation passed');
       return;
@@ -656,10 +576,6 @@ Validations.time = function (data, field, message, args, validations) {
   const timeFormat = ['HH:mm:ss', 'HH:mm', 'HH:mm a'];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.dateFormat(fieldValue, timeFormat)) {
       resolve('validation passed');
       return;
@@ -683,10 +599,6 @@ Validations.time = function (data, field, message, args, validations) {
 Validations.in = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (Raw.inArray(fieldValue, args)) {
       resolve('validation passed');
       return;
@@ -710,10 +622,6 @@ Validations.in = function (data, field, message, args, validations) {
 Validations.notIn = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     if (!Raw.inArray(fieldValue, args)) {
       resolve('validation passed');
       return;
@@ -1001,10 +909,6 @@ Validations.same = function (data, field, message, args, validations) {
     }
 
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (targetedFieldValue === fieldValue) {
       resolve('validation passed');
@@ -1036,10 +940,6 @@ Validations.different = function (data, field, message, args, validations) {
     }
 
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (targetedFieldValue !== fieldValue) {
       resolve('validation passed');
@@ -1069,10 +969,6 @@ Validations.range = function (data, field, message, args, validations) {
     }
 
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     const isNumeric = hasRule(validations, numericRules);
     if (Raw.between(getSize(fieldValue, isNumeric), min, max)) {
@@ -1098,10 +994,6 @@ Validations.range = function (data, field, message, args, validations) {
 Validations.min = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     const isNumeric = hasRule(validations, numericRules);
     const isFile = hasRule(validations, fileRules);
@@ -1127,10 +1019,6 @@ Validations.min = function (data, field, message, args, validations) {
 Validations.max = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     const isNumeric = hasRule(validations, numericRules);
     const isFile = hasRule(validations, fileRules);
@@ -1158,10 +1046,6 @@ Validations.includes = function (data, field, message, args, validations) {
   const substring = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (String(fieldValue).includes(substring)) {
       resolve('validation passed');
@@ -1187,10 +1071,6 @@ Validations.startsWith = function (data, field, message, args, validations) {
   const substring = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (String(fieldValue).startsWith(substring)) {
       resolve('validation passed');
@@ -1216,10 +1096,6 @@ Validations.endsWith = function (data, field, message, args, validations) {
   const substring = args[0];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (String(fieldValue).endsWith(substring)) {
       resolve('validation passed');
@@ -1246,10 +1122,6 @@ Validations.regex = function (data, field, message, args, validations) {
   const regexFlags = args[1];
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     const expression = regexFlags ? new RegExp(regexExp, regexFlags) : new RegExp(regexExp);
     if (Raw.regex(fieldValue, expression)) {
@@ -1274,10 +1146,6 @@ Validations.regex = function (data, field, message, args, validations) {
 Validations.string = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (Raw.string(fieldValue)) {
       resolve('validation passed');
@@ -1301,10 +1169,6 @@ Validations.string = function (data, field, message, args, validations) {
 Validations.lowercase = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (String(fieldValue).toLowerCase() === String(fieldValue)) {
       resolve('validation passed');
@@ -1328,10 +1192,6 @@ Validations.lowercase = function (data, field, message, args, validations) {
 Validations.uppercase = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (String(fieldValue).toUpperCase() === String(fieldValue)) {
       resolve('validation passed');
@@ -1354,10 +1214,6 @@ Validations.uppercase = function (data, field, message, args, validations) {
 Validations.size = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
     const isNumeric = hasRule(validations, numericRules);
     const isFile = hasRule(validations, fileRules);
     if (Number(getSize(fieldValue, isNumeric, isFile)) === Number(args[0])) {
@@ -1382,10 +1238,6 @@ Validations.size = function (data, field, message, args, validations) {
 Validations.file = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (!_.isObject(fieldValue) && !_.has(fieldValue, 'mimetype') && !_.has(fieldValue, 'path')) {
       reject(message);
@@ -1418,10 +1270,6 @@ Validations.file = function (data, field, message, args, validations) {
 Validations.mimetypes = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     if (fieldValue.mimetype === args[0]) {
       resolve('validation passed');
@@ -1445,10 +1293,6 @@ Validations.mimetypes = function (data, field, message, args, validations) {
 Validations.image = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     const image = sharp(fieldValue.path);
     image.metadata()
@@ -1477,10 +1321,6 @@ Validations.image = function (data, field, message, args, validations) {
 Validations.dimensions = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
 
     const image = sharp(fieldValue.path);
     image.metadata()

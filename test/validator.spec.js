@@ -146,6 +146,7 @@ describe('Validator', function () {
       });
     };
     Validator.extend('phone', phone, 'Enter valid phone number');
+    Validator.extendImplicit('phone');
 
     const rules = {
       contact_no: 'phone'
@@ -357,26 +358,26 @@ describe('Validator', function () {
   });
 
 
-  it('should fail validation when empty string is passed for any rule with strict mode on', function *() {
-    Validator.setMode('strict');
-
-    const rules = {
-      select: 'array'
-    };
-
-    const body = {
-      select: ''
-    };
-
-    try {
-      const passed = yield Validator.validate(body, rules);
-      expect(passed).not.to.exist();
-    } catch (e) {
-      expect(e).to.be.an('array');
-      expect(e[0].field).to.equal('select');
-      expect(e[0].validation).to.equal('array');
-    }
-  });
+  // it('should fail validation when empty string is passed for any rule with strict mode on', function *() {
+  //   Validator.setMode('strict');
+  //
+  //   const rules = {
+  //     select: 'array'
+  //   };
+  //
+  //   const body = {
+  //     select: ''
+  //   };
+  //
+  //   try {
+  //     const passed = yield Validator.validate(body, rules);
+  //     expect(passed).not.to.exist();
+  //   } catch (e) {
+  //     expect(e).to.be.an('array');
+  //     expect(e[0].field).to.equal('select');
+  //     expect(e[0].validation).to.equal('array');
+  //   }
+  // });
 
 
   it('should not fail validation when empty string is passed for any rule in normal mode', function *() {
@@ -476,27 +477,27 @@ describe('Validator', function () {
     }
   });
 
-  it('should throw an error when value is not an array', function *() {
-    const rules = {
-      people: 'array',
-      'people.*.email': 'required|email'
-    };
-
-    const data = {
-      people: ''
-    };
-
-    try {
-      Validator.setMode('strict');
-      const passed = yield Validator.validate(data, rules);
-      expect(passed).not.to.exist();
-    } catch (e) {
-      expect(e).to.be.an('array');
-      expect(e.length).to.equal(1);
-      expect(e[0].field).to.equal('people');
-      expect(e[0].validation).to.equal('array');
-    }
-  });
+  // it('should throw an error when value is not an array', function *() {
+  //   const rules = {
+  //     people: 'array',
+  //     'people.*.email': 'required|email'
+  //   };
+  //
+  //   const data = {
+  //     people: ''
+  //   };
+  //
+  //   try {
+  //     Validator.setMode('strict');
+  //     const passed = yield Validator.validate(data, rules);
+  //     expect(passed).not.to.exist();
+  //   } catch (e) {
+  //     expect(e).to.be.an('array');
+  //     expect(e.length).to.equal(1);
+  //     expect(e[0].field).to.equal('people');
+  //     expect(e[0].validation).to.equal('array');
+  //   }
+  // });
 
   it('should throw an error when value is an array but childs does not exists', function *() {
     const rules = {
@@ -664,6 +665,7 @@ describe('Validator', function () {
       });
     };
     Validator.extend('isPhone', phone, 'Enter valid phone number');
+    Validator.extendImplicit('isPhone');
 
     const rules = {
       contact_no: 'is_phone'

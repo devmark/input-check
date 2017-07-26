@@ -100,16 +100,6 @@ describe('Validations', function () {
         expect(e).to.equal(message);
       }
     });
-
-    it('should skip email validation when email field does not exists', function *() {
-      const data = {};
-      const field = 'email';
-      const message = 'email must be email';
-      const args = [];
-      const passes = yield Validations.email(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
     it('should work fine when valid email is provided', function *() {
       const data = { email: 'foo@bar.com' };
       const field = 'email';
@@ -170,14 +160,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field is not present or is undefined', function *() {
-      const data = {};
-      const field = 'terms';
-      const message = 'terms must be accepted';
-      const args = [];
-      const passes = yield Validations.accepted(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('after', function () {
@@ -203,23 +185,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when dob is not defined', function *() {
-      const data = {};
-      const field = 'dob';
-      const message = 'dob should be after 2010';
-      const args = ['2010-11-20'];
-      const passes = yield Validations.after(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when dob is undefined', function *() {
-      const data = { dob: undefined };
-      const field = 'dob';
-      const message = 'dob should be after 2010';
-      const args = ['2010-11-20'];
-      const passes = yield Validations.after(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('alpha', function () {
@@ -245,23 +210,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'username must contain letters only';
-      const args = [];
-      const passes = yield Validations.alpha(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'username must contain letters only';
-      const args = [];
-      const passes = yield Validations.alpha(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('before', function () {
@@ -287,23 +235,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when dob is not defined', function *() {
-      const data = {};
-      const field = 'dob';
-      const message = 'dob should be before 2010';
-      const args = ['2010-11-20'];
-      const passes = yield Validations.before(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when dob is undefined', function *() {
-      const data = { dob: undefined };
-      const field = 'dob';
-      const message = 'dob should be before 2010';
-      const args = ['2010-11-20'];
-      const passes = yield Validations.before(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('date', function () {
@@ -347,23 +278,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'dob';
-      const message = 'dob should be a valid date';
-      const args = [];
-      const passes = yield Validations.date(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { dob: undefined };
-      const field = 'dob';
-      const message = 'dob should be a valid date';
-      const args = [];
-      const passes = yield Validations.date(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('dateFormat', function () {
@@ -402,23 +316,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field is not available', function *() {
-      const data = {};
-      const field = 'dob';
-      const message = 'dob should be a valid date';
-      const args = ['YYYY/MM/DD'];
-      const passes = yield Validations.dateFormat(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field is undefined', function *() {
-      const data = { dob: undefined };
-      const field = 'dob';
-      const message = 'dob should be a valid date';
-      const args = ['YYYY/MM/DD'];
-      const passes = yield Validations.dateFormat(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('time', function () {
@@ -475,23 +372,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'dob';
-      const message = 'dob should be a valid time';
-      const args = [];
-      const passes = yield Validations.time(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { dob: undefined };
-      const field = 'dob';
-      const message = 'dob should be a valid time';
-      const args = [];
-      const passes = yield Validations.date(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('in', function () {
@@ -535,23 +415,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'marks';
-      const message = 'select valid marks';
-      const args = [10, 20, 40];
-      const passes = yield Validations.in(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { marks: undefined };
-      const field = 'marks';
-      const message = 'select valid marks';
-      const args = [10, 20, 40];
-      const passes = yield Validations.in(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('notIn', function () {
@@ -577,23 +440,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field is undefined', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'select valid username';
-      const args = ['admin', 'super', 'root'];
-      const passes = yield Validations.notIn(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'select valid username';
-      const args = ['admin', 'super', 'root'];
-      const passes = yield Validations.notIn(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('requiredIf', function () {
@@ -885,14 +731,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when targeted field value exists but actual field does not exists', function *() {
-      const data = { password: 'foo' };
-      const field = 'password_confirm';
-      const message = 'password should match';
-      const args = ['password'];
-      const passes = yield Validations.same(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('different', function () {
@@ -936,14 +774,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when targeted field value exists but actual field does not exists', function *() {
-      const data = { dob: '2011-20-10' };
-      const field = 'enrollment_date';
-      const message = 'enrollment date should be different from dob';
-      const args = ['dob'];
-      const passes = yield Validations.different(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('range', function () {
@@ -999,24 +829,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'age';
-      const message = 'only adults less than 60 years of age are allowed';
-      const args = [18, 60];
-      const passes = yield Validations.range(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { age: undefined };
-      const field = 'age';
-      const message = 'only adults less than 60 years of age are allowed';
-      const args = [18, 60];
-      const passes = yield Validations.range(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
     it('should work fine when field value is under defined range(string)', function *() {
       const data = { age: 20 };
       const validations = [{ name: 'numeric', args: [] }];
@@ -1068,26 +880,6 @@ describe('Validations', function () {
         }
       });
 
-      it('should skip validation when field does not exists', function *() {
-        const data = {};
-        const validations = [{ name: 'numeric', args: [] }];
-        const field = 'price';
-        const message = 'price should be over 6 characters';
-        const args = [6];
-        const passes = yield Validations.min(data, field, message, args, validations);
-        expect(passes).to.equal('validation skipped');
-      });
-
-      it('should skip validation when field value is undefined', function *() {
-        const data = { price: undefined };
-        const validations = [{ name: 'numeric', args: [] }];
-        const field = 'price';
-        const message = 'price should be over 6 characters';
-        const args = [6];
-        const passes = yield Validations.min(data, field, message, args, validations);
-        expect(passes).to.equal('validation skipped');
-      });
-
       it('should work fine when length of value of field is greater than defined length', function *() {
         const data = { price: 10 };
         const validations = [{ name: 'numeric', args: [] }];
@@ -1134,24 +926,6 @@ describe('Validations', function () {
         } catch (e) {
           expect(e).to.equal(message);
         }
-      });
-
-      it('should skip validation when field does not exists', function *() {
-        const data = {};
-        const field = 'password';
-        const message = 'password should be over 6 characters';
-        const args = [6];
-        const passes = yield Validations.min(data, field, message, args);
-        expect(passes).to.equal('validation skipped');
-      });
-
-      it('should skip validation when field value is undefined', function *() {
-        const data = { password: undefined };
-        const field = 'password';
-        const message = 'password should be over 6 characters';
-        const args = [6];
-        const passes = yield Validations.min(data, field, message, args);
-        expect(passes).to.equal('validation skipped');
       });
 
       it('should work fine when length of value of field is greater than defined length', function *() {
@@ -1266,26 +1040,6 @@ describe('Validations', function () {
         }
       });
 
-      it('should skip validation when field does not exists', function *() {
-        const data = {};
-        const validations = [{ name: 'numeric', args: [] }];
-        const field = 'price';
-        const message = 'price should be over 6 characters';
-        const args = [6];
-        const passes = yield Validations.max(data, field, message, args, validations);
-        expect(passes).to.equal('validation skipped');
-      });
-
-      it('should skip validation when field value is undefined', function *() {
-        const data = { price: undefined };
-        const validations = [{ name: 'numeric', args: [] }];
-        const field = 'price';
-        const message = 'price should be over 6 characters';
-        const args = [6];
-        const passes = yield Validations.max(data, field, message, args, validations);
-        expect(passes).to.equal('validation skipped');
-      });
-
       it('should work fine when length of value of field is less than defined length', function *() {
         const data = { price: 10 };
         const validations = [{ name: 'numeric', args: [] }];
@@ -1332,24 +1086,6 @@ describe('Validations', function () {
         } catch (e) {
           expect(e).to.equal(message);
         }
-      });
-
-      it('should skip validation when field does not exists', function *() {
-        const data = {};
-        const field = 'password';
-        const message = 'password should be less than 6 characters';
-        const args = [6];
-        const passes = yield Validations.max(data, field, message, args);
-        expect(passes).to.equal('validation skipped');
-      });
-
-      it('should skip validation when field value is undefined', function *() {
-        const data = { password: undefined };
-        const field = 'password';
-        const message = 'password should be less than 6 characters';
-        const args = [6];
-        const passes = yield Validations.max(data, field, message, args);
-        expect(passes).to.equal('validation skipped');
       });
 
       it('should work fine when length of value of field is less than defined length', function *() {
@@ -1448,24 +1184,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'dpath';
-      const message = 'path should include app directory';
-      const args = ['app'];
-      const passes = yield Validations.includes(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { dpath: undefined };
-      const field = 'dpath';
-      const message = 'path should include app directory';
-      const args = ['app'];
-      const passes = yield Validations.includes(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
     it('should work fine when field value includes given string', function *() {
       const data = { dpath: '/app/bar' };
       const field = 'dpath';
@@ -1488,24 +1206,6 @@ describe('Validations', function () {
       } catch (e) {
         expect(e).to.equal(message);
       }
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'username should start with D';
-      const args = ['D'];
-      const passes = yield Validations.startsWith(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'username should start with D';
-      const args = ['D'];
-      const passes = yield Validations.startsWith(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
     });
 
     it('should work fine when field value startsWith given string', function *() {
@@ -1532,24 +1232,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'username should end with e';
-      const args = ['e'];
-      const passes = yield Validations.endsWith(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'username should end with e';
-      const args = ['e'];
-      const passes = yield Validations.endsWith(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
     it('should work fine when field value endsWith given string', function *() {
       const data = { username: 'Doe' };
       const field = 'username';
@@ -1572,24 +1254,6 @@ describe('Validations', function () {
       } catch (e) {
         expect(e).to.equal(message);
       }
-    });
-
-    it('should skip validation when fields does not exists', function *() {
-      const data = {};
-      const field = 'country';
-      const message = 'country should be India with I as uppercase';
-      const args = ['[a-z]'];
-      const passes = yield Validations.regex(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when fields value is undefined', function *() {
-      const data = { country: undefined };
-      const field = 'country';
-      const message = 'country should be India with I as uppercase';
-      const args = ['[a-z]'];
-      const passes = yield Validations.regex(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
     });
 
     it('should work fine when field value satisfies regex pattern', function *() {
@@ -1625,23 +1289,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'username must letters and numbers only';
-      const args = [];
-      const passes = yield Validations.alphaNumeric(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'username must letters and numbers only';
-      const args = [];
-      const passes = yield Validations.alphaNumeric(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('array', function () {
@@ -1665,24 +1312,6 @@ describe('Validations', function () {
       const args = [];
       const passes = yield Validations.array(data, field, message, args);
       expect(passes).to.equal('validation passed');
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'users';
-      const message = 'users list must be an array';
-      const args = [];
-      const passes = yield Validations.array(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { users: undefined };
-      const field = 'users';
-      const message = 'users list must be an array';
-      const args = [];
-      const passes = yield Validations.array(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
     });
 
     it('should throw an error when value of field is an object', function *() {
@@ -1722,23 +1351,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'github_profile';
-      const message = 'github profile must point to a valid url ';
-      const args = [];
-      const passes = yield Validations.url(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { github_profile: undefined };
-      const field = 'github_profile';
-      const message = 'github profile must point to a valid url ';
-      const args = [];
-      const passes = yield Validations.url(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('uuid', function () {
@@ -1764,23 +1376,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'github_profile';
-      const message = 'github profile must point to a valid uuid ';
-      const args = [];
-      const passes = yield Validations.uuid(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { github_profile: undefined };
-      const field = 'github_profile';
-      const message = 'github profile must point to a valid uuid ';
-      const args = [];
-      const passes = yield Validations.uuid(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('ip', function () {
@@ -1806,23 +1401,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'user_ip';
-      const message = 'invalid ip address';
-      const args = [];
-      const passes = yield Validations.ip(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { user_ip: undefined };
-      const field = 'user_ip';
-      const message = 'invalid ip address';
-      const args = [];
-      const passes = yield Validations.ip(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('integer', function () {
@@ -1850,24 +1428,6 @@ describe('Validations', function () {
       } catch (e) {
         expect(e).to.equal(message);
       }
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'marks';
-      const message = 'marks should be an integer';
-      const args = [];
-      const passes = yield Validations.integer(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { marks: undefined };
-      const field = 'marks';
-      const message = 'marks should be an integer';
-      const args = [];
-      const passes = yield Validations.integer(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
     });
 
     it('should work fine when value is an integer', function *() {
@@ -1914,24 +1474,6 @@ describe('Validations', function () {
       } catch (e) {
         expect(e).to.equal(message);
       }
-    });
-
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'is_admin';
-      const message = 'admin identifier should be boolean indicator';
-      const args = [];
-      const passes = yield Validations.boolean(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { is_admin: undefined };
-      const field = 'is_admin';
-      const message = 'admin identifier should be boolean indicator';
-      const args = [];
-      const passes = yield Validations.boolean(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
     });
 
     it('should work fine when value is a valid positive boolean', function *() {
@@ -2012,24 +1554,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'profile';
-      const message = 'profile must be an object';
-      const args = [];
-      const passes = yield Validations.object(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { profile: undefined };
-      const field = 'profile';
-      const message = 'profile must be an object';
-      const args = [];
-      const passes = yield Validations.object(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
     it('should throw an error when value of field is an array', function *() {
       const data = { profile: ['username'] };
       const field = 'profile';
@@ -2076,24 +1600,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'profile';
-      const message = 'profile must be an number';
-      const args = [];
-      const passes = yield Validations.numeric(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { profile: undefined };
-      const field = 'profile';
-      const message = 'profile must be an number';
-      const args = [];
-      const passes = yield Validations.numeric(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
   });
 
   describe('json', function () {
@@ -2119,23 +1625,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'profile';
-      const message = 'profile must be in json';
-      const args = [];
-      const passes = yield Validations.json(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { profile: undefined };
-      const field = 'profile';
-      const message = 'profile must be in json';
-      const args = [];
-      const passes = yield Validations.json(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('ipv4', function () {
@@ -2161,23 +1650,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'user_ip';
-      const message = 'invalid ipv4 address';
-      const args = [];
-      const passes = yield Validations.ipv4(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { user_ip: undefined };
-      const field = 'user_ip';
-      const message = 'invalid ipv4 address';
-      const args = [];
-      const passes = yield Validations.ipv4(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('ipv6', function () {
@@ -2203,23 +1675,6 @@ describe('Validations', function () {
       expect(passes).to.equal('validation passed');
     });
 
-    it('should skip validation when field does not exists', function *() {
-      const data = {};
-      const field = 'user_ip';
-      const message = 'invalid ipv6 address';
-      const args = [];
-      const passes = yield Validations.ipv6(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { user_ip: undefined };
-      const field = 'user_ip';
-      const message = 'invalid ipv6 address';
-      const args = [];
-      const passes = yield Validations.ipv6(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('requiredWhen', function () {
@@ -2319,23 +1774,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'password';
-      const message = 'Password does not match!';
-      const args = [];
-      const passes = yield Validations.confirmed(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { password: undefined, password_confirmation: undefined };
-      const field = 'password';
-      const message = 'Password does not match!';
-      const args = [];
-      const passes = yield Validations.confirmed(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('String', function () {
@@ -2374,23 +1812,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'Username should be a string';
-      const args = [];
-      const passes = yield Validations.string(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'Username should be a string';
-      const args = [];
-      const passes = yield Validations.lowercase(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('Lowercase', function () {
@@ -2416,23 +1837,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'Username should be a lower case string';
-      const args = [];
-      const passes = yield Validations.lowercase(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'Username should be a lower case string';
-      const args = [];
-      const passes = yield Validations.lowercase(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('Uppercase', function () {
@@ -2458,23 +1862,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'username';
-      const message = 'Username should be a upper case string';
-      const args = [];
-      const passes = yield Validations.uppercase(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { username: undefined };
-      const field = 'username';
-      const message = 'Username should be a upper case string';
-      const args = [];
-      const passes = yield Validations.uppercase(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('mimetypes', function () {
@@ -2510,23 +1897,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'file';
-      const message = 'file should be a correct mimetype';
-      const args = [];
-      const passes = yield Validations.mimetypes(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { file: undefined };
-      const field = 'file';
-      const message = 'file should be a correct mimetype';
-      const args = [];
-      const passes = yield Validations.mimetypes(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('file', function () {
@@ -2562,23 +1932,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'file';
-      const message = 'File should be a file';
-      const args = [];
-      const passes = yield Validations.file(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { file: undefined };
-      const field = 'file';
-      const message = 'File should be a file';
-      const args = [];
-      const passes = yield Validations.file(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('images', function () {
@@ -2614,23 +1967,6 @@ describe('Validations', function () {
       }
     });
 
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'file';
-      const message = 'File should be a image';
-      const args = [];
-      const passes = yield Validations.image(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { file: undefined };
-      const field = 'file';
-      const message = 'File should be a image';
-      const args = [];
-      const passes = yield Validations.image(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
   });
 
   describe('dimensions', function () {
@@ -2682,24 +2018,6 @@ describe('Validations', function () {
       } catch (e) {
         expect(e).to.equal(message);
       }
-    });
-
-    it('should skip validation when field value is not defined', function *() {
-      const data = {};
-      const field = 'file';
-      const message = 'File should be a image';
-      const args = [];
-      const passes = yield Validations.dimensions(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when field value is undefined', function *() {
-      const data = { file: undefined };
-      const field = 'file';
-      const message = 'File should be a image';
-      const args = [];
-      const passes = yield Validations.dimensions(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
     });
 
     describe('min_width part', function () {
