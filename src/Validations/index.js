@@ -1542,6 +1542,30 @@ Validations.nullable = function (data, field, message, args, validations) {
 };
 
 /**
+ * @description Validate the value must exist
+ * values
+ * @method nullable
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @param  {Array} validations
+ * @return {Boolean}
+ * @public
+ */
+Validations.present = function (data, field, message, args, validations) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+
+    if (typeof fieldValue !== 'undefined') {
+      resolve('validation passed');
+    }
+
+    reject(message);
+  });
+};
+
+/**
  * aliases
  */
 Validations.between = Validations.range;

@@ -2909,4 +2909,38 @@ describe('Validations', function () {
 
   });
 
+  describe('Present', function () {
+    it('should work fine when field value is exist', function *() {
+      const data = { username: 'DDD' };
+      const field = 'username';
+      const message = 'Username should be present';
+      const args = [];
+      const passes = yield Validations.present(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should work fine when field value is null', function *() {
+      const data = { username: null };
+      const field = 'username';
+      const message = 'Username should be present';
+      const args = [];
+      const passes = yield Validations.present(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should throw an error when the field value is a undefined', function *() {
+      const data = { username: undefined };
+      const field = 'username';
+      const message = 'Username should be a upper case string';
+      const args = [];
+      try {
+        const passes = yield Validations.present(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+  });
+
 });
