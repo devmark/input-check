@@ -12,7 +12,7 @@ describe('Raw Validator', function () {
     });
 
     it('should return false when input is an object', function () {
-      const isArray = Is.array({age: 22});
+      const isArray = Is.array({ age: 22 });
       expect(isArray).to.equal(false);
     });
 
@@ -108,22 +108,22 @@ describe('Raw Validator', function () {
     });
 
     it('should return true when input is an object', function () {
-      const isObject = Is.object({name: 'virk'});
+      const isObject = Is.object({ name: 'virk' });
       expect(isObject).to.equal(true);
     });
 
     it('should return false when input is not a stringify object', function () {
-      const isObject = Is.object(JSON.stringify({name: 'virk'}));
+      const isObject = Is.object(JSON.stringify({ name: 'virk' }));
       expect(isObject).to.equal(false);
     });
 
     it('should return true when input is json', function () {
-      const isJson = Is.json(JSON.stringify({name: 'virk'}));
+      const isJson = Is.json(JSON.stringify({ name: 'virk' }));
       expect(isJson).to.equal(true);
     });
 
     it('should return false when input is an object', function () {
-      const isJson = Is.json({name: 'virk'});
+      const isJson = Is.json({ name: 'virk' });
       expect(isJson).to.equal(false);
     });
 
@@ -289,6 +289,21 @@ describe('Raw Validator', function () {
     it('should return false when input contains more than 63 characters TLD', function () {
       const isUrl = Is.url('https://example.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijkl');
       expect(isUrl).to.equal(false);
+    });
+
+    it('should return true when input contains only localhost', function () {
+      const isUrl = Is.url('http://localhost');
+      expect(isUrl).to.equal(true);
+    });
+
+    it('should return true when input contains localhost with port', function () {
+      const isUrl = Is.url('http://localhost:80');
+      expect(isUrl).to.equal(true);
+    });
+
+    it('should return true when domain name part contains 1 character', function () {
+      const isUrl = Is.url('https://t.co');
+      expect(isUrl).to.equal(true);
     });
 
     it('should return false when input is not a valid email', function () {
