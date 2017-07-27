@@ -131,7 +131,7 @@ const rules = {
 }
 ```
 
-~~after_or_equal:date~~
+after_or_equal:date
 ----
 The field under validation must be a value after or equal to the given date. For more information, see the after rule.
 
@@ -166,7 +166,7 @@ const rules = {
 }
 ```
 
-~~before_or_equal:date~~
+before_or_equal:date
 ----
 The field under validation must be a value preceding or equal to the given date. The dates will be passed into the `momentjs` function.
 
@@ -199,7 +199,7 @@ date_format:format
 The field under validation must match the given format. You should use either date or  date_format when validating a field, not both.
 
 
-~~different:field~~
+different:field
 ----
 The field under validation must have a different value than field.
 
@@ -291,7 +291,7 @@ numeric
 The field under validation must be numeric.
 
 
-~~present~~
+present
 ----
 The field under validation must be present in the input data but can be empty.
 

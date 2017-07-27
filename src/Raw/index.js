@@ -676,6 +676,22 @@ Raw.before = function (input, beforeDate) {
 };
 
 /**
+ * @description tells whether input is same given date
+ * @method after
+ * @param  {String|Object} input
+ * @param  {String|Object} sameDate
+ * @return {Boolean}
+ * @example
+ *   accepts
+ *   2015-11-30
+ *   new Date()
+ * @public
+ */
+Raw.sameDate = function (input, sameDate) {
+  return moment(input).isSame(sameDate);
+};
+
+/**
  * @description tells whether input is a valid date for a given
  * format or not
  * @method dateFormat

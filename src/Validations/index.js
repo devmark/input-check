@@ -586,6 +586,61 @@ Validations.before = function (data, field, message, args, validations) {
 };
 
 /**
+ * @description makes sure field under validation is before or same
+ * defined date
+ * @method before
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @param  {Array} validations
+ * @return {Object}
+ * @public
+ */
+Validations.beforeOrEqual = function (data, field, message, args, validations) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
+      resolve('validation skipped');
+      return;
+    }
+    if (Raw.before(fieldValue, args[0]) || Raw.sameDate(fieldValue, args[0])) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
+/**
+ * @description makes sure field under validation is after or same
+ * defined date
+ * @method before
+ * @param  {Object} data
+ * @param  {String} field
+ * @param  {String} message
+ * @param  {Array} args
+ * @param  {Array} validations
+ * @return {Object}
+ * @public
+ */
+Validations.afterOrEqual = function (data, field, message, args, validations) {
+  return new Promise(function (resolve, reject) {
+    const fieldValue = _.get(data, field);
+    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
+      resolve('validation skipped');
+      return;
+    }
+    if (Raw.after(fieldValue, args[0]) || Raw.sameDate(fieldValue, args[0])) {
+      resolve('validation passed');
+      return;
+    }
+    reject(message);
+  });
+};
+
+
+/**
  * @description makes sure field under validation is a valid
  * date
  * @method date

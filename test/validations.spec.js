@@ -222,6 +222,58 @@ describe('Validations', function () {
     });
   });
 
+  describe('afterOrEqual', function () {
+    it('should throw an error when date is not after defined date', function *() {
+      const data = { dob: '1980-11-20' };
+      const field = 'dob';
+      const message = 'dob should be after 2010';
+      const args = ['2010-11-20'];
+      try {
+        const passes = yield Validations.afterOrEqual(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should work fine when value is after defined date', function *() {
+      const data = { dob: '2011-01-01' };
+      const field = 'dob';
+      const message = 'dob should be after 2010';
+      const args = ['2010-11-20'];
+      const passes = yield Validations.afterOrEqual(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+
+    it('should work fine when value is same defined date', function *() {
+      const data = { dob: '2011-01-01' };
+      const field = 'dob';
+      const message = 'dob should be after 2010';
+      const args = ['2011-01-01'];
+      const passes = yield Validations.afterOrEqual(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should skip validation when dob is not defined', function *() {
+      const data = {};
+      const field = 'dob';
+      const message = 'dob should be after 2010';
+      const args = ['2010-11-20'];
+      const passes = yield Validations.afterOrEqual(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when dob is undefined', function *() {
+      const data = { dob: undefined };
+      const field = 'dob';
+      const message = 'dob should be after 2010';
+      const args = ['2010-11-20'];
+      const passes = yield Validations.afterOrEqual(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
   describe('alpha', function () {
     it('should throw an error when value is not alpha', function *() {
       const data = { username: 'virk1234' };
@@ -302,6 +354,57 @@ describe('Validations', function () {
       const message = 'dob should be before 2010';
       const args = ['2010-11-20'];
       const passes = yield Validations.before(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+  });
+
+  describe('beforeOrEqual', function () {
+    it('should throw an error when date is not before defined date', function *() {
+      const data = { dob: '2012-11-20' };
+      const field = 'dob';
+      const message = 'dob should be before 2010';
+      const args = ['2010-11-20'];
+      try {
+        const passes = yield Validations.beforeOrEqual(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should work fine when value is before defined date', function *() {
+      const data = { dob: '2009-01-01' };
+      const field = 'dob';
+      const message = 'dob should be before 2010';
+      const args = ['2010-11-20'];
+      const passes = yield Validations.beforeOrEqual(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should work fine when value is same defined date', function *() {
+      const data = { dob: '2010-11-20' };
+      const field = 'dob';
+      const message = 'dob should be before 2010';
+      const args = ['2010-11-20'];
+      const passes = yield Validations.beforeOrEqual(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should skip validation when dob is not defined', function *() {
+      const data = {};
+      const field = 'dob';
+      const message = 'dob should be before 2010';
+      const args = ['2010-11-20'];
+      const passes = yield Validations.beforeOrEqual(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should skip validation when dob is undefined', function *() {
+      const data = { dob: undefined };
+      const field = 'dob';
+      const message = 'dob should be before 2010';
+      const args = ['2010-11-20'];
+      const passes = yield Validations.beforeOrEqual(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
   });
