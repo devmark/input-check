@@ -802,23 +802,24 @@ Validations.required = function (data, field, message, args, validations) {
 };
 
 /**
- * @description makes sure field under validation is present when
- * conditional field value exists
- * @method requiredIf
+ * @description makes sure field under validation is present and
+ * value matches to the conditional field value
+ * @method requiredWhen
  * @param  {Object}   data
  * @param  {String}   field
  * @param  {String}   message
  * @param  {Array}   args
- * @param  {Function}   get
  * @param  {Function}  validations
  * @return {Object}
  * @public
  */
 Validations.requiredIf = function (data, field, message, args, validations) {
   const withField = args[0];
+  const withfieldExpectedValue = args[1];
   return new Promise(function (resolve, reject) {
     const withFieldValue = _.get(data, withField);
-    if (skippable(withFieldValue)) {
+
+    if (withfieldExpectedValue !== withFieldValue) {
       resolve('validation skipped');
       return;
     }
@@ -828,6 +829,7 @@ Validations.requiredIf = function (data, field, message, args, validations) {
       resolve('validation passed');
       return;
     }
+
     reject(message);
   });
 };
@@ -845,12 +847,13 @@ Validations.requiredIf = function (data, field, message, args, validations) {
  * @return {Object}
  * @public
  */
-Validations.requiredWhen = function (data, field, message, args, validations) {
+Validations.requiredUnless = function (data, field, message, args, validations) {
   const withField = args[0];
   const withfieldExpectedValue = args[1];
   return new Promise(function (resolve, reject) {
     const withFieldValue = _.get(data, withField);
-    if (String(withfieldExpectedValue) !== String(withFieldValue)) {
+
+    if (withfieldExpectedValue === withFieldValue) {
       resolve('validation skipped');
       return;
     }
@@ -877,7 +880,7 @@ Validations.requiredWhen = function (data, field, message, args, validations) {
  * @return {Object}
  * @public
  */
-Validations.requiredWithAny = function (data, field, message, args, validations) {
+Validations.requiredWith = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let withFieldCount = 0;
 
@@ -962,7 +965,7 @@ Validations.requiredWithAll = function (data, field, message, args, validations)
  * @return {Object}
  * @public
  */
-Validations.requiredWithoutAny = function (data, field, message, args, validations) {
+Validations.requiredWithout = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
     let withOutFieldCounts = 0;
 

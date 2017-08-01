@@ -702,18 +702,18 @@ describe('Validations', function () {
   describe('requiredIf', function () {
     it('should skip validation when conditional field does not exists', function *() {
       const data = {};
-      const field = 'password_confirm';
-      const message = 'please confirm password';
-      const args = ['password'];
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
       const passes = yield Validations.requiredIf(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
-    it('should throw error when conditional field exists and field under validation is missing', function *() {
-      const data = { password: 'foobar' };
-      const field = 'password_confirm';
-      const message = 'please confirm password';
-      const args = ['password'];
+    it('should throw error when conditional field value matches and field under validation is missing', function *() {
+      const data = { country: 'US' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
       try {
         const passes = yield Validations.requiredIf(data, field, message, args);
         expect(passes).not.to.exist();
@@ -722,36 +722,118 @@ describe('Validations', function () {
       }
     });
 
-    it('should throw error when conditional field is null and field under validation is missing', function *() {
-      const data = { password: null };
-      const field = 'password_confirm';
-      const message = 'please confirm password';
-      const args = ['password'];
-      try {
-        const passes = yield Validations.requiredIf(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
+    it('should skip validation when of value of conditional field does not match', function *() {
+      const data = { country: 'UK' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      const passes = yield Validations.requiredIf(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
     });
 
-    it('should work fine when field under validation is available', function *() {
-      const data = { password: 'foobar', 'password_confirm': 'foobar' };
-      const field = 'password_confirm';
-      const message = 'please confirm password';
-      const args = ['password'];
+    it('should throw error when conditional field value not matches and field is null', function *() {
+      const data = { country: null };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      const passes = yield Validations.requiredIf(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should work fine when field under validation is available and conditional field value match', function *() {
+      const data = { country: 'US', state: 'NewYork' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      const passes = yield Validations.requiredIf(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should work fine when field under validation is available and conditional field value match with boolean', function *() {
+      const data = { country: false, state: 'NewYork' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', false];
       const passes = yield Validations.requiredIf(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
 
-  describe('requiredWithAny', function () {
+  describe('requiredUnless', function () {
+    it('should throw error when conditional field value does not exists', function *() {
+      const data = {};
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      try {
+        const passes = yield Validations.requiredUnless(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should throw error when conditional field value not matches and field under validation is missing', function *() {
+      const data = { country: 'EN' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      try {
+        const passes = yield Validations.requiredUnless(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should skip validation when of value of conditional field does match', function *() {
+      const data = { country: 'US' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      const passes = yield Validations.requiredUnless(data, field, message, args);
+      expect(passes).to.equal('validation skipped');
+    });
+
+    it('should throw error when conditional field value not matches and field is null', function *() {
+      const data = { country: null };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      try {
+        const passes = yield Validations.requiredUnless(data, field, message, args);
+        expect(passes).not.to.exist();
+      } catch (e) {
+        expect(e).to.equal(message);
+      }
+    });
+
+    it('should work fine when field under validation is available and conditional field value not match', function *() {
+      const data = { country: 'EN', state: 'NewYork' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', 'US'];
+      const passes = yield Validations.requiredUnless(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+
+    it('should work fine when field under validation is available and conditional field value not match with boolean', function *() {
+      const data = { country: true, state: 'NewYork' };
+      const field = 'state';
+      const message = 'state is required';
+      const args = ['country', false];
+      const passes = yield Validations.requiredUnless(data, field, message, args);
+      expect(passes).to.equal('validation passed');
+    });
+  });
+
+  describe('requiredWith', function () {
     it('should work fine when none of the targeted fields are present', function *() {
       const data = {};
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithAny(data, field, message, args);
+      const passes = yield Validations.requiredWith(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -761,7 +843,7 @@ describe('Validations', function () {
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithAny(data, field, message, args);
+        const passes = yield Validations.requiredWith(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -774,7 +856,7 @@ describe('Validations', function () {
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithAny(data, field, message, args);
+        const passes = yield Validations.requiredWith(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -786,7 +868,7 @@ describe('Validations', function () {
       const field = 'password';
       const message = 'password is required after username or email';
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithAny(data, field, message, args);
+      const passes = yield Validations.requiredWith(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -846,13 +928,13 @@ describe('Validations', function () {
     });
   });
 
-  describe('requiredWithoutAny', function () {
+  describe('requiredWithout', function () {
     it('should work fine when all the targeted fields are present', function *() {
       const data = { username: 'foo', email: 'foo@bar.com' };
       const field = 'password';
       const message = 'enter email or password';
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithoutAny(data, field, message, args);
+      const passes = yield Validations.requiredWithout(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
 
@@ -862,7 +944,7 @@ describe('Validations', function () {
       const message = 'enter email or password';
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithoutAny(data, field, message, args);
+        const passes = yield Validations.requiredWithout(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -875,7 +957,7 @@ describe('Validations', function () {
       const message = 'enter email or password';
       const args = ['username', 'email'];
       try {
-        const passes = yield Validations.requiredWithoutAny(data, field, message, args);
+        const passes = yield Validations.requiredWithout(data, field, message, args);
         expect(passes).not.to.exist();
       } catch (e) {
         expect(e).to.equal(message);
@@ -887,7 +969,7 @@ describe('Validations', function () {
       const field = 'password';
       const message = 'enter email or password';
       const args = ['username', 'email'];
-      const passes = yield Validations.requiredWithoutAny(data, field, message, args);
+      const passes = yield Validations.requiredWithout(data, field, message, args);
       expect(passes).to.equal('validation passed');
     });
   });
@@ -2323,67 +2405,6 @@ describe('Validations', function () {
       const passes = yield Validations.ipv6(data, field, message, args);
       expect(passes).to.equal('validation skipped');
     });
-  });
-
-  describe('requiredWhen', function () {
-    it('should skip validation when conditional field does not exists', function *() {
-      const data = {};
-      const field = 'state';
-      const message = 'state is required';
-      const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should throw error when conditional field value matches and field under validation is missing', function *() {
-      const data = { country: 'US' };
-      const field = 'state';
-      const message = 'state is required';
-      const args = ['country', 'US'];
-      try {
-        const passes = yield Validations.requiredWhen(data, field, message, args);
-        expect(passes).not.to.exist();
-      } catch (e) {
-        expect(e).to.equal(message);
-      }
-    });
-
-    it('should skip validation when of value of conditional field does not match', function *() {
-      const data = { country: 'UK' };
-      const field = 'state';
-      const message = 'state is required';
-      const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should skip validation when conditional field is null', function *() {
-      const data = { country: null };
-      const field = 'state';
-      const message = 'state is required';
-      const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args);
-      expect(passes).to.equal('validation skipped');
-    });
-
-    it('should work fine when field under validation is available and conditional field value match', function *() {
-      const data = { country: 'US', state: 'NewYork' };
-      const field = 'state';
-      const message = 'state is required';
-      const args = ['country', 'US'];
-      const passes = yield Validations.requiredWhen(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-
-    it('should work fine when field under validation is available and conditional field value match with boolean', function *() {
-      const data = { country: false, state: 'NewYork' };
-      const field = 'state';
-      const message = 'state is required';
-      const args = ['country', false];
-      const passes = yield Validations.requiredWhen(data, field, message, args);
-      expect(passes).to.equal('validation passed');
-    });
-
   });
 
   describe('Confirmation', function () {
