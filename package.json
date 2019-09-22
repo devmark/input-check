@@ -22,11 +22,10 @@
   },
   "dependencies": {
     "inflect": "^0.4.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.15",
     "moment": "^2.18.1",
     "pope": "^1.0.2",
-    "q": "^2.0.3",
-    "sharp": "^0.23.0"
+    "q": "^2.0.3"
   },
   "standard": {
     "global": [

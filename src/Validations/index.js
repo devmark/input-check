@@ -3,7 +3,7 @@
 const Raw = require('../Raw');
 const Modes = require('../Modes');
 const _ = require('lodash');
-const sharp = require('sharp');
+
 const fs = require('fs');
 
 /**
@@ -1502,22 +1502,25 @@ Validations.mimetypes = function (data, field, message, args, validations) {
  */
 Validations.image = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
-
-    const image = sharp(fieldValue.path);
-    image.metadata()
-      .then(function () {
-        resolve('validation passed');
-        return;
-      })
-      .catch(function (err) {
-        reject(message);
-        return;
-      });
+    resolve('validation skipped');
+    return;
+    //
+    // const fieldValue = _.get(data, field);
+    // if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
+    //   resolve('validation skipped');
+    //   return;
+    // }
+    //
+    // const image = sharp(fieldValue.path);
+    // image.metadata()
+    //   .then(function () {
+    //     resolve('validation passed');
+    //     return;
+    //   })
+    //   .catch(function (err) {
+    //     reject(message);
+    //     return;
+    //   });
   });
 };
 
@@ -1534,48 +1537,51 @@ Validations.image = function (data, field, message, args, validations) {
  */
 Validations.dimensions = function (data, field, message, args, validations) {
   return new Promise(function (resolve, reject) {
-    const fieldValue = _.get(data, field);
-    if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
-      resolve('validation skipped');
-      return;
-    }
-
-    const image = sharp(fieldValue.path);
-    image.metadata()
-      .then(function (metadata) {
-        let parameters = {};
-        _.each(args, (arg) => {
-          const argValue = arg.split('=');
-          parameters[argValue[0]] = argValue[1];
-        });
-
-        if (
-          !_.isUndefined(parameters.width) && parseInt(parameters.width) !== metadata.width ||
-          !_.isUndefined(parameters.min_width) && parseInt(parameters.min_width) > metadata.width ||
-          !_.isUndefined(parameters.max_width) && parseInt(parameters.max_width) < metadata.width ||
-          !_.isUndefined(parameters.height) && parseInt(parameters.height) !== metadata.height ||
-          !_.isUndefined(parameters.min_height) && parseInt(parameters.min_height) > metadata.height ||
-          !_.isUndefined(parameters.max_height) && parseInt(parameters.max_height) < metadata.height
-        ) {
-          reject(message);
-          return;
-        }
-
-        if (!_.isUndefined(parameters.ratio)) {
-          let ratio = parameters.ratio.split('/');
-
-          let numerator = !_.isUndefined(ratio[0]) && ratio[0] !== '' ? parseInt(ratio[0]) : 1;
-          let denominator = !_.isUndefined(ratio[0]) && ratio[1] !== '' ? parseInt(ratio[1]) : 1;
-          if (numerator / denominator !== metadata.width / metadata.height) return reject(message);
-        }
-
-        resolve('validation passed');
-        return;
-      })
-      .catch(function (err) {
-        reject(message);
-        return;
-      });
+    resolve('validation skipped');
+    return;
+    //
+    // const fieldValue = _.get(data, field);
+    // if (skippable(fieldValue, hasRule(validations, 'nullable'))) {
+    //   resolve('validation skipped');
+    //   return;
+    // }
+    //
+    // const image = sharp(fieldValue.path);
+    // image.metadata()
+    //   .then(function (metadata) {
+    //     let parameters = {};
+    //     _.each(args, (arg) => {
+    //       const argValue = arg.split('=');
+    //       parameters[argValue[0]] = argValue[1];
+    //     });
+    //
+    //     if (
+    //       !_.isUndefined(parameters.width) && parseInt(parameters.width) !== metadata.width ||
+    //       !_.isUndefined(parameters.min_width) && parseInt(parameters.min_width) > metadata.width ||
+    //       !_.isUndefined(parameters.max_width) && parseInt(parameters.max_width) < metadata.width ||
+    //       !_.isUndefined(parameters.height) && parseInt(parameters.height) !== metadata.height ||
+    //       !_.isUndefined(parameters.min_height) && parseInt(parameters.min_height) > metadata.height ||
+    //       !_.isUndefined(parameters.max_height) && parseInt(parameters.max_height) < metadata.height
+    //     ) {
+    //       reject(message);
+    //       return;
+    //     }
+    //
+    //     if (!_.isUndefined(parameters.ratio)) {
+    //       let ratio = parameters.ratio.split('/');
+    //
+    //       let numerator = !_.isUndefined(ratio[0]) && ratio[0] !== '' ? parseInt(ratio[0]) : 1;
+    //       let denominator = !_.isUndefined(ratio[0]) && ratio[1] !== '' ? parseInt(ratio[1]) : 1;
+    //       if (numerator / denominator !== metadata.width / metadata.height) return reject(message);
+    //     }
+    //
+    //     resolve('validation passed');
+    //     return;
+    //   })
+    //   .catch(function (err) {
+    //     reject(message);
+    //     return;
+    //   });
   });
 };
 
